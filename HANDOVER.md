@@ -12,9 +12,15 @@
 
 ## 一、这是什么 / What this is
 
-macOS 菜单栏显示器控制器，**仅支持 Apple Silicon（M 系列）+ macOS 27**。Intel 路径已从代码中移除。
+macOS 菜单栏显示器控制器，**全部 M 系列芯片 + macOS 26 及以上**。Intel 路径已从代码中移除。
 
-A macOS menu bar display controller. **Apple Silicon (M-series) on macOS 27 only** — the Intel code paths have been removed, not just disabled.
+A macOS menu bar display controller. **Every M-series chip, macOS 26 and later** — the Intel code paths have been removed, not just disabled.
+
+对外可以直说「所有 M 芯片都支持」，理由不是乐观，是代码形状：每一代 M 芯片驱动显示器走的都是同一套
+Apple Silicon 栈（CGS 模式表 / SkyLight / DisplayServices / IOAVService），而这里**没有一处按机型名分支** ——
+私有符号一律 `dlsym`，取不到就单独降级。M1（第一代）与 M4 Max（目前最新一代的顶配）两端都全绿，
+中间几代用的是同一批符号。**没跑过的是 Ultra**：它能驱动的屏更多，多屏路径本身是通用的，
+但屏数上限那一档没有实机。
 
 ```bash
 ./scripts/build-app.sh --install     # 构建、用 Developer ID 签名、装进 /Applications 并启动
@@ -155,19 +161,23 @@ Worth calling out because neither produced an error — both just made features 
    注意 M4 Max 那台目前接的是两台 Studio Display —— 它们的音量走 USB 音频端点，
    有音量控制，所以按 `AudioEngine.displayOwningOutput` 的规则**音量键会交还 macOS**；
    要测「接管」那一支，得接回那台 Philips。
-3. **DDC 多通道配对仍未测** —— 两条通道的绑定与隔离已经在 M4 Max + 两台 Studio Display 上跑过，
+3. **Ultra 芯片未测** —— M1 与 M4 Max 全绿，中间几代同一套接口，所以「全部 M 系列」这个说法成立；
+   Ultra 唯一的差别是能驱动更多屏，而多屏路径本身是通用的（两屏已实测）。真接到一台 Ultra 上，
+   `pwelumenctl compat` 五秒就能自证。
+
+4. **DDC 多通道配对仍未测** —— 两条通道的绑定与隔离已经在 M4 Max + 两台 Studio Display 上跑过，
    但两端都不应答 VCP。真正没验证的是「两台**第三方**显示器同时收发 DDC」，需要两台非 Apple 屏。
-4. **`Colorimetry` / `PixelEncoding` 枚举含义未知**。IORegistry 以裸整数暴露，无公开文档。当前只报告能确定的（RGB=0、位深、动态范围），其余按原始值展示 —— **不要凭猜测给它们贴标签**。
-5. 🔴 **定价与售卖路径**未定（用户明确搁置）。`tools/config.sh` 的 `DOWNLOAD_URL` 是空的，
+5. **`Colorimetry` / `PixelEncoding` 枚举含义未知**。IORegistry 以裸整数暴露，无公开文档。当前只报告能确定的（RGB=0、位深、动态范围），其余按原始值展示 —— **不要凭猜测给它们贴标签**。
+6. 🔴 **定价与售卖路径**未定（用户明确搁置）。`tools/config.sh` 的 `DOWNLOAD_URL` 是空的，
    授权邮件会退回「安装包随邮件附上」；产品页的 Pro 段落没有价格，只留了联系方式和一处
    🔴 注释标出价格该放的位置。
 6. 🔴 **产品页尚未部署**。`site/public/lumenbar/` 是成品，需要复制进
    `PWE Loan Bar/site/public/` 再 `./deploy.sh`（集团站点，Cloudflare Pages）。
    **部署是对外发布动作，要单独确认。**
-7. **真机截图**：README 与产品页现在用的是欢迎窗的真实渲染与示意图。面板本身的截图需要人在
+8. **真机截图**：README 与产品页现在用的是欢迎窗的真实渲染与示意图。面板本身的截图需要人在
    键盘前点开 popover —— 脚本抓不到（`ImageRenderer` 画不出 AppKit 控件，`screencapture`
    需要屏幕录制授权）。发布前应补上，中英各一张。
-8. **版本号定在 `1.0.0`**（`scripts/version.sh`，唯一来源）。首发前确认。
+9. **版本号定在 `1.0.0`**（`scripts/version.sh`，唯一来源）。首发前确认。
 
 ---
 

@@ -4,7 +4,7 @@
 
 # PWE Lumen Bar
 
-**A macOS menu bar display controller for Apple Silicon.**
+**A macOS menu bar display controller for every M-series Mac.**
 
 [![macOS](https://img.shields.io/badge/macOS-26%2B-0E1729?style=flat-square)](#)
 [![Apple Silicon](https://img.shields.io/badge/Apple%20Silicon-M1–M5-A16207?style=flat-square)](#)
@@ -180,6 +180,8 @@ The icon is vector: `scripts/make-icons.swift` runs one Core Graphics drawing ro
 | MacBook Pro Mac16,5 **M4 Max** | macOS **26.6.2** (25G83) | all green, 16 checks |
 
 The M4 Max run on 1 September 2026 is what turned the declared macOS 26 floor from a reasoned claim into a tested one.
+
+**Every M-series chip is supported, and that is a claim about the code rather than optimism.** Each generation drives displays through the same Apple Silicon stack — the CGS mode table, SkyLight, `DisplayServices`, `IOAVService` — and nothing here branches on a model name: every private symbol is resolved with `dlsym`, and a missing one degrades that one capability. The first generation and the current top of the range both come back green, and the generations between them use the same symbols. Untested: an Ultra, whose only difference is the number of displays it can drive.
 
 **Verified on the M1 MacBook Air, macOS 27.0**: display enumeration, HiDPI mode enumeration, resolution switching and revert, `DisplayServices` brightness read/write, CoreAudio volume read/write, rotation capability probing, soft-disconnect symbol availability, global shortcut registration (6/6, no conflicts), per-display settings memory, gamma composition of warmth and dimming (verified by reading the table back), per-display capture at 2880×1800, full preset round-trip, the URL scheme, and colour profile enumeration.
 

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PWE Lumen Bar — every display, its own controls</title>
-<meta name="description" content="A macOS menu bar display controller for Apple Silicon. Per-display brightness, contrast, warmth, volume, resolution, HiDPI, orientation, input source and power — the MacBook's own panel included.">
+<meta name="description" content="A macOS menu bar display controller for every M-series Mac. Per-display brightness, contrast, warmth, volume, resolution, HiDPI, orientation, input source and power — the MacBook's own panel included.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
@@ -56,8 +56,8 @@
 
     <div class="hero-split">
       <div>
-        <p class="eyebrow" data-lang="en">macOS · Apple Silicon</p>
-        <p class="eyebrow" data-lang="zh">macOS · Apple Silicon</p>
+        <p class="eyebrow" data-lang="en">macOS 26+ · every M-series Mac</p>
+        <p class="eyebrow" data-lang="zh">macOS 26+ · 全部 M 系列机型</p>
         <h1 data-lang="en">Every display, its own controls.</h1>
         <h1 data-lang="zh">每块屏，单独控制。</h1>
         <p class="dek" data-lang="en">One card per screen: brightness, contrast, warmth, volume,
@@ -75,10 +75,10 @@
           <a class="cta light" href="#pro" data-lang="zh">Pro 加了什么 →</a>
         </div>
         <p class="hero-note" data-lang="en">Signed and notarised by Apple, so it opens with no security
-          warning. Requires macOS 26 or later on an Apple Silicon Mac. It lives in the menu bar and has
-          no Dock icon.</p>
-        <p class="hero-note" data-lang="zh">已由 Apple 签名公证，打开不会有安全提示。需要 macOS 26
-          或更新版本、Apple Silicon 机型。它住在菜单栏里，没有 Dock 图标。</p>
+          warning. Every M-series Mac, macOS 26 or later. It lives in the menu bar and has no Dock
+          icon.</p>
+        <p class="hero-note" data-lang="zh">已由 Apple 签名公证，打开不会有安全提示。全部 M 系列机型，
+          macOS 26 或更新版本。它住在菜单栏里，没有 Dock 图标。</p>
       </div>
 
       <figure class="lb-shot lb-hero-shot">
@@ -202,11 +202,19 @@
 
   <h2 data-lang="en">Requirements</h2>
   <h2 data-lang="zh">运行要求</h2>
-  <p data-lang="en">An Apple Silicon Mac (M1 or later) on macOS 26 or later. Two permissions are
-    optional and off until you ask: Accessibility, only if you want F1/F2 to act on an external
-    display; Screen Recording, only for per-display screenshots.</p>
-  <p data-lang="zh">Apple Silicon 机型（M1 及以后），macOS 26 或更新版本。两个权限都是可选的、
-    默认关闭：「辅助功能」只在你想让 F1/F2 作用于外接屏时需要；「屏幕录制」只在使用按屏截图时需要。</p>
+  <p data-lang="en">Any M-series Mac, macOS 26 or later. Every M chip drives displays through the same
+    Apple Silicon stack, and the app resolves what it needs at run time rather than checking a model
+    name — so the answer for your machine is a five-second self-check in Settings, not a compatibility
+    list. It has been run end to end on an <strong>M1</strong> and on an <strong>M4 Max</strong>,
+    across macOS 26.6.2 and 27, with all sixteen checks green on both.</p>
+  <p data-lang="zh">全部 M 系列机型，macOS 26 或更新版本。每一代 M 芯片驱动显示器走的都是同一套
+    Apple Silicon 栈，而这个应用是在运行时解析它需要的接口，不是去比对机型名 —— 所以你那台机器的
+    答案是设置里五秒钟的自检，不是一张兼容列表。<strong>M1</strong> 与 <strong>M4 Max</strong>
+    上都完整跑过，横跨 macOS 26.6.2 与 27，两台机器 16 项自检全绿。</p>
+  <p data-lang="en">Two permissions are optional and off until you ask: Accessibility, only if you want
+    F1/F2 to act on an external display; Screen Recording, only for per-display screenshots.</p>
+  <p data-lang="zh">两个权限都是可选的、默认关闭：「辅助功能」只在你想让 F1/F2 作用于外接屏时需要；
+    「屏幕录制」只在使用按屏截图时需要。</p>
 
 </main>
 

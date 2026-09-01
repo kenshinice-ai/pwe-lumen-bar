@@ -4,7 +4,7 @@
 
 # PWE Lumen Bar
 
-**macOS 菜单栏显示器控制器 · 仅支持 Apple Silicon（M 系列）**
+**macOS 菜单栏显示器控制器 · 全部 M 系列芯片 · macOS 26+**
 
 [![macOS](https://img.shields.io/badge/macOS-26%2B-0E1729?style=flat-square)](#)
 [![Apple Silicon](https://img.shields.io/badge/Apple%20Silicon-M1–M5-A16207?style=flat-square)](#)
@@ -262,7 +262,9 @@ All clear — every channel PWE Lumen Bar depends on is available on this machin
 
 设置 › 系统里有同一份报告。CGS 模式表那一项尤其关键：那个结构体**第 184 字节存着自己的长度**，所以布局是自校验的 —— 读回来不是 212 就说明 Apple 动过结构，PWE Lumen Bar 直接退回公开 API（失去强制 HiDPI），而不是照着错位的偏移读垃圾。
 
-**26 与 27 用的是同一套私有接口和同一套 Apple Silicon 显示栈**，两个版本现在都在真机上跑过：27 在 M1 上，26.6.2 在 M4 Max 上，16 项自检全绿。你自己那台的答案，`pwelumenctl compat` 五秒钟就能给。Intel 机型不支持：DDC 走的 `IOAVService` 在 Intel Mac 上根本不存在，首次启动会明说一次。
+**26 与 27 用的是同一套私有接口和同一套 Apple Silicon 显示栈**，两个版本现在都在真机上跑过：27 在 M1 上，26.6.2 在 M4 Max 上，16 项自检全绿。
+
+**芯片同理，所以「全部 M 系列」这句话可以直说**：每一代 M 芯片驱动显示器走的都是同一套栈，而这份代码**没有一处按机型名分支** —— 私有符号一律 `dlsym`，取不到就单独降级。第一代 M1 与目前顶配 M4 Max 两端都全绿，中间几代用的是同一批符号。你自己那台的答案，`pwelumenctl compat` 五秒钟就能给。Intel 机型不支持：DDC 走的 `IOAVService` 在 Intel Mac 上根本不存在，首次启动会明说一次。
 
 ## 已实测 / 未实测
 
