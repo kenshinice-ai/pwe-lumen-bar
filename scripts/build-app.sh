@@ -1,24 +1,48 @@
 #!/bin/bash
 # Builds PWE Lumen Bar.app from the SwiftPM products.
 #
+#   ./scripts/build-app.sh              build and sign
+#   ./scripts/build-app.sh --install    also copy it into /Applications and open it
+#   ./scripts/build-app.sh --debug      build the debug configuration
+#
 # SwiftPM produces a bare executable; a menu bar app needs a bundle with an
 # Info.plist (LSUIElement keeps it out of the Dock) and a signature, so we
 # assemble one here rather than carrying an Xcode project around.
 #
-# This is the development build. `scripts/package.sh` is the one that signs,
-# notarises and ships.
+# This is the development build. `scripts/package.sh` is the one that ships.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
-CONFIG="${1:-release}"
+
+CONFIG="release"
+INSTALL=0
+for arg in "$@"; do
+  case "$arg" in
+    --install) INSTALL=1 ;;
+    --debug)   CONFIG="debug" ;;
+    release|debug) CONFIG="$arg" ;;
+    *) echo "✗ unknown option: $arg"; exit 1 ;;
+  esac
+done
+
+# The bundle is assembled outside the repository on purpose.
+#
+# This project lives in iCloud Drive, and the file provider re-attaches
+# `com.apple.FinderInfo` to anything inside it within seconds of it being
+# written. codesign refuses to sign or verify a bundle carrying that xattr
+# ("resource fork, Finder information, or similar detritus not allowed"), and
+# stripping it does not help — it comes straight back. Anything that has to
+# carry a signature is therefore built somewhere iCloud does not manage.
+WORK="${TMPDIR:-/tmp}/pwelumenbar-build"
+APP="$WORK/PWE Lumen Bar.app"
+VERSION="$(./scripts/version.sh)"
+
 # The bundle declares macOS 26 while the package compiles against a 14.0
 # deployment target. That is deliberate: the low floor is what stops any API
 # newer than 14 from creeping into the code unnoticed, and the declared floor
 # is the oldest system the app has actually been reasoned about on. Everything
 # version-sensitive here is private and resolved at run time — `pwelumenctl compat`
 # checks it on the machine in front of you.
-APP="build/PWE Lumen Bar.app"
-VERSION="$(./scripts/version.sh)"
 
 echo "==> generating vector icons"
 # Compiled rather than run as a script because it shares BrandMark with the app:
@@ -85,11 +109,6 @@ PLIST
 # development build with the same Developer ID certificate keeps that grant
 # alive across rebuilds, which is the difference between "the F1 key works" and
 # "the F1 key works until you rebuild".
-# The project lives in iCloud Drive, which hangs Finder metadata off files it
-# syncs. codesign refuses to sign a bundle carrying any, with the memorable
-# "resource fork, Finder information, or similar detritus not allowed".
-xattr -cr "$APP"
-
 IDENTITY="$(security find-identity -v -p codesigning \
   | grep "Developer ID Application" | grep -v CSSMERR | head -1 \
   | sed -E 's/.*"(.*)".*/\1/' || true)"
@@ -101,6 +120,20 @@ else
   echo "    (every rebuild will revoke the Accessibility grant — media keys will need re-approving)"
   codesign --force --sign - --timestamp=none "$APP" >/dev/null 2>&1
 fi
+codesign --verify --deep --strict "$APP"
 
 echo "==> built $APP  ($VERSION)"
-codesign -dv "$APP" 2>&1 | grep -E "Signature|Identifier|Authority" | head -4 || true
+codesign -dv "$APP" 2>&1 | grep -E "Identifier|Authority=Developer" | head -2 || true
+
+if [[ "$INSTALL" == "1" ]]; then
+  # A menu bar app is almost always running when a new build arrives, and
+  # replacing the bundle underneath a running process leaves it half-alive.
+  pkill -x PWELumenBar 2>/dev/null || true
+  sleep 1
+  rm -rf "/Applications/PWE Lumen Bar.app"
+  cp -R "$APP" "/Applications/PWE Lumen Bar.app"
+  open "/Applications/PWE Lumen Bar.app"
+  echo "==> installed and launched /Applications/PWE Lumen Bar.app"
+else
+  echo "    install it with:  ./scripts/build-app.sh --install"
+fi

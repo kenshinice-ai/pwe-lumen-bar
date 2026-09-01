@@ -1,0 +1,154 @@
+PWE Lumen Bar — Licence Terms
+════════════════════════════════════════════════════════════════════
+
+Please read this before using the software.
+
+
+1. WHAT THIS SOFTWARE DOES
+────────────────────────────────────────────────────────────────────
+PWE Lumen Bar controls displays attached to an Apple Silicon Mac:
+brightness, contrast, colour temperature, volume, resolution,
+orientation, input source and power.
+
+Some of that reaches the monitor over DDC/CI, which is a standard
+every manufacturer implements differently. What a given monitor
+supports is probed at run time and anything unavailable is shown as
+unavailable rather than silently doing nothing.
+
+
+2. TWO OPERATIONS YOU CANNOT UNDO FROM SOFTWARE
+────────────────────────────────────────────────────────────────────
+Both ask for confirmation first, and both are worth understanding
+before you confirm:
+
+  DDC power off      Some monitors, told to power down over DDC,
+                     leave the system entirely. No software can wake
+                     them. The physical power button is the only way
+                     back.
+
+  Input switching    Sending the monitor to another input takes this
+                     Mac's picture away with it. Getting back means
+                     the monitor's own buttons.
+
+"Turn off" in the menu does neither of these — it disconnects the
+display in software and is always reversible.
+
+
+3. FORCED HiDPI
+────────────────────────────────────────────────────────────────────
+The Pro feature writes a display override file into /Library and
+needs a restart to take effect. macOS asks for an administrator
+password to allow the write; the application never handles it.
+
+The override can be removed from the same menu it was installed
+from. It affects only how macOS renders to that display.
+
+
+4. NO WARRANTY
+────────────────────────────────────────────────────────────────────
+The software is provided "as is", without warranty of any kind. To
+the maximum extent permitted by law, PWE Group Pty Ltd excludes all
+liability for any loss or damage arising from its use.
+
+Nothing in these terms excludes, restricts or modifies any guarantee,
+right or remedy under the Australian Consumer Law that cannot lawfully
+be excluded.
+
+
+5. YOUR LICENCE
+────────────────────────────────────────────────────────────────────
+The application is free to use. A Pro licence unlocks forced HiDPI
+and is registered to the email address it was purchased with.
+
+Use it on every Mac you personally work on. Please do not pass your
+key on: the email address it is registered to is displayed inside the
+application on any Mac it activates.
+
+You may not resell, redistribute or repackage the software itself.
+
+
+6. YOUR DATA
+────────────────────────────────────────────────────────────────────
+Everything stays on your Mac. The software contains no network code:
+nothing is uploaded, nothing is synced, no analytics are collected,
+and the licence is verified offline on your own machine.
+
+
+7. CONTACT
+────────────────────────────────────────────────────────────────────
+Reply to the email your licence came in.
+
+PWE Group Pty Ltd · ABN 55 606 664 546
+A PARADISE PRODUCTION
+
+
+════════════════════════════════════════════════════════════════════
+PWE Lumen Bar — 授权条款
+════════════════════════════════════════════════════════════════════
+
+使用前请阅读。
+
+
+1. 这个软件做什么
+────────────────────────────────────────────────────────────────────
+PWE Lumen Bar 控制接在 Apple Silicon Mac 上的显示器：亮度、对比度、
+色温、音量、分辨率、方向、输入源和电源。
+
+其中一部分通过 DDC/CI 抵达显示器，而这个标准每家厂商的实现都不同。
+某台显示器到底支持什么，是运行时探测出来的；探不到的功能会在界面上
+明确标为不可用，而不是按下去毫无反应。
+
+
+2. 两个软件无法撤销的操作
+────────────────────────────────────────────────────────────────────
+两者都会先弹窗确认，也都值得在确认前先弄清楚：
+
+  DDC 断电        有些显示器收到 DDC 断电指令后会整个从系统里消失，
+                  没有任何软件途径能唤醒它，只能按显示器的物理电源键。
+
+  切换输入源      把显示器切到别的输入，就等于把这台 Mac 的画面一起
+                  带走了。回来只能靠显示器自己的按键。
+
+菜单里的「熄屏」不属于这两种：它走软件断开，永远可逆。
+
+
+3. 强制 HiDPI
+────────────────────────────────────────────────────────────────────
+这个 Pro 功能会往 /Library 写一个显示器覆盖文件，需要重启才生效。
+macOS 会自己弹窗要管理员密码，应用不接触这个密码。
+
+覆盖可以从安装它的同一个菜单里移除。它只影响 macOS 如何向那块屏渲染。
+
+
+4. 免责
+────────────────────────────────────────────────────────────────────
+本软件按「现状」提供，不附带任何形式的保证。在法律允许的最大范围内，
+PWE Group Pty Ltd 不对因使用本软件产生的任何损失或损害承担责任。
+
+本条款不排除、限制或修改《澳大利亚消费者法》中不可依法排除的任何
+保证、权利或救济。
+
+
+5. 你的授权
+────────────────────────────────────────────────────────────────────
+应用本身免费。Pro 密钥解锁「强制开启 HiDPI」，并登记在购买时使用的
+邮箱名下。
+
+你自己用的每一台 Mac 都可以激活。请不要把密钥转给别人：任何一台激活
+的 Mac 都会在应用内显示密钥登记的那个邮箱。
+
+不得转售、再分发或重新打包本软件。
+
+
+6. 你的数据
+────────────────────────────────────────────────────────────────────
+一切都留在你的 Mac 上。软件不含任何网络代码：不上传、不同步、不收集
+分析数据，授权在你自己的机器上离线校验。
+
+
+7. 联系
+────────────────────────────────────────────────────────────────────
+直接回复授权邮件即可。
+
+PWE Group Pty Ltd · ABN 55 606 664 546
+天域文创出品

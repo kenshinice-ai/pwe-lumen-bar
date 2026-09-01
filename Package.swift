@@ -8,6 +8,8 @@ let package = Package(
         .executable(name: "PWELumenBar", targets: ["PWELumenBar"]),
         .library(name: "LumenBarCore", targets: ["LumenBarCore"]),
         .executable(name: "pwelumenctl", targets: ["pwelumenctl"]),
+        // Development only — renders the welcome window for the documentation.
+        .executable(name: "pwelumenshots", targets: ["pwelumenshots"]),
     ],
     targets: [
         // Display engines. No UI, so every capability can be exercised headlessly.
@@ -17,5 +19,6 @@ let package = Package(
         .target(name: "LumenBarUI", dependencies: ["LumenBarCore"], swiftSettings: [.swiftLanguageMode(.v5)]),
         .executableTarget(name: "PWELumenBar", dependencies: ["LumenBarUI"], swiftSettings: [.swiftLanguageMode(.v5)]),
         .executableTarget(name: "pwelumenctl", dependencies: ["LumenBarCore"], swiftSettings: [.swiftLanguageMode(.v5)]),
+        .executableTarget(name: "pwelumenshots", dependencies: ["LumenBarUI"], swiftSettings: [.swiftLanguageMode(.v5)]),
     ]
 )

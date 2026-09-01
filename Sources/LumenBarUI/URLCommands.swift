@@ -152,6 +152,22 @@ public enum URLCommands {
         case "refresh":
             controller.refresh()
 
+        case "activate":
+            // The one-click half of a licence email. The key is a signature the
+            // app verifies for itself, so a URL is no more trusted here than a
+            // paste into the settings field — a wrong key simply fails to
+            // verify. Settings opens either way, so the result is visible and
+            // the buyer has somewhere to correct a typo.
+            let email = query["email"] ?? ""
+            let key = query["key"] ?? ""
+            controller.openSettings()
+            guard !email.isEmpty, !key.isEmpty else {
+                report(controller, L10n.t("激活链接不完整，请在设置里手动粘贴密钥。",
+                                          "That activation link is incomplete — paste the key in Settings instead."))
+                return
+            }
+            report(controller, controller.activateLicense(email: email, key: key).message)
+
         case "settings":
             controller.openSettings()
 

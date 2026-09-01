@@ -56,27 +56,87 @@ enum Brand {
     }
 }
 
-/// The Paradise wing, as a SwiftUI shape.
+/// The product mark: the Paradise wing, with the sparkles that belong to this
+/// product.
 ///
-/// The geometry comes from `BrandMark`, which is imported from the generator —
-/// so the wing here, the wing in the app icon and the wing on the website are
-/// the same five feathers, and cannot drift apart (brand standard §2).
+/// The wing geometry comes from `BrandMark`, which is imported from the
+/// generator — so the wing here, the wing in the app icon and the wing on the
+/// website are the same five feathers and cannot drift apart (brand standard
+/// §2). The sparkles are placed off the leading feather's tip in the same
+/// proportions the icon uses, so the mark in the interface and the mark on the
+/// tile are one shape rather than two that resemble each other.
 struct WingMark: View {
+    /// The wing's own height. The view is larger, because the sparkles sit
+    /// outside the wing's golden box.
     var height: CGFloat = 14
     /// nil follows `Brand.accent`; pass a colour for a fixed ground.
     var color: Color? = nil
 
     var body: some View {
-        WingShape()
+        MarkShape(wingHeight: height)
             .fill(color ?? Brand.accent)
-            .frame(width: height * BrandMark.aspect, height: height)
+            .frame(width: height * BrandMark.aspect * MarkShape.widthSlack,
+                   height: height * MarkShape.heightSlack)
             .accessibilityHidden(true)
     }
 }
 
-private struct WingShape: Shape {
+private struct MarkShape: Shape {
+    let wingHeight: CGFloat
+
+    /// Room for the sparkles, as a multiple of the wing's own box.
+    static let widthSlack: CGFloat = 1.24
+    static let heightSlack: CGFloat = 1.34
+
     func path(in rect: CGRect) -> Path {
-        Path(BrandMark.path(in: rect).cgPath)
+        let markH = rect.height / Self.heightSlack
+        let markW = markH * BrandMark.aspect
+        // The wing sits bottom-left; its tip reaches the top-right, which is
+        // where the sparkles go.
+        let wing = CGRect(x: rect.minX, y: rect.maxY - markH, width: markW, height: markH)
+
+        // `BrandMark` maps the generator's SVG coordinates into AppKit's, where
+        // y grows upward — correct for the icon, which is drawn into a
+        // CoreGraphics context. SwiftUI's `Path` grows y downward, so the same
+        // geometry arrives mirrored: the wing sweeps down instead of up. Flip it
+        // back here rather than in `BrandMark`, which has to keep matching the
+        // shared file it was imported from.
+        let flip = CGAffineTransform(scaleX: 1, y: -1)
+            .concatenating(CGAffineTransform(translationX: 0, y: wing.minY + wing.maxY))
+        var path = Path(BrandMark.path(in: wing).cgPath).applying(flip)
+
+        let tip = CGPoint(x: wing.maxX, y: wing.minY)
+        path.addPath(Self.sparkle(center: CGPoint(x: tip.x + markW * 0.058,
+                                                  y: tip.y - markW * 0.047),
+                                  radius: markW * 0.092))
+        // The companion sparkle is detail, not structure — the same rule the
+        // icon follows. Below this size it stops being a shape and becomes a
+        // speck of amber next to the mark.
+        if markH >= 20 {
+            path.addPath(Self.sparkle(center: CGPoint(x: tip.x + markW * 0.190,
+                                                      y: tip.y - markW * 0.163),
+                                      radius: markW * 0.043))
+        }
+        return path
+    }
+
+    /// A four-pointed sparkle with concave sides — the same shape the resolution
+    /// menu uses to mark a HiDPI mode, so the mark and the interface say "sharp"
+    /// with one shape.
+    static func sparkle(center c: CGPoint, radius r: CGFloat) -> Path {
+        var path = Path()
+        let waist = r * 0.16  // control points near the centre pull the sides in
+        path.move(to: CGPoint(x: c.x, y: c.y - r))
+        path.addQuadCurve(to: CGPoint(x: c.x + r, y: c.y),
+                          control: CGPoint(x: c.x + waist, y: c.y - waist))
+        path.addQuadCurve(to: CGPoint(x: c.x, y: c.y + r),
+                          control: CGPoint(x: c.x + waist, y: c.y + waist))
+        path.addQuadCurve(to: CGPoint(x: c.x - r, y: c.y),
+                          control: CGPoint(x: c.x - waist, y: c.y + waist))
+        path.addQuadCurve(to: CGPoint(x: c.x, y: c.y - r),
+                          control: CGPoint(x: c.x - waist, y: c.y - waist))
+        path.closeSubpath()
+        return path
     }
 }
 

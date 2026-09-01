@@ -1,0 +1,97 @@
+PWE Lumen Bar
+════════════════════════════════════════════════════════════════════
+
+INSTALL
+  Drag PWE Lumen Bar onto the Applications folder beside it, then
+  open it from your Applications folder.
+
+  If macOS refuses to open it the first time, right-click the app,
+  choose Open, then click Open again. One-off.
+
+IT LIVES IN THE MENU BAR
+  There is no Dock icon. After launching, look for the display icon
+  in the menu bar at the top right of your screen, near the clock.
+
+    Click it            the panel — one card per display
+    Scroll on it        brightness of whichever display the pointer
+                        is on, without opening anything
+    Right-click it      jump straight to a saved preset
+
+APPLE SILICON ONLY
+  Requires an M-series Mac on macOS 26 or later. On an Intel Mac the
+  DDC/CI interface this app drives does not exist, and it will say so
+  once and then stay out of your way.
+
+TWO PERMISSIONS, BOTH OPTIONAL
+  Accessibility      only if you want F1/F2 to control an external
+                     display instead of the built-in one
+  Screen Recording   only if you use per-display screenshots
+
+  Everything else works without granting anything.
+
+ACTIVATE PRO
+  Click the activation link in your licence email, or open Settings
+  and paste the key and the email address it was issued to.
+
+  Pro unlocks forced HiDPI — the mode that makes a 4K display's text
+  as sharp as the built-in screen. Everything else is in the free app.
+
+WHAT IT WRITES
+  Display settings, on your Mac only. Nothing is uploaded, there is
+  no account, and the licence is verified offline. Forced HiDPI is
+  the one feature that writes a file to /Library, which macOS asks
+  for your password to allow — the app never sees that password.
+
+  A log both the app and the command line write to is at
+  ~/Library/Logs/PWE Lumen Bar/pwelumenbar.log
+
+Please read "Licence Terms.txt" in this window before use.
+
+PWE Group Pty Ltd · A PARADISE PRODUCTION
+
+
+════════════════════════════════════════════════════════════════════
+PWE Lumen Bar
+════════════════════════════════════════════════════════════════════
+
+安装
+  把 PWE Lumen Bar 拖到旁边的「应用程序」文件夹，然后从「应用程序」
+  里打开它。
+
+  如果第一次打开时 macOS 拒绝，右键点击应用，选「打开」，再点一次
+  「打开」。只需要这一次。
+
+它住在菜单栏里
+  没有 Dock 图标。启动后，请在屏幕右上角、时钟附近找那个显示器图标。
+
+    点击        打开面板 —— 一块屏一张卡片
+    滚轮        直接调节光标所在那块屏的亮度，不用打开面板
+    右键        直接切换已保存的场景
+
+仅支持 Apple Silicon
+  需要 M 系列芯片、macOS 26 或更新的系统。Intel 机器上没有本应用依赖
+  的 DDC/CI 接口，它会说明一次，之后不再打扰。
+
+两个权限，都可以不给
+  辅助功能      只有当你想让 F1/F2 控制外接屏而不是内建屏时才需要
+  屏幕录制      只有当你要用「按屏截图」时才需要
+
+  其余功能不需要任何授权。
+
+激活 Pro
+  点授权邮件里的激活链接；或者打开设置，粘贴密钥和购买时用的邮箱。
+
+  Pro 只解锁「强制开启 HiDPI」—— 让 4K 外接屏的文字和内建屏一样锐利
+  的那一档。其他功能都在免费版里。
+
+它会写什么
+  只写这台 Mac 上的显示设置。不上传、无账号，授权在本机离线校验。
+  只有「强制 HiDPI」会往 /Library 写一个文件，由 macOS 自己弹窗要
+  管理员密码 —— 应用不接触这个密码。
+
+  应用和命令行共用的日志在
+  ~/Library/Logs/PWE Lumen Bar/pwelumenbar.log
+
+使用前请阅读本窗口里的「Licence Terms.txt」。
+
+PWE Group Pty Ltd · 天域文创出品
