@@ -141,8 +141,9 @@ navy `#0E1729` 圆角底 + 琥珀 `#F5B335` 翅膀（宽度 60%），与
 - 产品页与使用指南在 `site/public/lumen/`（`/lumen` 与 `/lumen/guide`），已复制进
   `PWE Loan Bar/site/public/`，集团首页也加了卡片，`deploy.sh` 已接上（样式指纹、
   磁盘映像暂存、上线自检）。🔴 **部署本身是对外发布动作，等确认。**
-- `tools/config.sh` 的 `DOWNLOAD_URL` 上线后应填
-  `https://pwestudio.site/lumen/download/PWE-Lumen-Bar.dmg`。
+- ✅ 已上线：<https://pwestudio.site/lumen> 与 <https://pwestudio.site/lumen/guide>，
+  安装包由 `deploy.sh` 从本项目 `dist/` 暂存，线上文件与本地公证过的那一份 sha256 一致。
+  `tools/config.sh` 的 `DOWNLOAD_URL` 已填上。
 - README 里的面板图目前是示意图（`docs/images/guide-menu.svg`）。发布前应换成真机截图 ——
   这一步需要人在键盘前点开面板，脚本做不了。
 - 版本号定在 `1.0.0`（`scripts/version.sh`），首发前确认。
