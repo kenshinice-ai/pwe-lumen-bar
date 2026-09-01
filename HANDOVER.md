@@ -174,9 +174,10 @@ Worth calling out because neither produced an error — both just made features 
 6. 🔴 **产品页尚未部署**。`site/public/lumenbar/` 是成品，需要复制进
    `PWE Loan Bar/site/public/` 再 `./deploy.sh`（集团站点，Cloudflare Pages）。
    **部署是对外发布动作，要单独确认。**
-8. **真机截图**：README 与产品页现在用的是欢迎窗的真实渲染与示意图。面板本身的截图需要人在
-   键盘前点开 popover —— 脚本抓不到（`ImageRenderer` 画不出 AppKit 控件，`screencapture`
-   需要屏幕录制授权）。发布前应补上，中英各一张。
+8. **真机截图**：站点与文档现在用的是示意图（矢量，中英各一份，见
+   `scripts/docs-en-figures.py`）。面板本身的真机截图需要人在键盘前点开 popover ——
+   脚本抓不到（`ImageRenderer` 画不出 AppKit 控件，`screencapture` 需要屏幕录制授权）。
+   有了就替换 `site/public/lumen/img/panel*.svg` 那两张。
 9. **版本号定在 `1.0.0`**（`scripts/version.sh`，唯一来源）。首发前确认。
 
 ---

@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 340" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif; }
+    .h1 { font-size: 17px; font-weight: 700; fill: #1D1D1F; }
+    .sub { font-size: 12px; fill: #6E6E73; }
+    .t { font-size: 12.5px; fill: #1D1D1F; }
+    .tm { font-size: 12px; font-weight: 600; fill: #1D1D1F; }
+    .ts { font-size: 11px; fill: #6E6E73; }
+    .tt { font-size: 10px; fill: #98989D; }
+    .num { font-size: 11px; font-weight: 700; fill: #FFFFFF; }
+    .lead { stroke: #0A84FF; stroke-width: 1.1; fill: none; stroke-dasharray: 4 3; }
+  </style>
+
+  <rect width="1000" height="340" fill="#FFFFFF"/>
+  <text x="24" y="30" class="h1">菜单栏图标：三种操作</text>
+  <text x="24" y="50" class="sub">PWE Lumen Bar 不进 Dock，只有菜单栏这一个入口</text>
+
+  <!-- menu bar strip -->
+  <rect x="24" y="74" width="952" height="28" rx="6" fill="#F5F5F7" stroke="#D2D2D7"/>
+  <text x="44" y="92" class="ts">Finder　文件　编辑　显示　窗口　帮助</text>
+  <rect x="690" y="81" width="12" height="9" rx="2" fill="none" stroke="#98989D" stroke-width="1.2"/>
+  <path d="M 722 90 L 728 80 L 734 90 Z" fill="none" stroke="#98989D" stroke-width="1.2"/>
+  <circle cx="754" cy="87" r="5" fill="none" stroke="#98989D" stroke-width="1.2"/>
+  <rect x="776" y="77" width="28" height="22" rx="5" fill="#E3EEFF"/>
+  <rect x="782" y="80" width="13" height="9.5" rx="2" fill="none" stroke="#1D1D1F" stroke-width="1.4"/>
+  <rect x="787" y="84" width="13" height="9.5" rx="2" fill="#FFFFFF" stroke="#1D1D1F" stroke-width="1.4"/>
+  <text x="952" y="92" text-anchor="end" class="ts">9:41</text>
+
+  <!-- fan-out leaders -->
+  <path class="lead" d="M 788 104 L 140 128"/>
+  <path class="lead" d="M 790 104 L 466 128"/>
+  <path class="lead" d="M 792 104 L 792 128"/>
+
+  <!-- 1 left click -->
+  <circle cx="140" cy="140" r="10" fill="#0A84FF"/>
+  <text x="140" y="144" text-anchor="middle" class="num">1</text>
+  <text x="157" y="145" class="tm">左键</text>
+
+  <rect x="64" y="164" width="220" height="150" rx="10" fill="#FFFFFF" stroke="#D2D2D7"/>
+  <rect x="78" y="177" width="11" height="8" rx="1.5" fill="none" stroke="#0A84FF" stroke-width="1.3"/>
+  <rect x="80.5" y="186" width="6" height="1.6" fill="#0A84FF"/>
+  <text x="95" y="186" class="tm">PWE Lumen Bar</text>
+  <text x="272" y="186" text-anchor="end" class="tt">2 块屏幕</text>
+  <line x1="64" y1="196" x2="284" y2="196" stroke="#E3E3E6"/>
+  <rect x="76" y="206" width="196" height="96" rx="8" fill="#F2F2F5"/>
+  <text x="88" y="223" class="ts">27B1U3900</text>
+  <rect x="88" y="238" width="150" height="4" rx="2" fill="#D8D8DC"/>
+  <rect x="88" y="238" width="98" height="4" rx="2" fill="#0A84FF"/>
+  <circle cx="186" cy="240" r="5" fill="#FFFFFF" stroke="#C7C7CC"/>
+  <rect x="88" y="260" width="150" height="4" rx="2" fill="#D8D8DC"/>
+  <rect x="88" y="260" width="52" height="4" rx="2" fill="#0A84FF"/>
+  <circle cx="140" cy="262" r="5" fill="#FFFFFF" stroke="#C7C7CC"/>
+  <rect x="88" y="282" width="150" height="4" rx="2" fill="#D8D8DC"/>
+  <rect x="88" y="282" width="120" height="4" rx="2" fill="#0A84FF"/>
+  <circle cx="208" cy="284" r="5" fill="#FFFFFF" stroke="#C7C7CC"/>
+
+  <!-- 2 scroll -->
+  <circle cx="466" cy="140" r="10" fill="#0A84FF"/>
+  <text x="466" y="144" text-anchor="middle" class="num">2</text>
+  <text x="483" y="145" class="tm">滚轮</text>
+
+  <rect x="440" y="164" width="120" height="120" rx="16" fill="#FFFFFF" stroke="#D2D2D7"/>
+  <circle cx="500" cy="200" r="9" fill="#1D1D1F"/>
+  <g stroke="#1D1D1F" stroke-width="2" stroke-linecap="round">
+    <line x1="500" y1="183" x2="500" y2="187"/>
+    <line x1="500" y1="213" x2="500" y2="217"/>
+    <line x1="483" y1="200" x2="487" y2="200"/>
+    <line x1="513" y1="200" x2="517" y2="200"/>
+    <line x1="488" y1="188" x2="491" y2="191"/>
+    <line x1="509" y1="209" x2="512" y2="212"/>
+    <line x1="488" y1="212" x2="491" y2="209"/>
+    <line x1="509" y1="191" x2="512" y2="188"/>
+  </g>
+  <g fill="#D8D8DC">
+    <rect x="453" y="230" width="4.5" height="4.5"/><rect x="459" y="230" width="4.5" height="4.5"/>
+    <rect x="465" y="230" width="4.5" height="4.5"/><rect x="471" y="230" width="4.5" height="4.5"/>
+    <rect x="477" y="230" width="4.5" height="4.5"/><rect x="483" y="230" width="4.5" height="4.5"/>
+    <rect x="489" y="230" width="4.5" height="4.5"/><rect x="495" y="230" width="4.5" height="4.5"/>
+    <rect x="501" y="230" width="4.5" height="4.5"/><rect x="507" y="230" width="4.5" height="4.5"/>
+    <rect x="513" y="230" width="4.5" height="4.5"/><rect x="519" y="230" width="4.5" height="4.5"/>
+    <rect x="525" y="230" width="4.5" height="4.5"/><rect x="531" y="230" width="4.5" height="4.5"/>
+    <rect x="537" y="230" width="4.5" height="4.5"/><rect x="543" y="230" width="4.5" height="4.5"/>
+  </g>
+  <g fill="#1D1D1F">
+    <rect x="453" y="230" width="4.5" height="4.5"/><rect x="459" y="230" width="4.5" height="4.5"/>
+    <rect x="465" y="230" width="4.5" height="4.5"/><rect x="471" y="230" width="4.5" height="4.5"/>
+    <rect x="477" y="230" width="4.5" height="4.5"/><rect x="483" y="230" width="4.5" height="4.5"/>
+    <rect x="489" y="230" width="4.5" height="4.5"/><rect x="495" y="230" width="4.5" height="4.5"/>
+    <rect x="501" y="230" width="4.5" height="4.5"/><rect x="507" y="230" width="4.5" height="4.5"/>
+  </g>
+  <text x="500" y="258" text-anchor="middle" class="tt">27B1U3900</text>
+
+  <!-- 3 right click -->
+  <circle cx="792" cy="140" r="10" fill="#0A84FF"/>
+  <text x="792" y="144" text-anchor="middle" class="num">3</text>
+  <text x="809" y="145" class="tm">右键</text>
+
+  <rect x="716" y="164" width="220" height="108" rx="8" fill="#FFFFFF" stroke="#D2D2D7"/>
+  <text x="734" y="192" class="t">工作</text>
+  <text x="734" y="216" class="t">夜间</text>
+  <line x1="726" y1="228" x2="926" y2="228" stroke="#E3E3E6"/>
+  <text x="734" y="250" class="t">退出 PWE Lumen Bar</text>
+  <text x="918" y="250" text-anchor="end" class="tt">⌘Q</text>
+</svg>

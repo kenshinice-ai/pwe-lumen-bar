@@ -45,7 +45,7 @@ The first run shows this window once. To see it again later:
 **⋯ › Usage tips…** at the bottom of the panel.
 
 <p align="center">
-  <img src="images/guide-welcome.svg" width="900" alt="Welcome window">
+  <img src="images/guide-welcome-en.svg" width="900" alt="Welcome window">
 </p>
 
 1. **Title area** — one sentence on what PWE Lumen Bar is for.
@@ -85,7 +85,7 @@ for control of the whole machine just to dim a screen.
 ## 2. The menu bar icon: three gestures
 
 <p align="center">
-  <img src="images/guide-menubar.svg" width="900" alt="Three gestures on the menu bar icon">
+  <img src="images/guide-menubar-en.svg" width="900" alt="Three gestures on the menu bar icon">
 </p>
 
 1. **Left click** — opens the control panel (next section). Opening it re-detects
@@ -100,7 +100,7 @@ for control of the whole machine just to dim a screen.
 ## 3. The panel, item by item
 
 <p align="center">
-  <img src="images/guide-menu.svg" width="960" alt="Annotated control panel">
+  <img src="images/guide-menu-en.svg" width="960" alt="Annotated control panel">
 </p>
 
 The panel has a fixed width and scrolls when there are many displays. On the
@@ -182,7 +182,7 @@ draw a slider that cannot move:
 ## 4. The two ⋯ menus
 
 <p align="center">
-  <img src="images/guide-actions-menu.svg" width="960" alt="The two ⋯ menus">
+  <img src="images/guide-actions-menu-en.svg" width="960" alt="The two ⋯ menus">
 </p>
 
 ### The ⋯ at the top of a card: this display only
@@ -347,7 +347,7 @@ has seven sections top to bottom and scrolls — the illustration shows the firs
 five on the left and enlarges the last two on the right.
 
 <p align="center">
-  <img src="images/guide-settings.svg" width="960" alt="Settings window">
+  <img src="images/guide-settings-en.svg" width="960" alt="Settings window">
 </p>
 
 1. **PWE Lumen Bar Pro** — when unlocked, the email and "Deactivate on this Mac"; when
@@ -427,7 +427,7 @@ server's own mode table (the entries marked HiDPI in the resolution menu).
 **Pro**: when a display reports no such modes at all, adding them to the system.
 
 <p align="center">
-  <img src="images/guide-pro.svg" width="960" alt="Pro and forced HiDPI">
+  <img src="images/guide-pro-en.svg" width="960" alt="Pro and forced HiDPI">
 </p>
 
 1. **Where free ends and paid begins** — stated first, not buried.

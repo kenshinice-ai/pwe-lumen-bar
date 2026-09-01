@@ -31,7 +31,7 @@ A macOS menu bar display controller. Per-display brightness, contrast, warmth, v
 > all three are Apple Silicon paths. The Intel equivalents have been removed from the code and are not supported.
 
 <p align="center">
-  <img src="docs/images/guide-menu.svg" width="820" alt="The panel">
+  <img src="docs/images/guide-menu-en.svg" width="820" alt="The panel">
 </p>
 
 ## Getting started
