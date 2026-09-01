@@ -25,8 +25,7 @@ public struct MenuRootView: View {
 
     private var header: some View {
         HStack(spacing: 8) {
-            Image(systemName: "display")
-                .foregroundStyle(.tint)
+            WingMark(height: 13)
             Text("PWE Lumen Bar").font(.headline)
             if controller.isRefreshing {
                 ProgressView().controlSize(.small).scaleEffect(0.6)

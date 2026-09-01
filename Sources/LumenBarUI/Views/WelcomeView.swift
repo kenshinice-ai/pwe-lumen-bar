@@ -24,10 +24,8 @@ struct WelcomeView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            HStack(spacing: 12) {
-                Image(systemName: "sparkles.tv")
-                    .font(.system(size: 34))
-                    .foregroundStyle(.tint)
+            HStack(spacing: 14) {
+                WingMark(height: 30)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(L10n.t("PWE Lumen Bar 已在菜单栏里", "PWE Lumen Bar is in your menu bar"))
                         .font(.title3.weight(.semibold))
@@ -83,6 +81,9 @@ struct WelcomeView: View {
                 Button(L10n.t("开始使用", "Get started")) { finish() }
                     .keyboardShortcut(.defaultAction)
             }
+
+            Divider().padding(.top, 14).padding(.bottom, 10)
+            BrandSignature()
         }
         .padding(24)
         .frame(width: 460, height: 540)

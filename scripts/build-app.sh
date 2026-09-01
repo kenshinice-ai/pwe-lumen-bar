@@ -85,6 +85,11 @@ PLIST
 # development build with the same Developer ID certificate keeps that grant
 # alive across rebuilds, which is the difference between "the F1 key works" and
 # "the F1 key works until you rebuild".
+# The project lives in iCloud Drive, which hangs Finder metadata off files it
+# syncs. codesign refuses to sign a bundle carrying any, with the memorable
+# "resource fork, Finder information, or similar detritus not allowed".
+xattr -cr "$APP"
+
 IDENTITY="$(security find-identity -v -p codesigning \
   | grep "Developer ID Application" | grep -v CSSMERR | head -1 \
   | sed -E 's/.*"(.*)".*/\1/' || true)"

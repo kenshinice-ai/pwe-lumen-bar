@@ -183,11 +183,39 @@ struct SettingsView: View {
             }
 
             systemSection
+            aboutSection
         }
         .formStyle(.grouped)
         .frame(minWidth: 440, idealWidth: 460, minHeight: 520, idealHeight: 620)
         .onAppear(perform: refreshLabels)
         .onDisappear { stopRecording() }
+    }
+
+    // MARK: - About
+
+    /// Who made it, which build this is, and how to reach us — the three things
+    /// someone filing a bug report has to be able to read off the app itself.
+    private var aboutSection: some View {
+        Section {
+            HStack(spacing: 12) {
+                WingMark(height: 26)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("PWE Lumen Bar").font(.callout.weight(.semibold))
+                    Text(L10n.t("版本 \(Brand.version)", "Version \(Brand.version)"))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
+            }
+            VStack(alignment: .leading, spacing: 3) {
+                Text(Brand.signature)
+                    .font(.caption.weight(.medium))
+                    .tracking(1.2)
+                Text(Brand.copyright)
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+            }
+        }
     }
 
     // MARK: - System
