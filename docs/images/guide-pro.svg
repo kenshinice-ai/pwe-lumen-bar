@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif; }
+    .h1 { font-size: 17px; font-weight: 700; fill: #1D1D1F; }
+    .sub { font-size: 12px; fill: #6E6E73; }
+    .sec { font-size: 11px; font-weight: 600; fill: #6E6E73; }
+    .t { font-size: 12.5px; fill: #1D1D1F; }
+    .tm { font-size: 12.5px; font-weight: 500; fill: #1D1D1F; }
+    .tb { font-size: 13.5px; font-weight: 600; fill: #1D1D1F; }
+    .ts { font-size: 11px; fill: #6E6E73; }
+    .tt { font-size: 10.5px; fill: #98989D; }
+    .mono { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 10px; fill: #6E6E73; }
+    .num { font-size: 11px; font-weight: 700; fill: #FFFFFF; }
+    .lead { stroke: #0A84FF; stroke-width: 1.1; fill: none; }
+  </style>
+
+  <rect width="1000" height="500" fill="#FFFFFF"/>
+  <text x="24" y="30" class="h1">Lumen Pro：强制开启 HiDPI</text>
+  <text x="24" y="50" class="sub">设置 › Lumen Pro，以及卡片 ⋯ 菜单里的那一项</text>
+
+  <text x="60" y="82" class="sec">LUMEN PRO（未解锁时）</text>
+  <rect x="60" y="90" width="440" height="350" rx="8" fill="#FFFFFF" stroke="#E3E3E6"/>
+  <text x="76" y="118" class="ts">亮度、音量、分辨率、旋转、场景、快捷键、截图 —— 日常要用的全部免</text>
+  <text x="76" y="134" class="ts">费，没有试用期，也不会到期。</text>
+  <text x="76" y="156" class="ts">Pro 只解决一件事，也是最难的一件：</text>
+  <path d="M 82 176 L 84.4 182 L 90 184.4 L 84.4 186.8 L 82 192.6 L 79.6 186.8 L 74 184.4 L 79.6 182 Z" fill="#0A84FF"/>
+  <text x="98" y="188" class="tm">让外接屏的文字和内建屏一样锐利</text>
+  <text x="76" y="210" class="ts">你的显示器像素足够多，缺的只是 macOS 愿意用 2 倍渲染的那几档模式。</text>
+  <text x="76" y="226" class="ts">Lumen 把它们补进系统，重启后就多出「看起来像 2560×1440」这样的选</text>
+  <text x="76" y="242" class="ts">项 —— 和 Retina 屏同一种渲染方式，而不是被拉伸过的近似值。</text>
+  <text x="76" y="262" class="tt">需要管理员密码，重启后生效，随时可以移除。内建屏和 Apple 显示器本</text>
+  <text x="76" y="277" class="tt">来就有这些模式，用不上。</text>
+  <path d="M 78 293 L 83 298 L 78 303" fill="none" stroke="#8E8E93" stroke-width="1.4"/>
+  <circle cx="97" cy="298" r="6.5" fill="none" stroke="#0A84FF" stroke-width="1.3"/>
+  <text x="97" y="302" text-anchor="middle" style="font-size:9px" fill="#0A84FF">?</text>
+  <text x="110" y="302" class="t">为什么 Mac 接上显示器字会发虚？</text>
+  <rect x="76" y="314" width="408" height="26" rx="6" fill="#FFFFFF" stroke="#D2D2D7"/>
+  <text x="88" y="331" class="ts" fill="#A1A1A6">购买时使用的邮箱</text>
+  <rect x="76" y="348" width="408" height="42" rx="6" fill="#FFFFFF" stroke="#D2D2D7"/>
+  <text x="88" y="366" class="mono" fill="#A1A1A6">许可证密钥</text>
+  <rect x="76" y="400" width="60" height="24" rx="6" fill="#F2F2F5" stroke="#DDDDE0"/>
+  <text x="106" y="416" text-anchor="middle" class="ts" fill="#B0B0B5">解锁</text>
+
+  <!-- confirmation dialog -->
+  <text x="560" y="82" class="sec">点「强制开启 HiDPI…」之后</text>
+  <rect x="560" y="90" width="400" height="212" rx="10" fill="#F5F5F7" stroke="#D2D2D7"/>
+  <text x="580" y="122" class="tb">为 Philips 27B1U3900 强制开启 HiDPI？</text>
+  <text x="580" y="146" class="ts">将写入系统显示器覆盖文件，加入这些 HiDPI 档位：</text>
+  <text x="580" y="164" class="ts" fill="#1D1D1F">2560×1440, 2048×1152, 1920×1080</text>
+  <text x="580" y="188" class="ts">• 需要管理员密码（由 macOS 自己弹窗，Lumen 不接触密码）</text>
+  <text x="580" y="206" class="ts">• 重启后才会生效</text>
+  <text x="580" y="224" class="ts">• 写入位置：</text>
+  <text x="652" y="224" class="mono">/Library/Displays/Contents/Resources/Overrides/…</text>
+  <text x="580" y="242" class="ts">• 之后可以在同一个菜单里移除</text>
+  <rect x="756" y="262" width="80" height="26" rx="6" fill="#FFFFFF" stroke="#C7C7CC"/>
+  <text x="796" y="279" text-anchor="middle" class="ts" fill="#1D1D1F">取消</text>
+  <rect x="848" y="262" width="80" height="26" rx="6" fill="#0A84FF"/>
+  <text x="888" y="279" text-anchor="middle" class="ts" fill="#FFFFFF">继续</text>
+
+  <!-- after restart -->
+  <text x="560" y="336" class="sec">重启之后，分辨率菜单里多出来的档位</text>
+  <rect x="560" y="344" width="260" height="112" rx="8" fill="#FFFFFF" stroke="#D2D2D7"/>
+  <text x="576" y="368" class="t">✓  2560 × 1440  ·  HiDPI</text>
+  <text x="592" y="392" class="t">2048 × 1152  ·  HiDPI</text>
+  <text x="592" y="416" class="t">1920 × 1080  ·  HiDPI</text>
+  <text x="592" y="440" class="t" fill="#6E6E73">3840 × 2160  ·  1x</text>
+
+  <!-- callouts -->
+  <circle cx="30" cy="126" r="10" fill="#0A84FF"/><text x="30" y="130" text-anchor="middle" class="num">1</text>
+  <path class="lead" d="M 41 126 L 56 126"/>
+  <circle cx="30" cy="215" r="10" fill="#0A84FF"/><text x="30" y="219" text-anchor="middle" class="num">2</text>
+  <path class="lead" d="M 41 215 L 56 215"/>
+  <circle cx="30" cy="270" r="10" fill="#0A84FF"/><text x="30" y="274" text-anchor="middle" class="num">3</text>
+  <path class="lead" d="M 41 270 L 56 270"/>
+  <circle cx="30" cy="298" r="10" fill="#0A84FF"/><text x="30" y="302" text-anchor="middle" class="num">4</text>
+  <path class="lead" d="M 41 298 L 56 298"/>
+  <circle cx="30" cy="368" r="10" fill="#0A84FF"/><text x="30" y="372" text-anchor="middle" class="num">5</text>
+  <path class="lead" d="M 41 368 L 56 368"/>
+  <circle cx="978" cy="196" r="10" fill="#0A84FF"/><text x="978" y="200" text-anchor="middle" class="num">6</text>
+  <path class="lead" d="M 967 196 L 952 196"/>
+  <circle cx="850" cy="392" r="10" fill="#0A84FF"/><text x="850" y="396" text-anchor="middle" class="num">7</text>
+  <path class="lead" d="M 839 392 L 824 392"/>
+</svg>

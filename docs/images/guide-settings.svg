@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif; }
+    .h1 { font-size: 17px; font-weight: 700; fill: #1D1D1F; }
+    .sub { font-size: 12px; fill: #6E6E73; }
+    .sec { font-size: 11px; font-weight: 600; fill: #6E6E73; }
+    .t { font-size: 12.5px; fill: #1D1D1F; }
+    .ts { font-size: 11px; fill: #6E6E73; }
+    .tt { font-size: 10.5px; fill: #98989D; }
+    .key { font-size: 11.5px; fill: #1D1D1F; }
+    .num { font-size: 11px; font-weight: 700; fill: #FFFFFF; }
+    .lead { stroke: #0A84FF; stroke-width: 1.1; fill: none; }
+  </style>
+  <defs>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F5F5F7" stop-opacity="0"/>
+      <stop offset="1" stop-color="#F5F5F7" stop-opacity="1"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1000" height="700" fill="#FFFFFF"/>
+  <text x="24" y="30" class="h1">设置窗口</text>
+  <text x="24" y="50" class="sub">⋯ 菜单 › 设置… ，或欢迎窗口里的「打开设置」</text>
+
+  <!-- window -->
+  <rect x="70" y="70" width="460" height="590" rx="10" fill="#F5F5F7" stroke="#D2D2D7"/>
+  <path d="M 70 98 L 70 80 A 10 10 0 0 1 80 70 L 520 70 A 10 10 0 0 1 530 80 L 530 98 Z" fill="#ECECEE"/>
+  <line x1="70" y1="98" x2="530" y2="98" stroke="#D2D2D7"/>
+  <circle cx="90" cy="84" r="5.5" fill="#FF5F57"/>
+  <circle cx="108" cy="84" r="5.5" fill="#FEBC2E"/>
+  <circle cx="126" cy="84" r="5.5" fill="#28C840"/>
+  <text x="300" y="88" text-anchor="middle" class="ts">Lumen 设置</text>
+
+  <!-- Lumen Pro -->
+  <text x="90" y="124" class="sec">LUMEN PRO</text>
+  <rect x="90" y="132" width="420" height="80" rx="8" fill="#FFFFFF" stroke="#E3E3E6"/>
+  <path d="M 106 147 L 110 152 L 118 143" fill="none" stroke="#34C759" stroke-width="2" stroke-linecap="round"/>
+  <text x="126" y="152" class="t" fill="#34C759">已解锁</text>
+  <text x="106" y="172" class="ts">buyer@example.com</text>
+  <rect x="106" y="182" width="140" height="24" rx="6" fill="#FFFFFF" stroke="#C7C7CC"/>
+  <text x="176" y="198" text-anchor="middle" class="ts" fill="#1D1D1F">在这台 Mac 上取消激活</text>
+
+  <!-- 通用 -->
+  <text x="90" y="234" class="sec">通用</text>
+  <rect x="90" y="242" width="420" height="70" rx="8" fill="#FFFFFF" stroke="#E3E3E6"/>
+  <text x="106" y="269" class="t">语言</text>
+  <rect x="386" y="256" width="108" height="24" rx="6" fill="#FFFFFF" stroke="#C7C7CC"/>
+  <text x="398" y="272" class="ts" fill="#1D1D1F">跟随系统</text>
+  <path d="M 476 265 L 480 269.5 L 484 265" fill="none" stroke="#6E6E73" stroke-width="1.3"/>
+  <line x1="106" y1="288" x2="494" y2="288" stroke="#EFEFF1"/>
+  <text x="106" y="303" class="t">开机时启动</text>
+  <rect x="458" y="292" width="36" height="21" rx="10.5" fill="#34C759"/>
+  <circle cx="484" cy="302.5" r="8.5" fill="#FFFFFF"/>
+
+  <!-- 显示器信息 -->
+  <text x="90" y="340" class="sec">显示器信息</text>
+  <rect x="90" y="348" width="420" height="108" rx="8" fill="#FFFFFF" stroke="#E3E3E6"/>
+  <path d="M 108 366 L 113 371 L 108 376" fill="none" stroke="#8E8E93" stroke-width="1.4"/>
+  <text x="124" y="375" class="t">Philips 27B1U3900</text>
+  <text x="494" y="375" text-anchor="end" class="tt">2560 × 1440 HiDPI · 60 Hz</text>
+  <line x1="106" y1="388" x2="494" y2="388" stroke="#EFEFF1"/>
+  <path d="M 108 400 L 113 405 L 108 410" fill="none" stroke="#8E8E93" stroke-width="1.4"/>
+  <text x="124" y="409" class="t">内建 Retina 显示器</text>
+  <text x="494" y="409" text-anchor="end" class="tt">1440 × 900 HiDPI · 60 Hz</text>
+  <line x1="106" y1="421" x2="494" y2="421" stroke="#EFEFF1"/>
+  <rect x="106" y="428" width="58" height="22" rx="6" fill="#FFFFFF" stroke="#C7C7CC"/>
+  <text x="135" y="443" text-anchor="middle" class="ts" fill="#1D1D1F">刷新</text>
+
+  <!-- 显示器 -->
+  <text x="90" y="484" class="sec">显示器</text>
+  <rect x="90" y="492" width="420" height="96" rx="8" fill="#FFFFFF" stroke="#E3E3E6"/>
+  <text x="106" y="519" class="t">记住每块屏的设置</text>
+  <rect x="458" y="508" width="36" height="21" rx="10.5" fill="#34C759"/>
+  <circle cx="484" cy="518.5" r="8.5" fill="#FFFFFF"/>
+  <text x="106" y="540" class="ts">重新插拔后自动恢复亮度、色温、分辨率和方向。</text>
+  <line x1="106" y1="552" x2="494" y2="552" stroke="#EFEFF1"/>
+  <text x="106" y="574" class="t">接外接屏时收起内建屏</text>
+  <rect x="458" y="563" width="36" height="21" rx="10.5" fill="#E3E3E6"/>
+  <circle cx="468" cy="573.5" r="8.5" fill="#FFFFFF" stroke="#D2D2D7"/>
+
+  <!-- 键盘亮度/音量键 (clipped by the window edge) -->
+  <text x="90" y="616" class="sec">键盘亮度/音量键</text>
+  <rect x="90" y="624" width="420" height="36" rx="8" fill="#FFFFFF" stroke="#E3E3E6"/>
+  <text x="106" y="647" class="t">接管这些按键</text>
+  <rect x="458" y="636" width="36" height="21" rx="10.5" fill="#E3E3E6"/>
+  <circle cx="468" cy="646.5" r="8.5" fill="#FFFFFF" stroke="#D2D2D7"/>
+  <rect x="71" y="630" width="458" height="29" fill="url(#fade)"/>
+
+  <!-- ===== right column ===== -->
+  <text x="590" y="88" class="sec">全局快捷键</text>
+  <rect x="590" y="96" width="370" height="282" rx="8" fill="#FFFFFF" stroke="#E3E3E6"/>
+  <text x="606" y="123" class="t">启用</text>
+  <rect x="908" y="112" width="36" height="21" rx="10.5" fill="#34C759"/>
+  <circle cx="934" cy="122.5" r="8.5" fill="#FFFFFF"/>
+  <text x="606" y="145" class="ts">快捷键作用于光标所在的那块屏。</text>
+  <line x1="606" y1="156" x2="944" y2="156" stroke="#EFEFF1"/>
+  <g class="key">
+    <text x="606" y="176">调亮</text>
+    <text x="606" y="202">调暗</text>
+    <text x="606" y="228">音量加</text>
+    <text x="606" y="254">音量减</text>
+    <text x="606" y="280">静音开关</text>
+    <text x="606" y="306">截图这块屏</text>
+    <text x="606" y="332">关闭/唤醒这块屏</text>
+  </g>
+  <g>
+    <rect x="834" y="162" width="110" height="20" rx="5" fill="#FFFFFF" stroke="#C7C7CC"/><text x="889" y="176" text-anchor="middle" class="ts" fill="#1D1D1F">⌃⌥↑</text>
+    <rect x="834" y="188" width="110" height="20" rx="5" fill="#FFFFFF" stroke="#C7C7CC"/><text x="889" y="202" text-anchor="middle" class="ts" fill="#1D1D1F">⌃⌥↓</text>
+    <rect x="834" y="214" width="110" height="20" rx="5" fill="#FFFFFF" stroke="#C7C7CC"/><text x="889" y="228" text-anchor="middle" class="ts" fill="#1D1D1F">⌃⌥→</text>
+    <rect x="834" y="240" width="110" height="20" rx="5" fill="#FFFFFF" stroke="#C7C7CC"/><text x="889" y="254" text-anchor="middle" class="ts" fill="#1D1D1F">⌃⌥←</text>
+    <rect x="834" y="266" width="110" height="20" rx="5" fill="#FFFFFF" stroke="#C7C7CC"/><text x="889" y="280" text-anchor="middle" class="ts" fill="#1D1D1F">⌃⌥M</text>
+    <rect x="834" y="292" width="110" height="20" rx="5" fill="#FFFFFF" stroke="#C7C7CC"/><text x="889" y="306" text-anchor="middle" class="ts" fill="#1D1D1F">⌃⌥S</text>
+    <rect x="834" y="318" width="110" height="20" rx="5" fill="#FFFFFF" stroke="#C7C7CC"/><text x="889" y="332" text-anchor="middle" class="ts" fill="#1D1D1F">⌃⌥P</text>
+  </g>
+  <line x1="606" y1="346" x2="944" y2="346" stroke="#EFEFF1"/>
+  <rect x="606" y="354" width="120" height="20" rx="5" fill="#FFFFFF" stroke="#C7C7CC"/>
+  <text x="666" y="368" text-anchor="middle" class="ts" fill="#1D1D1F">恢复默认快捷键</text>
+
+  <text x="590" y="410" class="sec">系统</text>
+  <rect x="590" y="418" width="370" height="82" rx="8" fill="#FFFFFF" stroke="#E3E3E6"/>
+  <text x="606" y="447" class="t">运行环境</text>
+  <text x="944" y="447" text-anchor="end" class="ts">macOS 27.0 · Apple M1</text>
+  <line x1="606" y1="459" x2="944" y2="459" stroke="#EFEFF1"/>
+  <text x="606" y="481" class="t">接口自检</text>
+  <path d="M 800 476 L 804 481 L 812 471" fill="none" stroke="#6E6E73" stroke-width="1.6" stroke-linecap="round"/>
+  <text x="944" y="481" text-anchor="end" class="ts">全部可用（16 项）</text>
+
+  <text x="590" y="532" class="sec">录制新组合键时</text>
+  <rect x="590" y="540" width="370" height="80" rx="8" fill="#FFFFFF" stroke="#E3E3E6"/>
+  <text x="606" y="571" class="key">调亮</text>
+  <rect x="834" y="557" width="110" height="20" rx="5" fill="#E8F0FE" stroke="#0A84FF"/>
+  <text x="889" y="571" text-anchor="middle" class="ts" fill="#0A6BD6">按下组合键…</text>
+  <path d="M 610 596 L 617 604 L 603 604 Z" fill="none" stroke="#E08A00" stroke-width="1.4" stroke-linejoin="round"/>
+  <text x="626" y="604" class="ts" fill="#E08A00">这个组合被别的程序占用了，换一个。</text>
+
+  <!-- callouts -->
+  <circle cx="40" cy="172" r="10" fill="#0A84FF"/><text x="40" y="176" text-anchor="middle" class="num">1</text>
+  <path class="lead" d="M 51 172 L 66 172"/>
+  <circle cx="40" cy="277" r="10" fill="#0A84FF"/><text x="40" y="281" text-anchor="middle" class="num">2</text>
+  <path class="lead" d="M 51 277 L 66 277"/>
+  <circle cx="40" cy="402" r="10" fill="#0A84FF"/><text x="40" y="406" text-anchor="middle" class="num">3</text>
+  <path class="lead" d="M 51 402 L 66 402"/>
+  <circle cx="40" cy="540" r="10" fill="#0A84FF"/><text x="40" y="544" text-anchor="middle" class="num">4</text>
+  <path class="lead" d="M 51 540 L 66 540"/>
+  <circle cx="40" cy="640" r="10" fill="#0A84FF"/><text x="40" y="644" text-anchor="middle" class="num">5</text>
+  <path class="lead" d="M 51 640 L 66 640"/>
+  <circle cx="978" cy="237" r="10" fill="#0A84FF"/><text x="978" y="241" text-anchor="middle" class="num">6</text>
+  <path class="lead" d="M 967 237 L 952 237"/>
+  <circle cx="978" cy="459" r="10" fill="#0A84FF"/><text x="978" y="463" text-anchor="middle" class="num">7</text>
+  <path class="lead" d="M 967 459 L 952 459"/>
+  <circle cx="978" cy="580" r="10" fill="#0A84FF"/><text x="978" y="584" text-anchor="middle" class="num">8</text>
+  <path class="lead" d="M 967 580 L 952 580"/>
+</svg>

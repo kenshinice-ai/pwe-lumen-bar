@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 672" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif; }
+    .h1 { font-size: 17px; font-weight: 700; fill: #1D1D1F; }
+    .sub { font-size: 12px; fill: #6E6E73; }
+    .sec { font-size: 11px; font-weight: 600; fill: #6E6E73; }
+    .t { font-size: 12.5px; fill: #1D1D1F; }
+    .tm { font-size: 12.5px; font-weight: 500; fill: #1D1D1F; }
+    .big { font-size: 15.5px; font-weight: 600; fill: #1D1D1F; }
+    .ts { font-size: 11px; fill: #6E6E73; }
+    .tt { font-size: 10.5px; fill: #98989D; }
+    .mono { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 11px; fill: #E8E8ED; }
+    .num { font-size: 11px; font-weight: 700; fill: #FFFFFF; }
+    .lead { stroke: #0A84FF; stroke-width: 1.1; fill: none; }
+  </style>
+
+  <rect width="1000" height="672" fill="#FFFFFF"/>
+  <text x="24" y="30" class="h1">第一次运行：欢迎窗口</text>
+  <text x="24" y="50" class="sub">只出现一次，之后可从 ⋯ 菜单的「使用提示…」再打开</text>
+
+  <!-- ===== welcome window ===== -->
+  <rect x="70" y="76" width="460" height="568" rx="10" fill="#FFFFFF" stroke="#D2D2D7"/>
+  <path d="M 70 104 L 70 86 A 10 10 0 0 1 80 76 L 520 76 A 10 10 0 0 1 530 86 L 530 104 Z" fill="#ECECEE"/>
+  <line x1="70" y1="104" x2="530" y2="104" stroke="#D2D2D7"/>
+  <circle cx="90" cy="90" r="5.5" fill="#FF5F57"/>
+  <circle cx="108" cy="90" r="5.5" fill="#FEBC2E"/>
+  <circle cx="126" cy="90" r="5.5" fill="#28C840"/>
+  <text x="300" y="94" text-anchor="middle" class="ts">欢迎使用 Lumen</text>
+
+  <!-- header -->
+  <rect x="95" y="130" width="30" height="22" rx="3" fill="none" stroke="#0A84FF" stroke-width="1.8"/>
+  <rect x="104" y="155" width="12" height="2.4" rx="1" fill="#0A84FF"/>
+  <path d="M 118 126 L 120.4 132 L 126 134.4 L 120.4 136.8 L 118 142.6 L 115.6 136.8 L 110 134.4 L 115.6 132 Z" fill="#0A84FF" stroke="#FFFFFF" stroke-width="1.2"/>
+  <text x="136" y="143" class="big">Lumen 已在菜单栏里</text>
+  <text x="136" y="162" class="t" fill="#6E6E73">每块屏单独控制亮度、音量、分辨率和方向。</text>
+
+  <text x="94" y="200" class="sec">三个不太看得出来的用法</text>
+
+  <!-- tip 1 -->
+  <path d="M 99 214 L 99 230 L 103 226 L 106 233 L 109 231.5 L 106 225 L 111 224 Z" fill="#0A84FF"/>
+  <path d="M 112 213 A 7 7 0 0 1 116 217" fill="none" stroke="#0A84FF" stroke-width="1.4"/>
+  <text x="126" y="222" class="tm">在菜单栏图标上滚轮</text>
+  <text x="126" y="238" class="ts">直接调节光标所在那块屏的亮度，不用打开面板。</text>
+  <!-- tip 2 -->
+  <rect x="96" y="252" width="14" height="16" rx="2" fill="none" stroke="#0A84FF" stroke-width="1.4"/>
+  <line x1="99" y1="257" x2="107" y2="257" stroke="#0A84FF" stroke-width="1.2"/>
+  <line x1="99" y1="261" x2="107" y2="261" stroke="#0A84FF" stroke-width="1.2"/>
+  <path d="M 108 264 L 108 276 L 111 273 L 113.5 278 L 116 277 L 113.5 272 L 117 271 Z" fill="#0A84FF"/>
+  <text x="126" y="262" class="tm">右键图标</text>
+  <text x="126" y="278" class="ts">直接切换已保存的场景。</text>
+  <!-- tip 3 -->
+  <g stroke="#0A84FF" stroke-width="1.5">
+    <line x1="95" y1="294" x2="115" y2="294"/><line x1="95" y1="301" x2="115" y2="301"/><line x1="95" y1="308" x2="115" y2="308"/>
+  </g>
+  <circle cx="103" cy="294" r="2.6" fill="#FFFFFF" stroke="#0A84FF" stroke-width="1.5"/>
+  <circle cx="109" cy="301" r="2.6" fill="#FFFFFF" stroke="#0A84FF" stroke-width="1.5"/>
+  <circle cx="100" cy="308" r="2.6" fill="#FFFFFF" stroke="#0A84FF" stroke-width="1.5"/>
+  <text x="126" y="302" class="tm">面板里的 ⋯ 菜单</text>
+  <text x="126" y="318" class="ts">重命名、颜色配置、输入源、截图、锁定配置都在那里。</text>
+
+  <line x1="94" y1="346" x2="506" y2="346" stroke="#E3E3E6"/>
+  <text x="94" y="370" class="sec">两个需要授权的功能，默认关闭</text>
+
+  <!-- tip 4 -->
+  <rect x="94" y="384" width="22" height="15" rx="2.5" fill="none" stroke="#0A84FF" stroke-width="1.4"/>
+  <g fill="#0A84FF">
+    <rect x="97" y="387" width="2.4" height="2.4"/><rect x="101" y="387" width="2.4" height="2.4"/>
+    <rect x="105" y="387" width="2.4" height="2.4"/><rect x="109" y="387" width="2.4" height="2.4"/>
+    <rect x="99" y="392" width="12" height="2.4" rx="1"/>
+  </g>
+  <text x="126" y="392" class="tm">接管键盘亮度/音量键</text>
+  <text x="126" y="408" class="ts">让 F1/F2 作用于外接屏。需要「辅助功能」权限。</text>
+  <!-- tip 5 -->
+  <rect x="94" y="426" width="22" height="15" rx="3" fill="none" stroke="#0A84FF" stroke-width="1.4"/>
+  <path d="M 100 426 L 102.5 422 L 108 422 L 110.5 426" fill="none" stroke="#0A84FF" stroke-width="1.4"/>
+  <circle cx="105" cy="434" r="4" fill="none" stroke="#0A84FF" stroke-width="1.4"/>
+  <text x="126" y="432" class="tm">按屏截图</text>
+  <text x="126" y="448" class="ts">第一次使用时会请求「屏幕录制」权限。</text>
+
+  <!-- buttons -->
+  <rect x="94" y="596" width="82" height="26" rx="6" fill="#FFFFFF" stroke="#C7C7CC"/>
+  <text x="135" y="613" text-anchor="middle" class="t">打开设置</text>
+  <rect x="424" y="596" width="82" height="26" rx="6" fill="#0A84FF"/>
+  <text x="465" y="613" text-anchor="middle" class="t" fill="#FFFFFF">开始使用</text>
+
+  <!-- ===== right column ===== -->
+  <rect x="590" y="104" width="370" height="140" rx="10" fill="#1D1D1F"/>
+  <text x="606" y="134" class="mono">$ ./scripts/build-app.sh</text>
+  <text x="606" y="162" class="mono">$ cp -R build/Lumen.app /Applications/</text>
+  <text x="606" y="190" class="mono">$ open /Applications/Lumen.app</text>
+  <text x="606" y="218" class="mono" fill="#98989D">==&gt; built build/Lumen.app</text>
+
+  <rect x="590" y="280" width="370" height="152" rx="10" fill="#FFFFFF" stroke="#D2D2D7"/>
+  <text x="606" y="312" class="t">接管这些按键</text>
+  <rect x="908" y="301" width="36" height="21" rx="10.5" fill="#34C759"/>
+  <circle cx="934" cy="311.5" r="8.5" fill="#FFFFFF"/>
+  <text x="606" y="336" class="ts">亮度键作用于光标所在的那块屏；光标在内建屏上时交还</text>
+  <text x="606" y="352" class="ts">macOS。需要「辅助功能」权限。</text>
+  <line x1="606" y1="368" x2="944" y2="368" stroke="#E3E3E6"/>
+  <circle cx="613" cy="391" r="6" fill="none" stroke="#6E6E73" stroke-width="1.2"/>
+  <text x="613" y="395" text-anchor="middle" style="font-size:9px" fill="#6E6E73">i</text>
+  <text x="628" y="395" class="ts">需要「辅助功能」权限才能接管亮度/音量键。已打开</text>
+  <text x="628" y="411" class="ts">系统设置，勾选 Lumen 后再试一次。</text>
+
+  <!-- ===== callouts ===== -->
+  <circle cx="40" cy="146" r="10" fill="#0A84FF"/><text x="40" y="150" text-anchor="middle" class="num">1</text>
+  <path class="lead" d="M 51 146 L 66 146"/>
+  <circle cx="40" cy="228" r="10" fill="#0A84FF"/><text x="40" y="232" text-anchor="middle" class="num">2</text>
+  <path class="lead" d="M 51 228 L 66 228"/>
+  <circle cx="40" cy="268" r="10" fill="#0A84FF"/><text x="40" y="272" text-anchor="middle" class="num">3</text>
+  <path class="lead" d="M 51 268 L 66 268"/>
+  <circle cx="40" cy="308" r="10" fill="#0A84FF"/><text x="40" y="312" text-anchor="middle" class="num">4</text>
+  <path class="lead" d="M 51 308 L 66 308"/>
+  <circle cx="40" cy="398" r="10" fill="#0A84FF"/><text x="40" y="402" text-anchor="middle" class="num">5</text>
+  <path class="lead" d="M 51 398 L 66 398"/>
+  <circle cx="40" cy="438" r="10" fill="#0A84FF"/><text x="40" y="442" text-anchor="middle" class="num">6</text>
+  <path class="lead" d="M 51 438 L 66 438"/>
+  <circle cx="40" cy="609" r="10" fill="#0A84FF"/><text x="40" y="613" text-anchor="middle" class="num">7</text>
+  <path class="lead" d="M 51 609 L 66 609"/>
+  <circle cx="978" cy="174" r="10" fill="#0A84FF"/><text x="978" y="178" text-anchor="middle" class="num">8</text>
+  <path class="lead" d="M 967 174 L 952 174"/>
+  <circle cx="978" cy="356" r="10" fill="#0A84FF"/><text x="978" y="360" text-anchor="middle" class="num">9</text>
+  <path class="lead" d="M 967 356 L 952 356"/>
+</svg>

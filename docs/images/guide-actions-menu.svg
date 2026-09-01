@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif; }
+    .h1 { font-size: 17px; font-weight: 700; fill: #1D1D1F; }
+    .sub { font-size: 12px; fill: #6E6E73; }
+    .sec { font-size: 11px; font-weight: 600; fill: #6E6E73; }
+    .mi { font-size: 12px; fill: #1D1D1F; }
+    .ck { font-size: 11px; fill: #1D1D1F; }
+    .dg { font-size: 11px; fill: #6E6E73; }
+    .num { font-size: 10px; font-weight: 700; fill: #FFFFFF; }
+    .lead { stroke: #0A84FF; stroke-width: 1.1; fill: none; }
+    .arrow { font-size: 11px; fill: #8E8E93; }
+  </style>
+
+  <rect width="1000" height="600" fill="#FFFFFF"/>
+  <text x="24" y="30" class="h1">两个 ⋯ 菜单</text>
+  <text x="24" y="50" class="sub">卡片上的 ⋯ 只管这一块屏；面板底部的 ⋯ 管全局</text>
+
+  <text x="60" y="82" class="sec">卡片右上角的 ⋯</text>
+  <rect x="60" y="90" width="320" height="483" rx="8" fill="#FFFFFF" stroke="#D2D2D7"/>
+
+  <text x="86" y="112" class="mi">设为主屏</text>
+  <text x="86" y="135" class="mi">镜像到主屏</text>
+  <text x="86" y="158" class="mi">颜色配置文件</text><text x="364" y="158" text-anchor="end" class="arrow">›</text>
+  <text x="86" y="181" class="mi">位置</text><text x="364" y="181" text-anchor="end" class="arrow">›</text>
+  <text x="86" y="204" class="mi">截图</text><text x="364" y="204" text-anchor="end" class="arrow">›</text>
+  <line x1="70" y1="215" x2="370" y2="215" stroke="#E3E3E6"/>
+  <text x="86" y="235" class="mi">给显示器断电（可能需要物理电源键唤醒）</text>
+  <text x="86" y="258" class="mi">仅从桌面移除（显示器仍通电）</text>
+  <text x="70" y="281" class="ck">✓</text><text x="86" y="281" class="mi">跟随内建屏亮度</text>
+  <text x="86" y="304" class="mi">输入源</text><text x="364" y="304" text-anchor="end" class="arrow">›</text>
+  <text x="86" y="327" class="mi">DDC 通道</text><text x="364" y="327" text-anchor="end" class="arrow">›</text>
+  <line x1="70" y1="338" x2="370" y2="338" stroke="#E3E3E6"/>
+  <text x="86" y="358" class="mi">重命名…</text>
+  <text x="70" y="381" class="ck">✓</text><text x="86" y="381" class="mi">锁定分辨率和方向</text>
+  <text x="86" y="404" class="mi">强制开启 HiDPI…（Pro）</text>
+  <text x="86" y="427" class="mi">显示器详情…</text>
+  <line x1="70" y1="438" x2="370" y2="438" stroke="#E3E3E6"/>
+  <text x="70" y="456" class="sec">诊断</text>
+  <text x="86" y="477" class="dg">亮度：DDC</text>
+  <text x="86" y="498" class="dg">音量：音频设备</text>
+  <text x="86" y="519" class="dg">连接：外接 (transport 8)</text>
+  <text x="86" y="540" class="dg">DDC：已连接</text>
+  <text x="86" y="561" class="dg">模式：24 个，其中 HiDPI 9 个</text>
+
+  <text x="560" y="82" class="sec">面板底部的 ⋯</text>
+  <rect x="560" y="90" width="250" height="304" rx="8" fill="#FFFFFF" stroke="#D2D2D7"/>
+  <rect x="562" y="96" width="246" height="23" fill="#0A84FF"/>
+  <text x="586" y="112" class="mi" fill="#FFFFFF">场景</text><text x="796" y="112" text-anchor="end" class="arrow" fill="#FFFFFF">›</text>
+  <line x1="570" y1="123" x2="800" y2="123" stroke="#E3E3E6"/>
+  <text x="586" y="143" class="mi">重新检测显示器</text>
+  <text x="586" y="166" class="mi">截取所有屏幕</text>
+  <text x="586" y="189" class="mi">水平排列所有屏幕</text>
+  <text x="586" y="212" class="mi">语言</text><text x="796" y="212" text-anchor="end" class="arrow">›</text>
+  <text x="570" y="235" class="ck">✓</text><text x="586" y="235" class="mi">记住每块屏的设置</text>
+  <text x="570" y="258" class="ck">✓</text><text x="586" y="258" class="mi">接外接屏时收起内建屏</text>
+  <text x="586" y="281" class="mi">全局快捷键</text><text x="796" y="281" text-anchor="end" class="arrow">›</text>
+  <text x="570" y="304" class="ck">✓</text><text x="586" y="304" class="mi">开机时启动</text>
+  <line x1="570" y1="315" x2="800" y2="315" stroke="#E3E3E6"/>
+  <text x="586" y="335" class="mi">使用提示…</text>
+  <text x="586" y="358" class="mi">设置…</text>
+  <text x="586" y="381" class="mi">退出 Lumen</text>
+
+  <line x1="810" y1="107" x2="818" y2="107" stroke="#D2D2D7"/>
+  <rect x="818" y="90" width="176" height="120" rx="8" fill="#FFFFFF" stroke="#D2D2D7"/>
+  <text x="844" y="112" class="mi">工作</text>
+  <text x="844" y="135" class="mi">夜间</text>
+  <line x1="828" y1="146" x2="984" y2="146" stroke="#E3E3E6"/>
+  <text x="844" y="166" class="mi">删除</text><text x="978" y="166" text-anchor="end" class="arrow">›</text>
+  <line x1="828" y1="177" x2="984" y2="177" stroke="#E3E3E6"/>
+  <text x="844" y="197" class="mi">把当前状态存为场景…</text>
+
+  <circle cx="30" cy="112" r="9" fill="#0A84FF"/><text x="30" y="116" text-anchor="middle" class="num">1</text>
+  <path class="lead" d="M 39 112 L 56 112"/>
+  <circle cx="30" cy="158" r="9" fill="#0A84FF"/><text x="30" y="162" text-anchor="middle" class="num">2</text>
+  <path class="lead" d="M 39 158 L 56 158"/>
+  <circle cx="30" cy="235" r="9" fill="#0A84FF"/><text x="30" y="239" text-anchor="middle" class="num">3</text>
+  <path class="lead" d="M 39 235 L 56 235"/>
+  <circle cx="30" cy="277" r="9" fill="#0A84FF"/><text x="30" y="281" text-anchor="middle" class="num">4</text>
+  <path class="lead" d="M 39 277 L 56 277"/>
+  <circle cx="30" cy="304" r="9" fill="#0A84FF"/><text x="30" y="308" text-anchor="middle" class="num">5</text>
+  <path class="lead" d="M 39 304 L 56 304"/>
+  <circle cx="30" cy="354" r="9" fill="#0A84FF"/><text x="30" y="358" text-anchor="middle" class="num">6</text>
+  <path class="lead" d="M 39 354 L 56 354"/>
+  <circle cx="30" cy="381" r="9" fill="#0A84FF"/><text x="30" y="385" text-anchor="middle" class="num">7</text>
+  <path class="lead" d="M 39 381 L 56 381"/>
+  <circle cx="30" cy="404" r="9" fill="#0A84FF"/><text x="30" y="408" text-anchor="middle" class="num">8</text>
+  <path class="lead" d="M 39 404 L 56 404"/>
+  <circle cx="30" cy="427" r="9" fill="#0A84FF"/><text x="30" y="431" text-anchor="middle" class="num">9</text>
+  <path class="lead" d="M 39 427 L 56 427"/>
+  <circle cx="30" cy="500" r="9" fill="#0A84FF"/><text x="30" y="504" text-anchor="middle" class="num">10</text>
+  <path class="lead" d="M 39 500 L 56 500"/>
+
+  <circle cx="528" cy="107" r="9" fill="#0A84FF"/><text x="528" y="111" text-anchor="middle" class="num">11</text>
+  <path class="lead" d="M 537 107 L 556 107"/>
+  <circle cx="528" cy="143" r="9" fill="#0A84FF"/><text x="528" y="147" text-anchor="middle" class="num">12</text>
+  <path class="lead" d="M 537 143 L 556 143"/>
+  <circle cx="528" cy="177" r="9" fill="#0A84FF"/><text x="528" y="181" text-anchor="middle" class="num">13</text>
+  <path class="lead" d="M 537 177 L 556 177"/>
+  <circle cx="528" cy="212" r="9" fill="#0A84FF"/><text x="528" y="216" text-anchor="middle" class="num">14</text>
+  <path class="lead" d="M 537 212 L 556 212"/>
+  <circle cx="528" cy="246" r="9" fill="#0A84FF"/><text x="528" y="250" text-anchor="middle" class="num">15</text>
+  <path class="lead" d="M 537 246 L 556 246"/>
+  <circle cx="528" cy="281" r="9" fill="#0A84FF"/><text x="528" y="285" text-anchor="middle" class="num">16</text>
+  <path class="lead" d="M 537 281 L 556 281"/>
+  <circle cx="528" cy="304" r="9" fill="#0A84FF"/><text x="528" y="308" text-anchor="middle" class="num">17</text>
+  <path class="lead" d="M 537 304 L 556 304"/>
+  <circle cx="528" cy="358" r="9" fill="#0A84FF"/><text x="528" y="362" text-anchor="middle" class="num">18</text>
+  <path class="lead" d="M 537 358 L 556 358"/>
+</svg>
