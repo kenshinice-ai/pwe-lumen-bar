@@ -77,6 +77,12 @@ Every capability is **probed at run time**. What cannot be probed is greyed out 
 | Remove from desktop | ✅ | ✅ | Private `CGSConfigureDisplayEnabled` |
 | Main display / mirror | ✅ | ✅ | Public CoreGraphics API |
 
+### Switching one display off
+
+A software disconnect, always reversible — and the reason it earns a line of its own: a MacBook on a stand still drives its own panel, and the usual way to stop that is to close the lid, which also closes off one of the surfaces the machine sheds heat through. Turning the panel off in software leaves the lid open. Settings can do it automatically whenever an external display connects, and a switched-off display keeps a row at the top of the panel, which is how it comes back.
+
+Cutting a monitor's power over DDC is a different thing entirely — irreversible on some monitors, and behind its own confirmation.
+
 ## The connection decides which controls exist
 
 `kCGDisplayIsAirPlay` and `kCGDisplayIsVirtualDevice` in `CoreDisplay_DisplayCreateInfoDictionary` identify displays with no physical link, definitively. AirPlay screens and DisplayLink-style virtual displays **have no I2C channel**, so PWE Lumen Bar skips DDC entirely for them — saving three failed retries (about a second) on every refresh — and says plainly that only software dimming is available.

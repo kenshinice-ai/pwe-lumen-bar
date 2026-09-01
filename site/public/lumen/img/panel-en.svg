@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="104 76 372 476" width="372" height="476" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="104 76 372 445" width="372" height="445" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif">
   <style>
     text { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif; }
     .h1 { font-size: 17px; font-weight: 700; fill: #1D1D1F; }
@@ -46,12 +46,12 @@
   <text x="455" y="151" text-anchor="end" class="val">72%</text>
 
   <!-- ===================== card 1 ===================== -->
-  <rect x="113" y="178" width="354" height="285" rx="13" fill="#EAEAEE"/>
+  <rect x="113" y="178" width="354" height="254" rx="13" fill="#EAEAEE"/>
 
   <!-- title row -->
   <rect x="126" y="196" width="14" height="10" rx="1.8" fill="none" stroke="#0A84FF" stroke-width="1.4"/>
   <rect x="130" y="207" width="6" height="1.6" rx="0.8" fill="#0A84FF"/>
-  <text x="147" y="205" class="tm">Philips 27B1U3900</text>
+  <text x="147" y="205" class="tm">Studio Display</text>
   <rect x="274" y="193" width="32" height="16" rx="8" fill="#D6E7FF"/>
   <text x="290" y="204" text-anchor="middle" class="badge">Main</text>
   <rect x="312" y="193" width="52" height="16" rx="8" fill="#D6E7FF"/>
@@ -87,17 +87,9 @@
   <rect x="152" y="280" width="142" height="4" rx="2" fill="#0A84FF"/>
   <circle cx="294" cy="282" r="7" fill="#FFFFFF" stroke="#C7C7CC"/>
   <text x="391" y="286" text-anchor="end" class="val">72%</text>
-  <text x="399" y="286" class="tt">DDC</text>
+  <text x="399" y="286" class="tt">System</text>
 
-  <!-- contrast -->
-  <circle cx="135" cy="313" r="5.4" fill="none" stroke="#6E6E73" stroke-width="1.3"/>
-  <path d="M 135 307.6 A 5.4 5.4 0 0 0 135 318.4 Z" fill="#6E6E73"/>
-  <rect x="152" y="311" width="197" height="4" rx="2" fill="#D8D8DC"/>
-  <rect x="152" y="311" width="118" height="4" rx="2" fill="#0A84FF"/>
-  <circle cx="270" cy="313" r="7" fill="#FFFFFF" stroke="#C7C7CC"/>
-  <text x="391" y="317" text-anchor="end" class="val">60%</text>
-  <text x="399" y="317" class="tt">Contrast</text>
-
+  <g transform="translate(0,-31)">
   <!-- warmth -->
   <rect x="132.4" y="336" width="5.2" height="11" rx="2.6" fill="none" stroke="#6E6E73" stroke-width="1.2"/>
   <circle cx="135" cy="348" r="3.6" fill="#6E6E73"/>
@@ -115,7 +107,7 @@
   <rect x="152" y="373" width="69" height="4" rx="2" fill="#0A84FF"/>
   <circle cx="221" cy="375" r="7" fill="#FFFFFF" stroke="#C7C7CC"/>
   <text x="391" y="379" text-anchor="end" class="val">35%</text>
-  <text x="399" y="379" class="tt">27B1U3900</text>
+  <text x="399" y="379" class="tt">Studio Display</text>
 
   <!-- resolution -->
   <text x="126" y="406" class="ts" style="font-size:9.5px">Reso-</text><text x="126" y="416" class="ts" style="font-size:9.5px">lution</text>
@@ -133,11 +125,13 @@
   <text x="347" y="443" text-anchor="middle" class="ts">180°</text>
   <text x="418" y="443" text-anchor="middle" class="ts">270°</text>
 
+  </g>
+  <g transform="translate(0,-31)">
   <!-- status bar -->
   <line x1="100" y1="476" x2="480" y2="476" stroke="#E3E3E6"/>
   <circle cx="120" cy="493" r="6" fill="none" stroke="#6E6E73" stroke-width="1.1"/>
   <text x="120" y="496.5" text-anchor="middle" style="font-size:9px" fill="#6E6E73">i</text>
-  <text x="134" y="497" class="ts">Matched 2 displays to the 27B1U3900's 60%</text>
+  <text x="134" y="497" class="ts">Matched 2 displays to the Studio Display's 60%</text>
   <circle cx="460" cy="493" r="6" fill="#C7C7CC"/>
   <g stroke="#FFFFFF" stroke-width="1.3"><line x1="457.5" y1="490.5" x2="462.5" y2="495.5"/><line x1="462.5" y1="490.5" x2="457.5" y2="495.5"/></g>
   <line x1="100" y1="510" x2="480" y2="510" stroke="#E3E3E6"/>
@@ -156,97 +150,5 @@
   </g>
   <circle cx="458" cy="529" r="9" fill="none" stroke="#B8B8BD" stroke-width="1"/>
 
-  <!-- ===================== card 2: limited capabilities ===================== -->
-  <text x="560" y="168" class="sec">The same card, on a display that cannot do as much</text>
-  <rect x="560" y="178" width="380" height="235" rx="13" fill="#EAEAEE"/>
-
-  <rect x="573" y="196" width="14" height="10" rx="1.8" fill="none" stroke="#0A84FF" stroke-width="1.4"/>
-  <rect x="577" y="207" width="6" height="1.6" rx="0.8" fill="#0A84FF"/>
-  <text x="594" y="205" class="tm">Living room TV</text>
-  <rect x="700" y="193" width="48" height="16" rx="8" fill="#D6E7FF"/>
-  <text x="724" y="204" text-anchor="middle" class="badge">AirPlay</text>
-  <text x="594" y="220" class="tt">1920 × 1080 · 60 Hz</text>
-  <g fill="#6E6E73">
-    <circle cx="912" cy="201" r="1.7"/><circle cx="918" cy="201" r="1.7"/><circle cx="924" cy="201" r="1.7"/>
   </g>
-  <circle cx="918" cy="201" r="9" fill="none" stroke="#B8B8BD" stroke-width="1"/>
-
-  <rect x="573" y="238" width="56" height="22" rx="6" fill="#FFFFFF" stroke="#D6D6DB"/>
-  <rect x="581" y="245" width="11" height="8" rx="2" fill="#6E6E73"/>
-  <circle cx="586.5" cy="249" r="2.4" fill="#FFFFFF"/>
-  <text x="596" y="253" class="ts" style="font-size:9.5px">Capture</text>
-  <rect x="637" y="238" width="56" height="22" rx="6" fill="#FFFFFF" stroke="#D6D6DB"/>
-  <path d="M 649 243.5 A 5.6 5.6 0 1 0 649 254.5 A 4.3 4.3 0 1 1 649 243.5 Z" fill="#6E6E73"/>
-  <text x="658" y="253" class="ts" style="font-size:9.5px">Turn off</text>
-  <rect x="701" y="238" width="75" height="22" rx="6" fill="#FFFFFF" stroke="#D6D6DB"/>
-  <circle cx="713" cy="249" r="5.6" fill="#6E6E73"/>
-  <g stroke="#FFFFFF" stroke-width="1.1"><line x1="710" y1="247.5" x2="716" y2="247.5"/><line x1="710" y1="250.5" x2="716" y2="250.5"/></g>
-  <text x="722" y="253" class="ts" style="font-size:9.5px">Match all</text>
-  <rect x="784" y="238" width="75" height="22" rx="6" fill="#FFFFFF" stroke="#D6D6DB"/>
-  <rect x="791" y="244" width="12" height="9" rx="1.6" fill="none" stroke="#6E6E73" stroke-width="1.2"/>
-  <path d="M 797 252 L 797 246 M 794.6 248.4 L 797 246 L 799.4 248.4" fill="none" stroke="#6E6E73" stroke-width="1.2"/>
-  <text x="809" y="253" class="ts" style="font-size:9.5px">Make main</text>
-
-  <circle cx="582" cy="282" r="3.6" fill="#6E6E73"/>
-  <g stroke="#6E6E73" stroke-width="1.2" stroke-linecap="round">
-    <line x1="582" y1="275" x2="582" y2="276.8"/><line x1="582" y1="287.2" x2="582" y2="289"/>
-    <line x1="575" y1="282" x2="576.8" y2="282"/><line x1="587.2" y1="282" x2="589" y2="282"/>
-  </g>
-  <rect x="599" y="280" width="197" height="4" rx="2" fill="#D8D8DC"/>
-  <rect x="599" y="280" width="128" height="4" rx="2" fill="#0A84FF"/>
-  <circle cx="727" cy="282" r="7" fill="#FFFFFF" stroke="#C7C7CC"/>
-  <text x="838" y="286" text-anchor="end" class="val">65%</text>
-  <text x="846" y="286" class="tt">Software</text>
-  <text x="599" y="303" style="font-size:10px" fill="#A1A1A6">Software dimming — the backlight is untouched</text>
-
-  <rect x="579.4" y="323" width="5.2" height="11" rx="2.6" fill="none" stroke="#6E6E73" stroke-width="1.2"/>
-  <circle cx="582" cy="335" r="3.6" fill="#6E6E73"/>
-  <rect x="599" y="329" width="197" height="4" rx="2" fill="#D8D8DC"/>
-  <rect x="599" y="329" width="0" height="4" rx="2" fill="#0A84FF"/>
-  <circle cx="599" cy="331" r="7" fill="#FFFFFF" stroke="#C7C7CC"/>
-  <text x="838" y="335" text-anchor="end" class="val">0%</text>
-  <text x="846" y="335" class="tt">Warmth</text>
-
-  <text x="573" y="360" class="ts" style="font-size:9.5px">Reso-</text><text x="573" y="370" class="ts" style="font-size:9.5px">lution</text>
-  <text x="615" y="364" class="t">1920 × 1080  1x</text>
-  <path d="M 720 361 L 724 365 L 728 361" fill="none" stroke="#6E6E73" stroke-width="1.3"/>
-  <text x="851" y="364" class="t">60 Hz</text>
-  <path d="M 889 361 L 893 365 L 897 361" fill="none" stroke="#6E6E73" stroke-width="1.3"/>
-
-  <text x="573" y="391" class="ts" style="font-size:9.5px">Orien-</text><text x="573" y="401" class="ts" style="font-size:9.5px">tation</text>
-  <text x="615" y="395" style="font-size:11px" fill="#A1A1A6">This display refuses rotation requests</text>
-
-  <!-- ===================== callouts ===================== -->
-  <circle cx="506" cy="96" r="10" fill="#0A84FF"/><text x="506" y="100" text-anchor="middle" class="num">1</text>
-  <path class="lead" d="M 495 96 L 478 96"/>
-  <circle cx="60" cy="147" r="10" fill="#0A84FF"/><text x="60" y="151" text-anchor="middle" class="num">2</text>
-  <path class="lead" d="M 71 147 L 96 147"/>
-  <circle cx="60" cy="205" r="10" fill="#0A84FF"/><text x="60" y="209" text-anchor="middle" class="num">3</text>
-  <path class="lead" d="M 71 205 L 96 205"/>
-  <circle cx="506" cy="201" r="10" fill="#0A84FF"/><text x="506" y="205" text-anchor="middle" class="num">4</text>
-  <path class="lead" d="M 495 201 L 478 201"/>
-  <circle cx="60" cy="249" r="10" fill="#0A84FF"/><text x="60" y="253" text-anchor="middle" class="num">5</text>
-  <path class="lead" d="M 71 249 L 96 249"/>
-  <circle cx="60" cy="282" r="10" fill="#0A84FF"/><text x="60" y="286" text-anchor="middle" class="num">6</text>
-  <path class="lead" d="M 71 282 L 96 282"/>
-  <circle cx="60" cy="313" r="10" fill="#0A84FF"/><text x="60" y="317" text-anchor="middle" class="num">7</text>
-  <path class="lead" d="M 71 313 L 96 313"/>
-  <circle cx="60" cy="344" r="10" fill="#0A84FF"/><text x="60" y="348" text-anchor="middle" class="num">8</text>
-  <path class="lead" d="M 71 344 L 96 344"/>
-  <circle cx="60" cy="375" r="10" fill="#0A84FF"/><text x="60" y="379" text-anchor="middle" class="num">9</text>
-  <path class="lead" d="M 71 375 L 96 375"/>
-  <circle cx="60" cy="406" r="10" fill="#0A84FF"/><text x="60" y="410" text-anchor="middle" class="num">10</text>
-  <path class="lead" d="M 71 406 L 96 406"/>
-  <circle cx="60" cy="439" r="10" fill="#0A84FF"/><text x="60" y="443" text-anchor="middle" class="num">11</text>
-  <path class="lead" d="M 71 439 L 96 439"/>
-  <circle cx="60" cy="493" r="10" fill="#0A84FF"/><text x="60" y="497" text-anchor="middle" class="num">12</text>
-  <path class="lead" d="M 71 493 L 96 493"/>
-  <circle cx="60" cy="529" r="10" fill="#0A84FF"/><text x="60" y="533" text-anchor="middle" class="num">13</text>
-  <path class="lead" d="M 71 529 L 96 529"/>
-  <circle cx="966" cy="201" r="10" fill="#0A84FF"/><text x="966" y="205" text-anchor="middle" class="num">14</text>
-  <path class="lead" d="M 955 201 L 938 201"/>
-  <circle cx="966" cy="291" r="10" fill="#0A84FF"/><text x="966" y="295" text-anchor="middle" class="num">15</text>
-  <path class="lead" d="M 955 291 L 938 291"/>
-  <circle cx="966" cy="391" r="10" fill="#0A84FF"/><text x="966" y="395" text-anchor="middle" class="num">16</text>
-  <path class="lead" d="M 955 391 L 938 391"/>
 </svg>

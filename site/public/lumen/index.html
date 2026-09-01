@@ -62,11 +62,11 @@
         <h1 data-lang="zh">每块屏，单独控制。</h1>
         <p class="dek" data-lang="en">One card per screen: brightness, contrast, warmth, volume,
           resolution, orientation, input source, power and screenshots — the MacBook's own panel
-          included. What a given monitor cannot do is greyed out with the reason, rather than
-          quietly doing nothing.</p>
+          included. What a monitor cannot do is greyed out with the reason, or not drawn at
+          all — never a control that quietly does nothing.</p>
         <p class="dek" data-lang="zh">一块屏一张卡片：亮度、对比度、色温、音量、分辨率、方向、
-          输入源、开关、截图 —— 包括 MacBook 自己那块屏。某台显示器做不到的事会灰掉并写明原因，
-          而不是按下去毫无反应。</p>
+          输入源、开关、截图 —— 包括 MacBook 自己那块屏。显示器做不到的事，要么灰掉并写明原因，
+          要么根本不画出来 —— 绝不会是一个按下去没反应的控件。</p>
 
         <div class="hero-cta">
           <a class="cta amber" href="/lumen/download/PWE-Lumen-Bar.dmg" data-lang="en">Download for macOS</a>
@@ -119,6 +119,30 @@
     所以音量键只在一种情况下被接管：系统输出<em>正是</em>某台外接显示器自己的音频端点 ——
     这恰好是 DisplayPort 音频常常不暴露任何音量控制、而 DDC 可用的那一档。
     其余一切原样交还 macOS，连原生 HUD 和反馈音都保留。</p>
+
+  <h2 data-lang="en">Switch a screen off without closing the lid</h2>
+  <h2 data-lang="zh">不合盖子，也能关掉一块屏</h2>
+  <p data-lang="en">A MacBook living on a stand still drives its own panel — backlight on, pixels
+    rendered, for a screen nobody is looking at. The usual way to stop that is to shut the lid, which
+    also closes off one of the surfaces the machine sheds heat through.</p>
+  <p data-lang="zh">挂在支架上的 MacBook 仍然在驱动自己那块屏 —— 背光亮着、画面照渲染，
+    而没有人在看它。要它停下来，常规做法是合盖，可那同时也封掉了机器散热的一个面。</p>
+  <p data-lang="en"><strong>Turn off</strong> takes a display out of the desktop in software instead.
+    Windows move off it, the panel goes dark, and it comes back the moment you ask — no cable, no lid,
+    nothing physical to undo. So the lid stays open for the airflow while the panel stops being driven,
+    and you are no longer choosing between clamshell and a screen you do not use. There is a switch for
+    doing it automatically whenever an external display connects.</p>
+  <p data-lang="zh"><strong>「熄屏」</strong>是用软件把一块屏移出桌面：窗口挪走，面板熄灭，
+    随时一句话就能回来 —— 不用拔线、不用合盖、没有任何物理动作要撤销。于是盖子开着保持风道，
+    同时那块屏不再被驱动，你不必再在「合盖」和「留着一块用不上的屏」之间二选一。
+    设置里还有一个开关：接上外接屏时自动把内建屏收起来。</p>
+  <p data-lang="en">It is a software disconnect and always reversible. The display that was switched off
+    keeps a row of its own at the top of the panel — that row is how it comes back, and it is why
+    switching a screen off can never lose it. Cutting a monitor's power over DDC is a different,
+    irreversible thing, and it lives behind its own confirmation.</p>
+  <p data-lang="zh">它走的是软件断开，永远可逆。被熄掉的那块屏会在面板顶部留下自己的一行 ——
+    那一行就是它回来的入口，也是为什么「熄屏」不可能把一块屏弄丢。
+    通过 DDC 给显示器断电是另一回事，不可逆，藏在它自己的确认弹窗后面。</p>
 
   <h2 data-lang="en">What it will not pretend to do</h2>
   <h2 data-lang="zh">它不会假装能做的事</h2>

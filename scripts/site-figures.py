@@ -29,12 +29,37 @@ COPY = [
     "guide-actions-menu.svg", "guide-actions-menu-en.svg",
 ]
 
-# The panel alone, lifted out of the annotated sheet for the hero.
-# (source, output, viewBox)
-CROP = [
-    ("guide-menu.svg", "panel.svg", "104 76 372 476"),
-    ("guide-menu-en.svg", "panel-en.svg", "104 76 372 476"),
+# The hero: the panel alone, on a Studio Display.
+#
+# It is built from the guide's own sheet rather than drawn again, so the hero and
+# the manual cannot drift apart. Three things change on the way:
+#
+#   · the display becomes a Studio Display — an Apple panel is what most people
+#     picture on a Mac desk, and it is what this machine actually drives;
+#   · the contrast row goes, because an Apple display answers no DDC and the app
+#     therefore does not draw that row at all. Renaming without removing it would
+#     be a screenshot of something the software never shows;
+#   · everything below closes the gap, and the popover gets 31px shorter.
+#
+# The annotated sheet keeps its third-party monitor: that figure has to teach
+# what DDC gives you, and the callout numbering belongs to it.
+HERO = [
+    ("guide-menu.svg", "panel.svg", {
+        "Philips 27B1U3900": "Studio Display",
+        ">DDC<": ">系统<",
+        ">27B1U3900<": ">Studio Display<",
+        "已把 2 块屏对齐到 27B1U3900 的 60%": "已把 2 块屏对齐到 Studio Display 的 60%",
+    }),
+    ("guide-menu-en.svg", "panel-en.svg", {
+        "Philips 27B1U3900": "Studio Display",
+        ">DDC<": ">System<",
+        ">27B1U3900<": ">Studio Display<",
+        "Matched 2 displays to the 27B1U3900's 60%": "Matched 2 displays to the Studio Display's 60%",
+    }),
 ]
+
+SHIFT = 31          # the height the contrast row occupied
+CARD_HEIGHT = 285   # of card 1, before the row was removed
 
 OUT.mkdir(parents=True, exist_ok=True)
 
@@ -45,8 +70,39 @@ for name in COPY:
     (OUT / name).write_text(source.read_text())
 print(f"  copied {len(COPY)} figures")
 
-for name, out_name, box in CROP:
+def section(text: str, start: str, end: str) -> tuple:
+    """The slice between two of the drawing's own comments."""
+    a, b = text.index(start), text.index(end)
+    return a, b
+
+
+for name, out_name, swaps in HERO:
     text = (IMAGES / name).read_text()
+
+    for old, new in swaps.items():
+        if old not in text:
+            sys.exit(f"{name}: nothing to swap for {old!r}")
+        text = text.replace(old, new)
+
+    # Drop the contrast row, and pull the four rows under it up into its place.
+    a, b = section(text, "  <!-- contrast -->", "  <!-- warmth -->")
+    text = text[:a] + text[b:]
+    a, b = section(text, "  <!-- warmth -->", "  <!-- status bar -->")
+    text = (text[:a] + f'  <g transform="translate(0,-{SHIFT})">\n' + text[a:b]
+            + "  </g>\n" + text[b:])
+
+    # The status bar and the footer come up with them, and the card and popover
+    # lose the same height.
+    a, b = section(text, "  <!-- status bar -->", "  <!-- ===================== card 2")
+    text = (text[:a] + f'  <g transform="translate(0,-{SHIFT})">\n' + text[a:b]
+            + "  </g>\n" + text[b:])
+    text = text.replace(f'<rect x="113" y="178" width="354" height="{CARD_HEIGHT}" rx="13"',
+                        f'<rect x="113" y="178" width="354" height="{CARD_HEIGHT - SHIFT}" rx="13"')
+
+    # Card 2 and the callouts belong to the manual, not to a hero.
+    text = text[:text.index("  <!-- ===================== card 2")] + "</svg>\n"
+
+    box = f"104 76 372 {476 - SHIFT}"
     width, height = box.split()[2:]
     text, count = re.subn(r'viewBox="[^"]*"( width="[^"]*")?( height="[^"]*")?',
                           f'viewBox="{box}" width="{width}" height="{height}"',

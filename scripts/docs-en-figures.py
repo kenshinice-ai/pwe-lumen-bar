@@ -34,6 +34,7 @@ IMAGES = ROOT / "docs" / "images"
 # Labels the interface itself uses, so the mockups cannot drift from the app.
 UI = {
     "全部": "All",
+    "系统": "System",
     "主屏": "Main",
     "外接": "External",
     "截图": "Capture",
