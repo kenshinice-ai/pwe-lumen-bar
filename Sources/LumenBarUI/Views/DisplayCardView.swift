@@ -41,9 +41,10 @@ struct DisplayCardView: View {
                     Text(card.info.name)
                         .font(.callout.weight(.medium))
                         .lineLimit(1)
+                        .layoutPriority(1)
                         .help(card.info.name)
                     if card.info.isMain {
-                        badge(L10n.t("主屏 · 菜单栏在此", "Main · menu bar here"))
+                        badge(L10n.t("主屏", "Main"))
                             .help(L10n.t("菜单栏和 Dock 在这块屏上",
                                          "The menu bar and Dock live on this display"))
                     }
@@ -148,8 +149,12 @@ struct DisplayCardView: View {
     private func badge(_ text: String) -> some View {
         Text(text)
             .font(.caption2)
-            .padding(.horizontal, 5)
-            .padding(.vertical, 1)
+            // A badge that wraps is worse than one that is slightly too wide:
+            // two lines of badge push the whole row apart.
+            .lineLimit(1)
+            .fixedSize()
+            .padding(.horizontal, 6)
+            .padding(.vertical, 2)
             .background(.tint.opacity(0.18), in: Capsule())
     }
 

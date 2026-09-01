@@ -16,7 +16,7 @@ public struct MenuRootView: View {
             Divider()
             footer
         }
-        .frame(width: 377)
+        .frame(width: 400)
         // Language changes rewrite every label in the tree.
         .id(controller.languageRevision)
     }

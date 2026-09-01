@@ -29,9 +29,9 @@
   <circle cx="90" cy="84" r="5.5" fill="#FF5F57"/>
   <circle cx="108" cy="84" r="5.5" fill="#FEBC2E"/>
   <circle cx="126" cy="84" r="5.5" fill="#28C840"/>
-  <text x="300" y="88" text-anchor="middle" class="ts">Lumen 设置</text>
+  <text x="300" y="88" text-anchor="middle" class="ts">PWE Lumen Bar 设置</text>
 
-  <!-- Lumen Pro -->
+  <!-- PWE Lumen Bar Pro -->
   <text x="90" y="124" class="sec">LUMEN PRO</text>
   <rect x="90" y="132" width="420" height="80" rx="8" fill="#FFFFFF" stroke="#E3E3E6"/>
   <path d="M 106 147 L 110 152 L 118 143" fill="none" stroke="#34C759" stroke-width="2" stroke-linecap="round"/>

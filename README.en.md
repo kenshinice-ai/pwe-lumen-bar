@@ -1,6 +1,22 @@
+<div align="center">
+
+<img src="docs/images/icon.png" width="120" alt="PWE Lumen Bar">
+
 # PWE Lumen Bar
 
+**A macOS menu bar display controller for Apple Silicon.**
+
+[![macOS](https://img.shields.io/badge/macOS-26%2B-0E1729?style=flat-square)](#)
+[![Apple Silicon](https://img.shields.io/badge/Apple%20Silicon-M1–M5-A16207?style=flat-square)](#)
+[![Licence](https://img.shields.io/badge/licence-proprietary-0E1729?style=flat-square)](LICENSE)
+
 English · [中文](README.md)
+
+*A PARADISE PRODUCTION*
+
+</div>
+
+---
 
 A macOS menu bar display controller. Per-display brightness, contrast, warmth, volume, resolution / HiDPI, orientation, input source, colour profile, power and screenshots — the MacBook's own panel included.
 
@@ -14,12 +30,17 @@ A macOS menu bar display controller. Per-display brightness, contrast, warmth, v
 > Resolution goes through the private CGS mode table, rotation through SkyLight, DDC through `IOAVService` —
 > all three are Apple Silicon paths. The Intel equivalents have been removed from the code and are not supported.
 
+<p align="center">
+  <img src="docs/images/guide-menu.svg" width="820" alt="The panel">
+</p>
+
 ## Getting started
 
 ```bash
-./scripts/build-app.sh
-cp -R build/PWE Lumen Bar.app /Applications/ && open /Applications/PWE Lumen Bar.app
+./scripts/build-app.sh --install
 ```
+
+That builds, signs with the Developer ID certificate if one is in the keychain, copies the app into `/Applications` and launches it. `./scripts/package.sh --notarize` is the one that produces a disk image to send someone.
 
 Click the display icon in the menu bar to open the panel. **Scroll on the icon** to change the brightness of whatever display the pointer is on without opening anything; **right-click** to switch presets. The interface follows the system language and can be forced to Chinese or English in Settings.
 
@@ -181,3 +202,9 @@ The icon is vector: `scripts/make-icons.swift` runs one Core Graphics drawing ro
 ## One thing deliberately not built
 
 **Virtual / dummy displays.** `CGVirtualDisplayCreate` **does not exist** on macOS 27 — the symbol has been renamed or moved to another framework. No promises until that is understood.
+
+---
+
+<div align="center">
+<sub>PWE Group Pty Ltd · A PARADISE PRODUCTION</sub>
+</div>

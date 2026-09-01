@@ -27,9 +27,7 @@ PWE Lumen Bar 是一个 macOS 菜单栏显示器控制器：**一块屏一张卡
 ## 1. 安装与第一次运行
 
 ```bash
-./scripts/build-app.sh                 # → build/PWE Lumen Bar.app（顺带构建 pwelumenctl）
-cp -R build/PWE Lumen Bar.app /Applications/
-open /Applications/PWE Lumen Bar.app
+./scripts/build-app.sh --install       # 构建、签名、装进 /Applications 并启动（顺带构建 pwelumenctl）
 ```
 
 PWE Lumen Bar 是 `LSUIElement` 应用，**不进 Dock，也没有窗口**。启动成功的唯一标志是菜单栏里多了一个图标（两块重叠的显示器）。
@@ -436,3 +434,7 @@ macOS 的辅助功能授权绑定**代码签名哈希**，而目前的 `PWE Lume
 ### 旋转失败
 
 方向那一行会写「这块屏拒绝了旋转请求」。`pwelumenctl rotate-probe <屏>` 可以只验证这条通道、不真的转屏幕。
+
+---
+
+<sub>PWE Group Pty Ltd · 天域文创出品</sub>

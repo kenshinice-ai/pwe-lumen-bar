@@ -75,7 +75,7 @@
   <!-- message HUD -->
   <text x="640" y="72" class="sec">消息 HUD</text>
   <rect x="640" y="80" width="200" height="200" rx="20" fill="#F2F2F5" stroke="#D2D2D7"/>
-  <text x="740" y="114" text-anchor="middle" class="tt" fill="#6E6E73" style="font-weight:600">Lumen · 自动化命令</text>
+  <text x="740" y="114" text-anchor="middle" class="tt" fill="#6E6E73" style="font-weight:600">PWE Lumen Bar · 自动化命令</text>
   <path d="M 740 132 L 768 180 L 712 180 Z" fill="#1D1D1F"/>
   <rect x="738" y="148" width="4" height="16" rx="2" fill="#F2F2F5"/>
   <circle cx="740" cy="172" r="2.4" fill="#F2F2F5"/>

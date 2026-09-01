@@ -55,6 +55,6 @@
   <text x="40" y="390" class="ts">The third option needs the monitor to advertise that HiDPI mode. Many never do, so macOS stretches a non-native resolution instead — resampling every pixel, which is the blur people notice.</text>
 
   <rect x="24" y="410" width="952" height="42" rx="9" fill="#eff6ff" stroke="#93c5fd"/>
-  <text x="40" y="430" class="t"><tspan font-weight="650">Lumen 的强制 HiDPI：</tspan>把缺失的 2 倍模式写进系统的显示器覆盖文件，重启后第三档就出现了。需要管理员密码，随时可移除。</text>
+  <text x="40" y="430" class="t"><tspan font-weight="650">PWE Lumen Bar 的强制 HiDPI：</tspan>把缺失的 2 倍模式写进系统的显示器覆盖文件，重启后第三档就出现了。需要管理员密码，随时可移除。</text>
   <text x="40" y="446" class="ts">Forced HiDPI writes the missing 2× modes into the system's display override file. Needs an admin password, removable at any time.</text>
 </svg>

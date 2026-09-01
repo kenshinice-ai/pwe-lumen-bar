@@ -1,26 +1,34 @@
-<p align="center">
-  <img src="docs/images/icon.png" width="128" alt="PWE Lumen Bar">
-</p>
+<div align="center">
 
-<h1 align="center">PWE Lumen Bar</h1>
+<img src="docs/images/icon.png" width="120" alt="PWE Lumen Bar">
 
-<p align="center">
-  <a href="README.en.md">English</a> · 中文<br>
-  <sub>macOS 菜单栏显示器控制器 · 仅支持 Apple Silicon（M 系列）· macOS 26 / 27</sub>
-</p>
+# PWE Lumen Bar
+
+**macOS 菜单栏显示器控制器 · 仅支持 Apple Silicon（M 系列）**
+
+[![macOS](https://img.shields.io/badge/macOS-26%2B-0E1729?style=flat-square)](#)
+[![Apple Silicon](https://img.shields.io/badge/Apple%20Silicon-M1–M5-A16207?style=flat-square)](#)
+[![授权](https://img.shields.io/badge/授权-商业软件-0E1729?style=flat-square)](LICENSE)
+
+[English](README.en.md) · 中文
+
+*天域文创出品*
+
+</div>
 
 ---
 
 一块屏一张卡片。亮度、对比度、色温、音量、分辨率、方向、输入源、开关、截图 —— 每块屏单独控制，包括 MacBook 自己的屏幕。
 
 <p align="center">
-  <img src="docs/images/menu.png" width="420" alt="PWE Lumen Bar 菜单">
+  <img src="docs/images/guide-menu.svg" width="820" alt="PWE Lumen Bar 菜单">
 </p>
 
 ```bash
-./scripts/build-app.sh
-cp -R build/PWE Lumen Bar.app /Applications/ && open /Applications/PWE Lumen Bar.app
+./scripts/build-app.sh --install
 ```
+
+这一条会构建、用钥匙串里的 Developer ID 证书签名、复制进 `/Applications` 并启动它。要打一个能发给别人的磁盘映像，用 `./scripts/package.sh --notarize`。
 
 点菜单栏图标打开面板；**在图标上滚轮**直接调节光标所在屏的亮度，不用开面板；**右键**切换场景。
 
@@ -273,3 +281,9 @@ pwelumenctl compat
 ## 交接
 
 完整交接文档见 [HANDOVER.md](HANDOVER.md)：API 陷阱、系统性缺陷的成因、Pro 授权机制、未决事项、安全约定。
+
+---
+
+<div align="center">
+<sub>PWE Group Pty Ltd · 天域文创出品</sub>
+</div>

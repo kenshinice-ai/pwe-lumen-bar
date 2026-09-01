@@ -59,7 +59,7 @@
   <line x1="570" y1="315" x2="800" y2="315" stroke="#E3E3E6"/>
   <text x="586" y="335" class="mi">使用提示…</text>
   <text x="586" y="358" class="mi">设置…</text>
-  <text x="586" y="381" class="mi">退出 Lumen</text>
+  <text x="586" y="381" class="mi">退出 PWE Lumen Bar</text>
 
   <line x1="810" y1="107" x2="818" y2="107" stroke="#D2D2D7"/>
   <rect x="818" y="90" width="176" height="120" rx="8" fill="#FFFFFF" stroke="#D2D2D7"/>

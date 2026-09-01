@@ -35,9 +35,7 @@ is present on *your* machine is something you can check yourself
 ## 1. Installing and first run
 
 ```bash
-./scripts/build-app.sh                 # → build/PWE Lumen Bar.app (builds pwelumenctl too)
-cp -R build/PWE Lumen Bar.app /Applications/
-open /Applications/PWE Lumen Bar.app
+./scripts/build-app.sh --install       # build, sign, copy into /Applications and launch (builds pwelumenctl too)
 ```
 
 PWE Lumen Bar is an `LSUIElement` app: **no Dock icon and no window**. The only sign it
@@ -643,3 +641,7 @@ PWE Lumen Bar switched off).
 
 The orientation row says "this display refused the rotation request".
 `pwelumenctl rotate-probe <disp>` tests that channel without turning the screen.
+
+---
+
+<sub>PWE Group Pty Ltd · A PARADISE PRODUCTION</sub>
