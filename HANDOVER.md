@@ -4,6 +4,8 @@
 > Last updated 1 Sep 2026 · ~8,600 lines of Swift · installed at `/Applications/PWE Lumen Bar.app`
 >
 > 仓库 / Repository：<https://github.com/kenshinice-ai/pwe-lumen-bar>（private）
+> 产品页 / Product page：<https://pwestudio.site/lumen> · 使用指南 `/lumen/guide`
+> 版本 1.0.0，已签名公证并上线；Pro 一次性 **A$9.99**，应用本身免费
 > 品牌与命名的全部决定见 [BRANDING.md](BRANDING.md) / every branding and naming decision is in BRANDING.md
 
 ---
@@ -30,11 +32,25 @@ A macOS menu bar display controller. **Apple Silicon (M-series) on macOS 27 only
 
 ## 二、已在真机验证过的硬件 / Hardware actually tested
 
+两台机器，两个芯片世代，两个系统大版本 / Two machines, two chip generations, two major OS versions:
+
+| 机器 | 系统 | 自检 |
+|---|---|---|
+| MacBook Air **M1** | macOS 27.0 (26A5425a) | 全绿 |
+| MacBook Pro Mac16,5 **M4 Max** | macOS **26.6.2** (25G83) | 全绿，16 项 |
+
+M4 Max 那台是 2026-09-01 补测的，它同时验证了声明里的 macOS 26 地板 —— 在那之前 26 是「支持但没实机跑过」。
+
 | 显示器 | 通道 | 结论 |
 |---|---|---|
 | MacBook Air M1 内建屏 | `DisplayServices` | 亮度、旋转、8 个模式（5 个 HiDPI） |
 | Apple Studio Display 5K | `DisplayServices` | **完全不响应 DDC** —— Apple 屏用自有协议 |
 | Philips 27B1U3900 4K | DDC/CI | 亮度 `0x10`、对比度 `0x12`、音量 `0x62`、capabilities `0xF3`、EDID 全部通过 |
+| **两台** Studio Display 同时接在 M4 Max 上 | `DisplayServices` | 各 26 个模式（10 个 HiDPI）、亮度可读写、旋转**探测为支持**（未实际转）、两块屏身份互不串（`key=1552-44602-…` 后段序列号不同） |
+
+**两台屏同时在线这件事本身是新证据。** `pwelumenctl diag` 报「external DDC channels: 2」：
+两条 `IOAVService` 通道各自绑定成功、互不覆盖，而两端都不应答 VCP —— 与 Apple 屏用自有协议一致。
+所以**多通道的绑定与隔离已经跑过**，仍然没跑过的是「两台**第三方**显示器同时收发 DDC」。
 
 两套协议并存的架构成立：能力按屏运行时探测，探不到就在界面上灰掉并说明原因。
 
@@ -119,7 +135,12 @@ Worth calling out because neither produced an error — both just made features 
 - 授权邮件里的一键激活：`pwelumen://activate?email=…&key=…`。密钥是应用自己校验的签名，所以链接不比手动粘贴更可信 —— 错的密钥只是验不过。已实测：签发的密钥能通过应用内嵌公钥校验，链接能激活运行中的构建。
 - 目前只锁一个功能：强制开启 HiDPI。
 - **离线密钥无法限制机器数**（BetterDisplay 用 Paddle 的激活服务器做到 2 台）。要限制就需要一个授权服务器，代价是失去离线可用性。
-- **上不了 Mac App Store**：私有 API、不能沙盒、辅助功能事件拦截、向 `/Library` 写管理员文件 —— 每条都是拒绝项。只能直接分发 + 许可证密钥。定价与支付方案**用户已明确搁置**。
+- **上不了 Mac App Store**：私有 API、不能沙盒、辅助功能事件拦截、向 `/Library` 写管理员文件 —— 每条都是拒绝项。只能直接分发 + 许可证密钥。
+- **定价：Pro 一次性 A$9.99**（2026-09-01 定），应用本身免费、无试用期。写法跟随家族惯例
+  （Loan Bar 用 `A$58` / `A$188`）。改币种要同时改三处：产品页、`tools/templates/customer-email*.txt`、
+  `tools/config.sh`。
+- 买法是预填邮件（产品页上的按钮），收到后跑 `./tools/issue.sh --email …`。没有支付网关，
+  没有订阅 —— 这是有意的：一次性 A$9.99 的东西，接一套支付系统的成本比它自己还贵。
 
 ---
 
@@ -131,7 +152,11 @@ Worth calling out because neither produced an error — both just made features 
    代码签名哈希上 —— ad-hoc 每次重建都会静默作废它。现在签名跨构建稳定，授权不会再掉。
 2. **媒体键接管仍未在真机验证**。死锁 bug 已修（回调本就在主线程，却又
    `DispatchQueue.main.sync` 等自己）。签名问题已经排除，现在只差**按一次 F1**。
-3. **DDC 多通道配对未测** —— 需要同时接两台第三方显示器。
+   注意 M4 Max 那台目前接的是两台 Studio Display —— 它们的音量走 USB 音频端点，
+   有音量控制，所以按 `AudioEngine.displayOwningOutput` 的规则**音量键会交还 macOS**；
+   要测「接管」那一支，得接回那台 Philips。
+3. **DDC 多通道配对仍未测** —— 两条通道的绑定与隔离已经在 M4 Max + 两台 Studio Display 上跑过，
+   但两端都不应答 VCP。真正没验证的是「两台**第三方**显示器同时收发 DDC」，需要两台非 Apple 屏。
 4. **`Colorimetry` / `PixelEncoding` 枚举含义未知**。IORegistry 以裸整数暴露，无公开文档。当前只报告能确定的（RGB=0、位深、动态范围），其余按原始值展示 —— **不要凭猜测给它们贴标签**。
 5. 🔴 **定价与售卖路径**未定（用户明确搁置）。`tools/config.sh` 的 `DOWNLOAD_URL` 是空的，
    授权邮件会退回「安装包随邮件附上」；产品页的 Pro 段落没有价格，只留了联系方式和一处
@@ -195,6 +220,8 @@ PWE Lumen Bar 自己的 `⌃⌥←→` 保持按光标走 —— 那是它字面
 ## 系统版本：怎么在没有那台机器的情况下负责任 / Claiming version support you cannot test
 
 包按 **macOS 14.0** 编译（`Package.swift` 的 `.macOS(.v14)`），bundle 声明 **26.0**。这不是矛盾，是分工：低地板让任何高于 14 的 API 在**编译期**就被挡住（代码里没有一个 `#available`，这条不变量是被编译器保证的），声明的地板是实际推理过的最老系统。
+
+**2026-09-01 起，声明的那个地板不再只是推理**：M4 Max 那台跑的就是 macOS 26.6.2，16 项自检全绿。
 
 会随系统变的全是私有接口，一律 `dlsym` 运行时解析。因此支持性不靠版本号断言，靠自检：
 

@@ -247,6 +247,9 @@ PWE Lumen Bar 是 `LSUIElement` 应用，**不进 Dock，也没有窗口**。启
 
 日常要用的功能全部免费，没有试用期，也不会到期。Pro 只锁一件事，也是最难的一件：**让外接屏的文字和内建屏一样锐利**。
 
+价格是一次性 **A$9.99**，登记在购买邮箱名下，离线校验，你自己用的每一台 Mac 都能激活。
+买法在 [pwestudio.site/lumen](https://pwestudio.site/lumen) —— 点「购买授权」，是一封预填好的邮件。
+
 先看这张图，它解释了问题本身：
 
 <p align="center">

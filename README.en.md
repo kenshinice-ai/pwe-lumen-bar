@@ -42,6 +42,8 @@ A macOS menu bar display controller. Per-display brightness, contrast, warmth, v
 
 That builds, signs with the Developer ID certificate if one is in the keychain, copies the app into `/Applications` and launches it. `./scripts/package.sh --notarize` is the one that produces a disk image to send someone.
 
+If you would rather not build it, [**pwestudio.site/lumen**](https://pwestudio.site/lumen) carries a signed, notarised disk image and a [guide](https://pwestudio.site/lumen/guide). **The app is free, with no trial period**; Pro is **A$9.99 once** and unlocks one thing — forced HiDPI.
+
 Click the display icon in the menu bar to open the panel. **Scroll on the icon** to change the brightness of whatever display the pointer is on without opening anything; **right-click** to switch presets. The interface follows the system language and can be forced to Chinese or English in Settings.
 
 **Two switches worth turning on** (both in Settings, both off by default):
@@ -170,7 +172,16 @@ The icon is vector: `scripts/make-icons.swift` runs one Core Graphics drawing ro
 
 ## Verified / not verified
 
-**Verified on this M1 MacBook Air, macOS 27.0**: display enumeration, HiDPI mode enumeration, resolution switching and revert, `DisplayServices` brightness read/write, CoreAudio volume read/write, rotation capability probing, soft-disconnect symbol availability, global shortcut registration (6/6, no conflicts), per-display settings memory, gamma composition of warmth and dimming (verified by reading the table back), per-display capture at 2880×1800, full preset round-trip, the URL scheme, and colour profile enumeration.
+**Verified on two machines**, a chip generation and a major OS version apart:
+
+| Machine | System | Self-check |
+|---|---|---|
+| MacBook Air **M1** | macOS 27.0 (26A5425a) | all green |
+| MacBook Pro Mac16,5 **M4 Max** | macOS **26.6.2** (25G83) | all green, 16 checks |
+
+The M4 Max run on 1 September 2026 is what turned the declared macOS 26 floor from a reasoned claim into a tested one.
+
+**Verified on the M1 MacBook Air, macOS 27.0**: display enumeration, HiDPI mode enumeration, resolution switching and revert, `DisplayServices` brightness read/write, CoreAudio volume read/write, rotation capability probing, soft-disconnect symbol availability, global shortcut registration (6/6, no conflicts), per-display settings memory, gamma composition of warmth and dimming (verified by reading the table back), per-display capture at 2880×1800, full preset round-trip, the URL scheme, and colour profile enumeration.
 
 **External display results** (Apple Studio Display 5K, 1 September 2026):
 
@@ -184,7 +195,18 @@ The icon is vector: `scripts/make-icons.swift` runs one Core Graphics drawing ro
 | `kDisplayTransportType` | wired external = **1** (built-in = 0) |
 | DDC/CI | ❌ the Studio Display answers no VCP at all — Apple displays use their own protocol |
 
-**Still unverified**: the DDC chain on a third-party monitor (contrast `0x12`, volume `0x62`, input source `0x60`, backlight off `0xD6`) and DDC multi-channel pairing. Both need a non-Apple display.
+**Two Studio Displays at once** (M4 Max, macOS 26.6.2, 1 September 2026):
+
+| Item | Result |
+|---|---|
+| Enumeration | ✅ 26 modes / 10 HiDPI each |
+| Identity | ✅ the two panels never cross — same vendor and model, different serial in the persistent key |
+| DDC channels | ✅ `external DDC channels: 2` — two `IOAVService` channels bound, neither overwriting the other |
+| DDC replies | ❌ neither answers a VCP, exactly as an Apple display should not |
+
+**The DDC chain on a third-party monitor** — contrast `0x12`, volume `0x62`, input source `0x60`, backlight off `0xD6` — is verified separately on a Philips 27B1U3900, along with `capabilities` `0xF3` and EDID over I²C `0x50`.
+
+**Still unverified**: two *third-party* monitors talking DDC at the same time. Binding and isolation across two channels is now exercised, but both ends of that test were Apple displays, which answer nothing. Also unverified: an actual press of F1 with the media keys taken over — the ownership rule itself is tested, and the ad-hoc signing problem that used to revoke the Accessibility grant on every rebuild is gone.
 
 ## Four bugs the external display exposed
 
@@ -195,7 +217,7 @@ The icon is vector: `scripts/make-icons.swift` runs one Core Graphics drawing ro
 
 ## Next
 
-- EDID override to force HiDPI on displays that report none (needs admin rights and a restart; behaviour on macOS 27 still unverified)
+- ~~EDID override to force HiDPI on displays that report none~~ — **shipped**, and it is the one Pro feature. It writes a display override into `/Library` behind the standard administrator prompt and takes effect after a restart.
 - Nits-normalised brightness across displays
 - Native App Intents for Shortcuts — SwiftPM cannot emit `Metadata.appintents`, which needs an Xcode project; the URL scheme covers the same ground today
 

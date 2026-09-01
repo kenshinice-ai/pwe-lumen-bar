@@ -30,6 +30,8 @@
 
 这一条会构建、用钥匙串里的 Developer ID 证书签名、复制进 `/Applications` 并启动它。要打一个能发给别人的磁盘映像，用 `./scripts/package.sh --notarize`。
 
+不想自己构建的话，[**pwestudio.site/lumen**](https://pwestudio.site/lumen) 上有签名公证过的安装包和[使用指南](https://pwestudio.site/lumen/guide)。**应用免费，没有试用期**；Pro 一次性 **A$9.99**，只解锁一件事 —— 强制开启 HiDPI。
+
 点菜单栏图标打开面板；**在图标上滚轮**直接调节光标所在屏的亮度，不用开面板；**右键**切换场景。
 
 ---
@@ -248,33 +250,36 @@ pwelumenctl compat
 ```
 
 ```
-✅  macOS                                 27.0.0 (26A5425a)
-✅  Apple Silicon                         Apple M1
-✅  CGSGetDisplayModeDescriptionOfLength  HiDPI mode list
-✅  SLSSetDisplayRotation                 rotation
-✅  IOAVServiceReadI2C                    DDC/CI
-✅  CGS mode table                        212-byte layout confirmed…
+✅  macOS                                   26.6.2 (25G83)
+✅  Apple Silicon                           Apple M4 Max
+✅  CGSGetDisplayModeDescriptionOfLength    HiDPI mode list
+✅  SLSSetDisplayRotation                   rotation
+✅  IOAVServiceReadI2C                      DDC/CI
+✅  CGS mode table                          212-byte layout confirmed; the window server lists 26 modes…
+
+All clear — every channel PWE Lumen Bar depends on is available on this machine.
 ```
 
 设置 › 系统里有同一份报告。CGS 模式表那一项尤其关键：那个结构体**第 184 字节存着自己的长度**，所以布局是自校验的 —— 读回来不是 212 就说明 Apple 动过结构，PWE Lumen Bar 直接退回公开 API（失去强制 HiDPI），而不是照着错位的偏移读垃圾。
 
-**26 与 27 用的是同一套私有接口和同一套 Apple Silicon 显示栈**，开发和验证在 27 上做，26 支持但没有实机跑过 —— `pwelumenctl compat` 五秒钟就能在你的机器上给出真实答案。Intel 机型不支持：DDC 走的 `IOAVService` 在 Intel Mac 上根本不存在，首次启动会明说一次。
+**26 与 27 用的是同一套私有接口和同一套 Apple Silicon 显示栈**，两个版本现在都在真机上跑过：27 在 M1 上，26.6.2 在 M4 Max 上，16 项自检全绿。你自己那台的答案，`pwelumenctl compat` 五秒钟就能给。Intel 机型不支持：DDC 走的 `IOAVService` 在 Intel Mac 上根本不存在，首次启动会明说一次。
 
 ## 已实测 / 未实测
 
-**已在真机验证**（M1 MacBook Air / macOS 27，构建 26A5425a）：
+**已在真机验证**，两台机器：M1 MacBook Air / macOS 27.0（26A5425a），以及 MacBook Pro M4 Max / macOS 26.6.2（25G83）。
 
 | 显示器 | 结论 |
 |---|---|
 | 内建 Retina | 亮度、旋转、8 个模式（5 个 HiDPI） |
 | Apple Studio Display 5K | 走 `DisplayServices`；**完全不响应 DDC** —— Apple 屏用自有协议 |
 | Philips 27B1U3900 4K | DDC 亮度/对比度/音量/capabilities/EDID/输入源全部通过 |
+| **两台** Studio Display 同时在线（M4 Max） | 各 26 个模式（10 个 HiDPI），两条 `IOAVService` 通道各自绑定、互不覆盖，两块屏身份互不串 |
 
 另外已实测：分辨率切换与 15 秒回滚、旋转往返、单屏关闭点亮（在线数 2→1→2）、场景往返、配置锁定还原外部改动、跟随亮度按比例同步、联动亮度保差异、截图（5120×2880 完整像素）、EDID 导出、改名、镜像、排列、URL 自动化、授权激活。
 
 另外已实测：音量键归属判定 —— 把系统输出切到 Philips，`pwelumenctl audio` 报「接管」；切回内建扬声器，报「交还 macOS」，两个方向都对。
 
-**未实测**：DDC 多通道配对（需两台第三方显示器）、媒体键接管的**实际按键**（受 ad-hoc 签名影响，辅助功能授权每次重新构建就失效；归属判定本身已验证）、macOS 26 实机（`pwelumenctl compat` 可当场自检）。
+**未实测**：两台**第三方**显示器同时收发 DDC（两条通道的绑定与隔离已经在两台 Studio Display 上跑过，但 Apple 屏不应答 VCP），以及媒体键接管的**实际按键**（归属判定本身已验证；曾经挡路的 ad-hoc 签名问题已经解决 —— 现在开发构建也用 Developer ID 签名，辅助功能授权不再随每次重建失效）。
 
 `Colorimetry` / `PixelEncoding` 的枚举含义 IOKit 未公开，界面只报告能确定的部分，其余按原始值展示 —— 不凭猜测贴标签。
 

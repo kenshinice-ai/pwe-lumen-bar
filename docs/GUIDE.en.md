@@ -404,6 +404,11 @@ Everything you reach for daily is free, with no trial period and no expiry. Pro
 gates one thing, and it is the hard one: **making text on an external display as
 sharp as it is on the built-in panel.**
 
+It costs **A$9.99, once**. The licence is registered to the email address it was
+bought with, verified offline, and works on every Mac you personally work on.
+Buy it at [pwestudio.site/lumen](https://pwestudio.site/lumen) — the button opens
+a prefilled email.
+
 This diagram is the problem itself:
 
 <p align="center">
