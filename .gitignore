@@ -4,3 +4,6 @@ build/
 
 # The Pro licence signing key. Leaking this lets anyone mint licences.
 .license-signing-key
+
+# Release artefacts: rebuildable, and a .dmg has no business in a git history.
+dist/
