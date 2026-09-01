@@ -2,20 +2,20 @@
 import PackageDescription
 
 let package = Package(
-    name: "Lumen",
+    name: "PWELumenBar",
     platforms: [.macOS(.v14)],
     products: [
-        .executable(name: "Lumen", targets: ["Lumen"]),
-        .library(name: "LumenCore", targets: ["LumenCore"]),
-        .executable(name: "lumenctl", targets: ["lumenctl"]),
+        .executable(name: "PWELumenBar", targets: ["PWELumenBar"]),
+        .library(name: "LumenBarCore", targets: ["LumenBarCore"]),
+        .executable(name: "pwelumenctl", targets: ["pwelumenctl"]),
     ],
     targets: [
         // Display engines. No UI, so every capability can be exercised headlessly.
-        .target(name: "LumenCore", swiftSettings: [.swiftLanguageMode(.v5)]),
+        .target(name: "LumenBarCore", swiftSettings: [.swiftLanguageMode(.v5)]),
         // The menu itself. A library so both the app and the screenshot renderer
         // can mount the exact same views.
-        .target(name: "LumenUI", dependencies: ["LumenCore"], swiftSettings: [.swiftLanguageMode(.v5)]),
-        .executableTarget(name: "Lumen", dependencies: ["LumenUI"], swiftSettings: [.swiftLanguageMode(.v5)]),
-        .executableTarget(name: "lumenctl", dependencies: ["LumenCore"], swiftSettings: [.swiftLanguageMode(.v5)]),
+        .target(name: "LumenBarUI", dependencies: ["LumenBarCore"], swiftSettings: [.swiftLanguageMode(.v5)]),
+        .executableTarget(name: "PWELumenBar", dependencies: ["LumenBarUI"], swiftSettings: [.swiftLanguageMode(.v5)]),
+        .executableTarget(name: "pwelumenctl", dependencies: ["LumenBarCore"], swiftSettings: [.swiftLanguageMode(.v5)]),
     ]
 )

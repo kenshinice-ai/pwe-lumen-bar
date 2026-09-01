@@ -2,7 +2,7 @@
 import CryptoKit
 import Foundation
 
-// Issues a Lumen Pro licence key.
+// Issues a PWE Lumen Bar Pro licence key.
 //
 //   swift scripts/make-license.swift buyer@example.com
 //

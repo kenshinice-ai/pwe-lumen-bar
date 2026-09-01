@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="docs/images/icon.png" width="128" alt="Lumen">
+  <img src="docs/images/icon.png" width="128" alt="PWE Lumen Bar">
 </p>
 
-<h1 align="center">Lumen</h1>
+<h1 align="center">PWE Lumen Bar</h1>
 
 <p align="center">
   <a href="README.en.md">English</a> · 中文<br>
@@ -14,12 +14,12 @@
 一块屏一张卡片。亮度、对比度、色温、音量、分辨率、方向、输入源、开关、截图 —— 每块屏单独控制，包括 MacBook 自己的屏幕。
 
 <p align="center">
-  <img src="docs/images/menu.png" width="420" alt="Lumen 菜单">
+  <img src="docs/images/menu.png" width="420" alt="PWE Lumen Bar 菜单">
 </p>
 
 ```bash
 ./scripts/build-app.sh
-cp -R build/Lumen.app /Applications/ && open /Applications/Lumen.app
+cp -R build/PWE Lumen Bar.app /Applications/ && open /Applications/PWE Lumen Bar.app
 ```
 
 点菜单栏图标打开面板；**在图标上滚轮**直接调节光标所在屏的亮度，不用开面板；**右键**切换场景。
@@ -44,7 +44,7 @@ cp -R build/Lumen.app /Applications/ && open /Applications/Lumen.app
 
 很多显示器不报告第三档。macOS 于是只能把一个非原生分辨率拉伸到面板上，每个像素都重采样一次 —— 那点「糊」就是这么来的，而显示器本身完全没有问题。
 
-Lumen 做两件事：把系统藏起来的 HiDPI 模式**挖出来**（免费），以及在显示器压根不报告时把它们**补进去**（Pro，需管理员密码 + 重启，随时可移除）。
+PWE Lumen Bar 做两件事：把系统藏起来的 HiDPI 模式**挖出来**（免费），以及在显示器压根不报告时把它们**补进去**（Pro，需管理员密码 + 重启，随时可移除）。
 
 ---
 
@@ -90,16 +90,16 @@ Lumen 做两件事：把系统藏起来的 HiDPI 模式**挖出来**（免费）
 
 亮度是显示器的属性，音量不是 —— 音量是**当前输出设备**的属性。
 
-如果照着「调光标所在那块屏」的规则做，你戴着 AirPods、光标停在外接屏上按音量键，Lumen 会去调那台显示器扬声器的音量：HUD 动了，进度条动了，你听到的声音一点没变。**一个调了等于没调的音量条，比没有音量条更糟。**
+如果照着「调光标所在那块屏」的规则做，你戴着 AirPods、光标停在外接屏上按音量键，PWE Lumen Bar 会去调那台显示器扬声器的音量：HUD 动了，进度条动了，你听到的声音一点没变。**一个调了等于没调的音量条，比没有音量条更糟。**
 
-所以规则是一句话：**只有当系统输出正是某台外接显示器自己的扬声器时，Lumen 才接管音量键；走蓝牙、AirPlay、内建扬声器或外置声卡时，按键原样交还 macOS**，由系统去调真正在发声的设备，连原生 HUD 和「调音量时播放反馈」的那声轻响都保留。
+所以规则是一句话：**只有当系统输出正是某台外接显示器自己的扬声器时，PWE Lumen Bar 才接管音量键；走蓝牙、AirPlay、内建扬声器或外置声卡时，按键原样交还 macOS**，由系统去调真正在发声的设备，连原生 HUD 和「调音量时播放反馈」的那声轻响都保留。
 
-接管的那种情况反而是系统做不好的：DisplayPort 音频端点经常**根本不暴露音量控制**（本机这台 Philips 27B1U3900 就是），系统音量键按下去毫无反应，而 DDC 的 VCP `0x62` 完全可用。这时 Lumen 接管，键就活了 —— 并且会自己补上那声反馈音，因为按键被吃掉之后 macOS 不会再播。
+接管的那种情况反而是系统做不好的：DisplayPort 音频端点经常**根本不暴露音量控制**（本机这台 Philips 27B1U3900 就是），系统音量键按下去毫无反应，而 DDC 的 VCP `0x62` 完全可用。这时 PWE Lumen Bar 接管，键就活了 —— 并且会自己补上那声反馈音，因为按键被吃掉之后 macOS 不会再播。
 
 菜单里也一并说清楚：某块屏的扬声器不是当前输出时，音量滑块下面直接写着**声音正在哪里**。滑块照样能用（可以先把显示器音量预设好再切过去），但它不会假装你听得到。
 
 ```bash
-lumenctl audio      # 列出输出设备，标出当前输出，并直接告诉你音量键归谁
+pwelumenctl audio      # 列出输出设备，标出当前输出，并直接告诉你音量键归谁
 ```
 
 ### 显示器信息
@@ -122,23 +122,23 @@ HDR 分两件事说清楚：**链路能不能传 HDR 信号**，和 **macOS 有�
 
 ## 自动化
 
-`lumen://` URL scheme，可在「快捷指令」的「打开 URL」里调用：
+`pwelumen://` URL scheme，可在「快捷指令」的「打开 URL」里调用：
 
 ```
-lumen://brightness?display=cursor&value=60     显示器可写 cursor / main / builtin / ID / 名字片段
-lumen://brightness?display=main&delta=-10      相对调整
-lumen://contrast?display=main&value=55         lumen://warmth?display=2&value=40
-lumen://volume?display=LG&value=30             lumen://mute?display=main&state=toggle
-lumen://link?state=on                          lumen://matchbrightness?display=2
-lumen://preset?name=工作                        lumen://rotate?display=2&angle=90
-lumen://mode?display=main&id=cgs:3             lumen://input?display=LG&source=hdmi1
-lumen://off?display=2   lumen://on             lumen://main?display=2
-lumen://arrange?tile    lumen://sleep          lumen://refresh   lumen://settings
+pwelumen://brightness?display=cursor&value=60     显示器可写 cursor / main / builtin / ID / 名字片段
+pwelumen://brightness?display=main&delta=-10      相对调整
+pwelumen://contrast?display=main&value=55         pwelumen://warmth?display=2&value=40
+pwelumen://volume?display=LG&value=30             pwelumen://mute?display=main&state=toggle
+pwelumen://link?state=on                          pwelumen://matchbrightness?display=2
+pwelumen://preset?name=工作                        pwelumen://rotate?display=2&angle=90
+pwelumen://mode?display=main&id=cgs:3             pwelumen://input?display=LG&source=hdmi1
+pwelumen://off?display=2   pwelumen://on             pwelumen://main?display=2
+pwelumen://arrange?tile    pwelumen://sleep          pwelumen://refresh   pwelumen://settings
 ```
 
 参数错误、找不到显示器、命令不存在，都会在主屏弹出提示并写明来源 —— 自动化是从「快捷指令」触发的，把错误只写进菜单状态栏等于没写。
 
-**截图刻意不开放给 URL scheme**：任何网页或程序都能打开自定义 URL，而 Lumen 持有录屏权限，把 capture 放进来等于给外部静默截屏的能力。
+**截图刻意不开放给 URL scheme**：任何网页或程序都能打开自定义 URL，而 PWE Lumen Bar 持有录屏权限，把 capture 放进来等于给外部静默截屏的能力。
 
 ---
 
@@ -154,7 +154,7 @@ lumen://arrange?tile    lumen://sleep          lumen://refresh   lumen://setting
 
 文档里的 `kCGDisplayShowDuplicateLowResolutionModes` 选项在这版系统上**完全没有效果**。所有 HiDPI 档只存在于窗口服务器自己的模式表里，只能通过 `CGSGetDisplayModeDescriptionOfLength` 读出来。
 
-结构体字段偏移是实测确认的（`Sources/LumenCore/CGSModeTable.swift`）：
+结构体字段偏移是实测确认的（`Sources/LumenBarCore/CGSModeTable.swift`）：
 
 | 偏移 | 字段 |
 |---|---|
@@ -182,34 +182,34 @@ lumen://arrange?tile    lumen://sleep          lumen://refresh   lumen://setting
 
 ## 命令行
 
-`lumenctl` 与界面**共用同一套引擎和同一份设置** —— 在菜单里存的场景，命令行能读到；命令行锁定的显示器，运行中的 app 会执行。
+`pwelumenctl` 与界面**共用同一套引擎和同一份设置** —— 在菜单里存的场景，命令行能读到；命令行锁定的显示器，运行中的 app 会执行。
 
 ```bash
-lumenctl                             # 用法（--verbose 打开引擎调试输出，--lang zh|en 切语言）
-lumenctl diag                        # 每块屏走哪条通道
-lumenctl modes 2 --all               # 全部模式，HiDPI 分组
-lumenctl set-mode 2 cgs:61 --revert 3   # 切换并 3 秒后自动回滚
-lumenctl brightness 2 70             # 0-100，越界或非数字直接报错并 exit 1
-lumenctl warmth 2 40                 # 色温
-lumenctl link / matchbrightness      # 见 URL scheme
-lumenctl follow 2 on                 # 外接屏跟随内建屏亮度
-lumenctl protect 2 on                # 锁定分辨率和方向
-lumenctl name 2 "左侧 4K"             # 重命名（- 恢复系统名称）
-lumenctl details 2                   # 完整信息：PPI / HDR / 色彩空间 / EDID
-lumenctl caps 2                      # 显示器自报的 DDC capabilities
-lumenctl edid 2 ~/Desktop/mon.bin    # 导出 EDID
-lumenctl hidpi 2 show                # 预览强制 HiDPI 会写什么（不安装）
-lumenctl preset save 工作 / apply 工作
-lumenctl off 2 / on                  # 关闭 / 点亮单块屏
-lumenctl log 50                      # 诊断日志，app 与 CLI 共写
-lumenctl audio                       # 输出设备 + 当前输出 + 音量键归属
-lumenctl compat                      # 系统兼容性自检：私有接口一项一项验
+pwelumenctl                             # 用法（--verbose 打开引擎调试输出，--lang zh|en 切语言）
+pwelumenctl diag                        # 每块屏走哪条通道
+pwelumenctl modes 2 --all               # 全部模式，HiDPI 分组
+pwelumenctl set-mode 2 cgs:61 --revert 3   # 切换并 3 秒后自动回滚
+pwelumenctl brightness 2 70             # 0-100，越界或非数字直接报错并 exit 1
+pwelumenctl warmth 2 40                 # 色温
+pwelumenctl link / matchbrightness      # 见 URL scheme
+pwelumenctl follow 2 on                 # 外接屏跟随内建屏亮度
+pwelumenctl protect 2 on                # 锁定分辨率和方向
+pwelumenctl name 2 "左侧 4K"             # 重命名（- 恢复系统名称）
+pwelumenctl details 2                   # 完整信息：PPI / HDR / 色彩空间 / EDID
+pwelumenctl caps 2                      # 显示器自报的 DDC capabilities
+pwelumenctl edid 2 ~/Desktop/mon.bin    # 导出 EDID
+pwelumenctl hidpi 2 show                # 预览强制 HiDPI 会写什么（不安装）
+pwelumenctl preset save 工作 / apply 工作
+pwelumenctl off 2 / on                  # 关闭 / 点亮单块屏
+pwelumenctl log 50                      # 诊断日志，app 与 CLI 共写
+pwelumenctl audio                       # 输出设备 + 当前输出 + 音量键归属
+pwelumenctl compat                      # 系统兼容性自检：私有接口一项一项验
 ```
 
 ## 结构
 
 ```
-LumenCore/   引擎，无 UI，可命令行完整驱动
+LumenBarCore/   引擎，无 UI，可命令行完整驱动
   Dyn            私有符号一律 dlsym，取不到就降级，绝不在启动时崩
   Defaults       app 与 CLI 的共享设置域 —— 新增设置一律走它
   CGSModeTable   私有模式表 + 布局版本护栏
@@ -219,24 +219,24 @@ LumenCore/   引擎，无 UI，可命令行完整驱动
   Mode Brightness Audio Rotation Power Input Capture Color
   Arrangement Preset DisplayDetails HiDPIOverride
   SettingsStore DisplayNameStore LicenseStore
-LumenUI/     菜单、控制器、快捷键、媒体键、OSD、设置窗、URL 命令
+LumenBarUI/     菜单、控制器、快捷键、媒体键、OSD、设置窗、URL 命令
              StatusItemController 自管状态栏项（MenuBarExtra 收不到滚轮事件）
-Lumen/       应用外壳（纯 AppKit）
-lumenctl/    命令行
+PWE Lumen Bar/       应用外壳（纯 AppKit）
+pwelumenctl/    命令行
 ```
 
 图标是矢量的：`scripts/make-icons.swift` 用同一套 Core Graphics 绘制代码导出 `AppIcon.pdf`、菜单栏的 `MenuBarIcon.pdf`（template，任意缩放不糊）和各尺寸 `.icns`。
 
 ## 系统支持：为什么是「26 / 27」，以及怎么自己验证
 
-Lumen 自己的代码**不用任何高于 macOS 14 的 API** —— 包是按 14.0 的 deployment target 编译的，这条低地板就是防止新 API 悄悄溜进来的机制：真用了，编译期就过不去。
+PWE Lumen Bar 自己的代码**不用任何高于 macOS 14 的 API** —— 包是按 14.0 的 deployment target 编译的，这条低地板就是防止新 API 悄悄溜进来的机制：真用了，编译期就过不去。
 
 真正会随系统变的全在**私有接口**上：窗口服务器的模式表、SkyLight 的旋转、DisplayServices 的亮度、IOAVService 的 I2C 通道。这些一律在运行时用 `dlsym` 解析，改名只会让**对应的那一个能力**降级，不会让 app 起不来。
 
 所以与其宣称一个版本区间然后祈祷，不如把接口本身查一遍：
 
 ```bash
-lumenctl compat
+pwelumenctl compat
 ```
 
 ```
@@ -248,9 +248,9 @@ lumenctl compat
 ✅  CGS mode table                        212-byte layout confirmed…
 ```
 
-设置 › 系统里有同一份报告。CGS 模式表那一项尤其关键：那个结构体**第 184 字节存着自己的长度**，所以布局是自校验的 —— 读回来不是 212 就说明 Apple 动过结构，Lumen 直接退回公开 API（失去强制 HiDPI），而不是照着错位的偏移读垃圾。
+设置 › 系统里有同一份报告。CGS 模式表那一项尤其关键：那个结构体**第 184 字节存着自己的长度**，所以布局是自校验的 —— 读回来不是 212 就说明 Apple 动过结构，PWE Lumen Bar 直接退回公开 API（失去强制 HiDPI），而不是照着错位的偏移读垃圾。
 
-**26 与 27 用的是同一套私有接口和同一套 Apple Silicon 显示栈**，开发和验证在 27 上做，26 支持但没有实机跑过 —— `lumenctl compat` 五秒钟就能在你的机器上给出真实答案。Intel 机型不支持：DDC 走的 `IOAVService` 在 Intel Mac 上根本不存在，首次启动会明说一次。
+**26 与 27 用的是同一套私有接口和同一套 Apple Silicon 显示栈**，开发和验证在 27 上做，26 支持但没有实机跑过 —— `pwelumenctl compat` 五秒钟就能在你的机器上给出真实答案。Intel 机型不支持：DDC 走的 `IOAVService` 在 Intel Mac 上根本不存在，首次启动会明说一次。
 
 ## 已实测 / 未实测
 
@@ -264,9 +264,9 @@ lumenctl compat
 
 另外已实测：分辨率切换与 15 秒回滚、旋转往返、单屏关闭点亮（在线数 2→1→2）、场景往返、配置锁定还原外部改动、跟随亮度按比例同步、联动亮度保差异、截图（5120×2880 完整像素）、EDID 导出、改名、镜像、排列、URL 自动化、授权激活。
 
-另外已实测：音量键归属判定 —— 把系统输出切到 Philips，`lumenctl audio` 报「接管」；切回内建扬声器，报「交还 macOS」，两个方向都对。
+另外已实测：音量键归属判定 —— 把系统输出切到 Philips，`pwelumenctl audio` 报「接管」；切回内建扬声器，报「交还 macOS」，两个方向都对。
 
-**未实测**：DDC 多通道配对（需两台第三方显示器）、媒体键接管的**实际按键**（受 ad-hoc 签名影响，辅助功能授权每次重新构建就失效；归属判定本身已验证）、macOS 26 实机（`lumenctl compat` 可当场自检）。
+**未实测**：DDC 多通道配对（需两台第三方显示器）、媒体键接管的**实际按键**（受 ad-hoc 签名影响，辅助功能授权每次重新构建就失效；归属判定本身已验证）、macOS 26 实机（`pwelumenctl compat` 可当场自检）。
 
 `Colorimetry` / `PixelEncoding` 的枚举含义 IOKit 未公开，界面只报告能确定的部分，其余按原始值展示 —— 不凭猜测贴标签。
 

@@ -1,4 +1,4 @@
-# Lumen User Guide
+# PWE Lumen Bar User Guide
 
 > English · [中文](GUIDE.md)
 >
@@ -6,13 +6,13 @@
 > illustration for each screen. For how it works inside, read the
 > [README](../README.en.md); to take over the code, read [HANDOVER](../HANDOVER.md).
 
-Lumen is a macOS menu bar display controller: **one card per display**, with
+PWE Lumen Bar is a macOS menu bar display controller: **one card per display**, with
 brightness, contrast, colour temperature, volume, resolution, refresh rate,
 orientation, input source, power and screenshots controlled per display —
 including the MacBook's own panel.
 
 **Apple Silicon (M-series) only.** The bundle declares macOS 26 as its floor and
-is verified on macOS 27 / M1. Whether every private interface Lumen depends on
+is verified on macOS 27 / M1. Whether every private interface PWE Lumen Bar depends on
 is present on *your* machine is something you can check yourself
 (see [9. When something goes wrong](#9-when-something-goes-wrong)).
 
@@ -26,8 +26,8 @@ is present on *your* machine is something you can check yourself
 4. [The two ⋯ menus](#4-the-two--menus)
 5. [Everyday tasks](#5-everyday-tasks)
 6. [The Settings window](#6-the-settings-window)
-7. [Lumen Pro: forcing HiDPI on](#7-lumen-pro-forcing-hidpi-on)
-8. [The `lumenctl` command line](#8-the-lumenctl-command-line)
+7. [PWE Lumen Bar Pro: forcing HiDPI on](#7-pwe-lumen-bar-pro-forcing-hidpi-on)
+8. [The `pwelumenctl` command line](#8-the-pwelumenctl-command-line)
 9. [When something goes wrong](#9-when-something-goes-wrong)
 
 ---
@@ -35,12 +35,12 @@ is present on *your* machine is something you can check yourself
 ## 1. Installing and first run
 
 ```bash
-./scripts/build-app.sh                 # → build/Lumen.app (builds lumenctl too)
-cp -R build/Lumen.app /Applications/
-open /Applications/Lumen.app
+./scripts/build-app.sh                 # → build/PWE Lumen Bar.app (builds pwelumenctl too)
+cp -R build/PWE Lumen Bar.app /Applications/
+open /Applications/PWE Lumen Bar.app
 ```
 
-Lumen is an `LSUIElement` app: **no Dock icon and no window**. The only sign it
+PWE Lumen Bar is an `LSUIElement` app: **no Dock icon and no window**. The only sign it
 launched is a new menu bar icon (two overlapping displays).
 
 The first run shows this window once. To see it again later:
@@ -50,7 +50,7 @@ The first run shows this window once. To see it again later:
   <img src="images/guide-welcome.svg" width="900" alt="Welcome window">
 </p>
 
-1. **Title area** — one sentence on what Lumen is for.
+1. **Title area** — one sentence on what PWE Lumen Bar is for.
 2. **Scroll on the menu bar icon** — adjusts the brightness of the display under
    the pointer without opening anything. Nothing in the interface hints at this,
    which is why it comes first.
@@ -65,12 +65,12 @@ The first run shows this window once. To see it again later:
 7. **Two buttons** — "Open Settings" goes straight to the settings window;
    "Get started" closes the window for good.
 8. **Build and install** — the three commands above. `build-app.sh` also places
-   `lumenctl` inside `Lumen.app/Contents/Resources/lumenctl`; the SwiftPM product
-   is at `.build/release/lumenctl` (or `debug`).
+   `pwelumenctl` inside `PWE Lumen Bar.app/Contents/Resources/pwelumenctl`; the SwiftPM product
+   is at `.build/release/pwelumenctl` (or `debug`).
 9. **When permission is refused** — turning the key takeover on without the
    grant opens System Settings and says what to do next in the status line.
 
-### What Lumen asks for, and why
+### What PWE Lumen Bar asks for, and why
 
 | Permission | When it is needed | What happens without it |
 |---|---|---|
@@ -95,7 +95,7 @@ for control of the whole machine just to dim a screen.
 2. **Scroll** — adjusts the brightness of **the display under the pointer**, 2%
    per step, with no interface at all. A HUD appears on the display that moved.
 3. **Right click** — a short menu that applies a saved preset, ending in
-   "Quit Lumen". With no presets saved yet it says so.
+   "Quit PWE Lumen Bar". With no presets saved yet it says so.
 
 ---
 
@@ -118,7 +118,7 @@ display that cannot do as much.
    the name. Badges appear as they apply:
    - `Main · menu bar here` — the menu bar and Dock are on this display
    - `Mirroring` — it is showing another display's picture
-   - `Off` — Lumen switched it off
+   - `Off` — PWE Lumen Bar switched it off
    - `Locked` — outside changes to resolution or orientation are reverted
    - `External` / `Built-in` / `AirPlay` / `Virtual` — the connection, which
      decides which controls this display can have at all
@@ -162,7 +162,7 @@ display that cannot do as much.
     the mouse to wake them); "Link" and "Match brightness" are covered in
     [section 5](#5-everyday-tasks); the ⋯ on the right is the global menu.
 
-The card on the right is **what a limited display looks like**. Lumen does not
+The card on the right is **what a limited display looks like**. PWE Lumen Bar does not
 draw a slider that cannot move:
 
 14. **Connection badge** — an `AirPlay` display has no physical link, so DDC is
@@ -212,9 +212,9 @@ draw a slider that cannot move:
    only way to tell them apart. The name is stored against the display's
    identity and survives replugging.
 7. **Lock resolution and orientation** — once ticked, any resolution or
-   orientation change from outside Lumen is reverted, and the card shows a
+   orientation change from outside PWE Lumen Bar is reverted, and the card shows a
    `Locked` badge.
-8. **Force HiDPI on…** — a Pro feature; see [section 7](#7-lumen-pro-forcing-hidpi-on).
+8. **Force HiDPI on…** — a Pro feature; see [section 7](#7-pwe-lumen-bar-pro-forcing-hidpi-on).
    Once installed, this item becomes "Remove the HiDPI override…". The built-in
    panel does not have this item.
 9. **Display details…** — its own window: physical size, native resolution, PPI,
@@ -239,7 +239,7 @@ draw a slider that cannot move:
 16. **Global shortcuts** — turn them on or off and see the current bindings;
     rebinding happens in the settings window.
 17. **Launch at login.**
-18. **Usage tips… / Settings… / Quit Lumen.**
+18. **Usage tips… / Settings… / Quit PWE Lumen Bar.**
 
 ---
 
@@ -258,7 +258,7 @@ draw a slider that cannot move:
    because the menu lives on the screen that just went dark.
 
 If a display reports no HiDPI modes at all, the resolution menu's tooltip says
-so. That is the problem [section 7](#7-lumen-pro-forcing-hidpi-on) solves.
+so. That is the problem [section 7](#7-pwe-lumen-bar-pro-forcing-hidpi-on) solves.
 
 ### 5.2 Switch off one display without touching the others
 
@@ -271,7 +271,7 @@ so. That is the problem [section 7](#7-lumen-pro-forcing-hidpi-on) solves.
 
 This path is always reversible. To genuinely power a monitor down, use the item
 in the ⋯ menu and read its confirmation. **The last remaining display cannot be
-switched off** — Lumen says so rather than leaving you with no picture.
+switched off** — PWE Lumen Bar says so rather than leaving you with no picture.
 
 ### 5.3 Match every display's brightness to one of them
 
@@ -301,10 +301,10 @@ deliberately dimmer stays dimmer.
 - Every display at once: bottom ⋯ › **Capture every display**.
 - The first capture asks for Screen Recording permission. Files are saved to the
   desktop at full pixel resolution, named like
-  `Lumen 27B1U3900 2026-09-01 at 14.30.02.png`.
+  `PWE Lumen Bar 27B1U3900 2026-09-01 at 14.30.02.png`.
 
-> Screenshots are **deliberately not exposed through the `lumen://` URL scheme**:
-> any web page or program can open a custom URL, and Lumen holds a screen
+> Screenshots are **deliberately not exposed through the `pwelumen://` URL scheme**:
+> any web page or program can open a custom URL, and PWE Lumen Bar holds a screen
 > recording grant.
 
 ### 5.6 Rotate a display
@@ -315,17 +315,17 @@ deliberately dimmer stays dimmer.
 
 **The built-in panel rotates too** — macOS just does not offer the option in
 System Settings. If the driver refuses, the row becomes "this display refused
-the rotation request", and `lumenctl rotate-probe` can test that channel on its
+the rotation request", and `pwelumenctl rotate-probe` can test that channel on its
 own.
 
 ### 5.7 Rename a display
 
 1. Card ⋯ › **Rename…**, type a new name, "OK".
-2. The name only affects what Lumen shows. It is stored against the display's
+2. The name only affects what PWE Lumen Bar shows. It is stored against the display's
    identity and survives replugging.
 
 To restore the system name, the command line is the reliable route:
-`lumenctl name 2 -`. (Clearing the field in the dialog cancels the edit rather
+`pwelumenctl name 2 -`. (Clearing the field in the dialog cancels the edit rather
 than restoring the original name.)
 
 ### 5.8 Save and apply presets
@@ -338,7 +338,7 @@ than restoring the original name.)
 A preset records each display's brightness, warmth, volume, resolution,
 orientation, position and colour profile. Displays that are offline when it is
 applied are skipped, and the status line says how many were actually reached.
-The command line reads the same data: `lumenctl preset list|save|apply|delete`.
+The command line reads the same data: `pwelumenctl preset list|save|apply|delete`.
 
 ---
 
@@ -352,9 +352,9 @@ five on the left and enlarges the last two on the right.
   <img src="images/guide-settings.svg" width="960" alt="Settings window">
 </p>
 
-1. **Lumen Pro** — when unlocked, the email and "Deactivate on this Mac"; when
+1. **PWE Lumen Bar Pro** — when unlocked, the email and "Deactivate on this Mac"; when
    not, the full explanation and the unlock fields. See
-   [section 7](#7-lumen-pro-forcing-hidpi-on).
+   [section 7](#7-pwe-lumen-bar-pro-forcing-hidpi-on).
 2. **General** — language (follow the system / 中文 / English) and launch at login.
 3. **Display information** — one row per display; expanding it shows everything
    (physical size, PPI, white point, colour space, bit depth, signal encoding,
@@ -367,7 +367,7 @@ five on the left and enlarges the last two on the right.
    needs Accessibility. There are two rules here, and they differ:
    - **The brightness keys follow the pointer**: they act on the display it is
      on, and are handed back to macOS on the built-in panel, native HUD and all.
-   - **The volume keys follow the sound**, not the pointer: Lumen takes them
+   - **The volume keys follow the sound**, not the pointer: PWE Lumen Bar takes them
      over only when the system output **is an external display's own speakers**
      (the case where DisplayPort audio often exposes no volume control at all
      and DDC does). Playing through Bluetooth, AirPlay, the built-in speakers or
@@ -387,20 +387,20 @@ five on the left and enlarges the last two on the right.
    | Sleep / wake this display | `⌃⌥P` |
 
 7. **System** — what you are running on (macOS version + chip) and an
-   **interface self-check**: whether every private interface Lumen depends on is
+   **interface self-check**: whether every private interface PWE Lumen Bar depends on is
    present on this machine. All clear is one line; anything missing is listed
    individually, with a note that the matching feature degrades rather than
-   crashes. `lumenctl compat` prints the same report.
+   crashes. `pwelumenctl compat` prints the same report.
 8. **When rebinding** — click the button next to an action and press your
-   combination: **at least one of `⌃ ⌥ ⌘` is required**, otherwise Lumen refuses
+   combination: **at least one of `⌃ ⌥ ⌘` is required**, otherwise PWE Lumen Bar refuses
    (a bare key would swallow ordinary typing system-wide); Esc cancels. If
-   another app already owns the combination, Lumen says so on the spot rather
+   another app already owns the combination, PWE Lumen Bar says so on the spot rather
    than recording a shortcut that will never fire. "Reset shortcuts to defaults"
    restores all seven.
 
 ---
 
-## 7. Lumen Pro: forcing HiDPI on
+## 7. PWE Lumen Bar Pro: forcing HiDPI on
 
 Everything you reach for daily is free, with no trial period and no expiry. Pro
 gates one thing, and it is the hard one: **making text on an external display as
@@ -419,7 +419,7 @@ do not, so the system stretches a non-native resolution onto the panel instead,
 resampling every pixel. That is where the softness comes from, and the display
 itself is fine.
 
-**Free**: the HiDPI modes macOS hides. Lumen digs them straight out of the window
+**Free**: the HiDPI modes macOS hides. PWE Lumen Bar digs them straight out of the window
 server's own mode table (the entries marked HiDPI in the resolution menu).
 **Pro**: when a display reports no such modes at all, adding them to the system.
 
@@ -437,30 +437,30 @@ server's own mode table (the entries marked HiDPI in the resolution menu).
    the explanation the diagram above shows.
 5. **Unlocking** — the email used at purchase and the licence key, then
    "Unlock". Keys are **verified offline**: the key is a signature over your
-   email, so Lumen needs no network and no account.
+   email, so PWE Lumen Bar needs no network and no account.
 
 To turn it on: card ⋯ › **Force HiDPI on…**
 
 6. **The confirmation spells out the cost**: which modes are added, that an
-   administrator password is required (**macOS asks; Lumen never touches the
+   administrator password is required (**macOS asks; PWE Lumen Bar never touches the
    password**), the path written to, that it takes effect after a restart, and
    that it can be removed from the same menu.
 7. **After the restart**, the new HiDPI modes appear in the resolution menu. To
    undo: "Remove the HiDPI override…" in the same ⋯ menu, which also needs a
    restart.
 
-To see what would be written without installing anything: `lumenctl hidpi 2 show`.
+To see what would be written without installing anything: `pwelumenctl hidpi 2 show`.
 
 ---
 
-## 8. The `lumenctl` command line
+## 8. The `pwelumenctl` command line
 
-`lumenctl` shares **the same engines and the same settings** as the interface. A
+`pwelumenctl` shares **the same engines and the same settings** as the interface. A
 preset saved in the menu is readable from the command line; a display locked
 from the command line is enforced by the running app.
 
-It lives at `Lumen.app/Contents/Resources/lumenctl`, or as the SwiftPM product
-`.build/release/lumenctl`.
+It lives at `PWE Lumen Bar.app/Contents/Resources/pwelumenctl`, or as the SwiftPM product
+`.build/release/pwelumenctl`.
 
 `<disp>` accepts a display ID, an index (`0`, `1`…), or part of a name (`LG`,
 `27B1`). Global options: `--lang zh|en` switches the output language, `--verbose`
@@ -472,7 +472,7 @@ It lives at `Lumen.app/Contents/Resources/lumenctl`, or as the SwiftPM product
 |---|---|
 | `list` | The displays: ID, name, connection, current mode |
 | `diag` | Capability report: which channel brightness/volume use, whether rotation works, how many modes |
-| `compat` | System compatibility self-check: are the private interfaces Lumen depends on present |
+| `compat` | System compatibility self-check: are the private interfaces PWE Lumen Bar depends on present |
 | `details <disp>` | Everything: physical size, PPI, HDR, colour space, EDID |
 | `caps <disp>` | The monitor's own DDC capabilities string |
 | `vcp <disp> <hex>` | Read one VCP value directly |
@@ -503,7 +503,7 @@ It lives at `Lumen.app/Contents/Resources/lumenctl`, or as the SwiftPM product
 
 | Command | What it does |
 |---|---|
-| `off <disp>` / `on [disp]` | Switch one display off / back on (`on` with no argument restores every display Lumen switched off) |
+| `off <disp>` / `on [disp]` | Switch one display off / back on (`on` with no argument restores every display PWE Lumen Bar switched off) |
 | `disconnect <disp>` / `connect <disp>` | Soft disconnect / reattach |
 | `power <disp> on\|off\|standby` | DDC power command (external displays; carries the irreversibility risk from section 4) |
 | `main <disp>` | Make it the main display |
@@ -539,13 +539,13 @@ It lives at `Lumen.app/Contents/Resources/lumenctl`, or as the SwiftPM product
 A few useful combinations:
 
 ```bash
-lumenctl diag                          # run this first when something is wrong
-lumenctl compat                        # run this first after a system upgrade
-lumenctl modes 2 --all                 # every mode, HiDPI grouped
-lumenctl set-mode 2 cgs:61 --revert 3  # switch, look, switch back after 3s
-lumenctl brightness 2 70
-lumenctl hidpi 2 show                  # preview what forcing HiDPI would write
-lumenctl log 50                        # the last 50 log lines
+pwelumenctl diag                          # run this first when something is wrong
+pwelumenctl compat                        # run this first after a system upgrade
+pwelumenctl modes 2 --all                 # every mode, HiDPI grouped
+pwelumenctl set-mode 2 cgs:61 --revert 3  # switch, look, switch back after 3s
+pwelumenctl brightness 2 70
+pwelumenctl hidpi 2 show                  # preview what forcing HiDPI would write
+pwelumenctl log 50                        # the last 50 log lines
 ```
 
 ---
@@ -555,17 +555,17 @@ lumenctl log 50                        # the last 50 log lines
 Run these two first; they answer most questions on the spot:
 
 ```bash
-lumenctl diag      # which channel each display uses
-lumenctl compat    # whether the private interfaces are present on this machine
+pwelumenctl diag      # which channel each display uses
+pwelumenctl compat    # whether the private interfaces are present on this machine
 ```
 
-The log is at `~/Library/Logs/Lumen/lumen.log`, written by both the app and the
-command line; `lumenctl log 50` reads it.
+The log is at `~/Library/Logs/PWE Lumen Bar/pwelumenbar.log`, written by both the app and the
+command line; `pwelumenctl log 50` reads it.
 
 ### The brightness slider moves but the screen does not
 
 Look at the channel label to the right of the slider. **`Software`** means the
-display accepts no hardware adjustment and Lumen is changing a colour curve —
+display accepts no hardware adjustment and PWE Lumen Bar is changing a colour curve —
 the picture really is darker, but **the backlight has not moved**. The card says
 this explicitly.
 
@@ -586,11 +586,11 @@ After changing cabling or monitor settings, press **↻** in the panel's title b
 ### The media keys stop working after every rebuild
 
 macOS ties an Accessibility grant to the **code signature hash**, and
-`Lumen.app` is currently ad-hoc signed — every rebuild changes the signature and
+`PWE Lumen Bar.app` is currently ad-hoc signed — every rebuild changes the signature and
 invalidates the grant you already gave, so **the toggle looks on while the keys
 do nothing**.
 
-The fix: System Settings › Privacy & Security › Accessibility, remove Lumen and
+The fix: System Settings › Privacy & Security › Accessibility, remove PWE Lumen Bar and
 add it again (not just untick and retick). This goes away once the app is signed
 with a real developer identity.
 
@@ -608,26 +608,26 @@ For a reversible switch-off, always use **Sleep** on the card.
 ### The resolution or orientation reverted on its own
 
 That is the design: no "Keep" within 15 seconds and it reverts. If a new change
-supersedes a pending confirmation, Lumen **rolls the previous change back**
+supersedes a pending confirmation, PWE Lumen Bar **rolls the previous change back**
 rather than silently keeping it.
 
 ### Forced HiDPI is installed but nothing changed
 
 Both conditions are required: **the administrator password** (macOS asks) and
 **a restart**. Until the restart, the resolution menu will not show the new
-modes. `lumenctl hidpi <disp> show` shows what was written and whether it is
+modes. `pwelumenctl hidpi <disp> show` shows what was written and whether it is
 installed. Removing it also needs a restart.
 
 ### A display refuses to change resolution or orientation
 
 Check for the `Locked` badge. With "lock resolution and orientation" on, changes
-from outside Lumen are reverted. Untick it in the card's ⋯ menu.
+from outside PWE Lumen Bar are reverted. Untick it in the card's ⋯ menu.
 
 ### The volume keys do nothing, or change something I cannot hear
 
-The volume keys **follow the sound, not the pointer**. Lumen takes them over only
+The volume keys **follow the sound, not the pointer**. PWE Lumen Bar takes them over only
 when the system output is an external display's own speakers; otherwise they go
-back to macOS untouched. Run `lumenctl audio` — the last line says who owns the
+back to macOS untouched. Run `pwelumenctl audio` — the last line says who owns the
 volume keys right now.
 
 To adjust a display that is **not currently playing**, use the volume slider in
@@ -636,10 +636,10 @@ the panel; the line under it names what you are actually hearing.
 ### A display I switched off is nowhere to be found
 
 The **Turn back on** row at the top of the panel is the way back. If the panel
-itself will not open: `lumenctl on` (with no argument it restores every display
-Lumen switched off).
+itself will not open: `pwelumenctl on` (with no argument it restores every display
+PWE Lumen Bar switched off).
 
 ### Rotation failed
 
 The orientation row says "this display refused the rotation request".
-`lumenctl rotate-probe <disp>` tests that channel without turning the screen.
+`pwelumenctl rotate-probe <disp>` tests that channel without turning the screen.

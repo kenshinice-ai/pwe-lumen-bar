@@ -1,7 +1,7 @@
-# Lumen — 交接文档 / Handover
+# PWE Lumen Bar — 交接文档 / Handover
 
-> 最后更新：2026-09-01 · 约 8600 行 Swift · 已安装于 `/Applications/Lumen.app`
-> Last updated 1 Sep 2026 · ~8,600 lines of Swift · installed at `/Applications/Lumen.app`
+> 最后更新：2026-09-01 · 约 8600 行 Swift · 已安装于 `/Applications/PWE Lumen Bar.app`
+> Last updated 1 Sep 2026 · ~8,600 lines of Swift · installed at `/Applications/PWE Lumen Bar.app`
 
 ---
 
@@ -12,9 +12,9 @@ macOS 菜单栏显示器控制器，**仅支持 Apple Silicon（M 系列）+ mac
 A macOS menu bar display controller. **Apple Silicon (M-series) on macOS 27 only** — the Intel code paths have been removed, not just disabled.
 
 ```bash
-./scripts/build-app.sh                                   # → build/Lumen.app
-cp -R build/Lumen.app /Applications/ && open /Applications/Lumen.app
-.build/debug/lumenctl                                    # 命令行，与 app 共用引擎和设置
+./scripts/build-app.sh                                   # → build/PWE Lumen Bar.app
+cp -R build/PWE Lumen Bar.app /Applications/ && open /Applications/PWE Lumen Bar.app
+.build/debug/pwelumenctl                                    # 命令行，与 app 共用引擎和设置
 ```
 
 ---
@@ -57,7 +57,7 @@ Learned the hard way, not from documentation. Read before touching the related c
 ## 四、架构 / Architecture
 
 ```
-LumenCore/    引擎，无 UI，可被命令行完整驱动
+LumenBarCore/    引擎，无 UI，可被命令行完整驱动
   Dyn             私有符号一律 dlsym；取不到就降级，绝不在启动时崩
   Defaults        app 与 CLI 的共享设置域（见下方「已修的系统性问题」）
   CGSModeTable    私有模式表 + 布局版本护栏
@@ -68,9 +68,9 @@ LumenCore/    引擎，无 UI，可被命令行完整驱动
   PowerEngine InputEngine CaptureEngine ColorEngine
   ArrangementEngine PresetEngine DisplayDetails HiDPIOverride
   SettingsStore DisplayNameStore LicenseStore
-LumenUI/      菜单、控制器、快捷键、媒体键、OSD、设置窗、URL 命令
-Lumen/        应用外壳（纯 AppKit，自管 NSStatusItem —— MenuBarExtra 收不到滚轮事件）
-lumenctl/     命令行
+LumenBarUI/      菜单、控制器、快捷键、媒体键、OSD、设置窗、URL 命令
+PWE Lumen Bar/        应用外壳（纯 AppKit，自管 NSStatusItem —— MenuBarExtra 收不到滚轮事件）
+pwelumenctl/     命令行
 ```
 
 ---
@@ -81,7 +81,7 @@ lumenctl/     命令行
 
 Worth calling out because neither produced an error — both just made features quietly not work.
 
-- **app 与 CLI 曾经用不同的设置存储**。CLI 是裸二进制，`UserDefaults.standard` 落在它自己的域里。在菜单里存的场景，命令行读不到；命令行锁定的显示器，运行中的 app 永远不会执行。现已统一到 `com.leeliu.lumen.settings`（`Defaults.shared`）。**任何新增设置都必须走它，不要用 `UserDefaults.standard`。**
+- **app 与 CLI 曾经用不同的设置存储**。CLI 是裸二进制，`UserDefaults.standard` 落在它自己的域里。在菜单里存的场景，命令行读不到；命令行锁定的显示器，运行中的 app 永远不会执行。现已统一到 `com.pwegroup.pwelumenbar.settings`（`Defaults.shared`）。**任何新增设置都必须走它，不要用 `UserDefaults.standard`。**
 
 - **设置存储曾在启动时读入内存后不再重读**，跨进程写入完全看不见。现在全部读写直连存储。
 
@@ -111,14 +111,14 @@ Worth calling out because neither produced an error — both just made features 
 
 ## 八、诊断 / Diagnostics
 
-app 与 CLI 共写 `~/Library/Logs/Lumen/lumen.log`（统一日志对 ad-hoc 签名的菜单栏应用不可靠，这是备用通道）。
+app 与 CLI 共写 `~/Library/Logs/PWE Lumen Bar/pwelumenbar.log`（统一日志对 ad-hoc 签名的菜单栏应用不可靠，这是备用通道）。
 
 ```bash
-lumenctl log 50          # 最近 50 行，两个进程共用
-lumenctl diag            # 每块屏走哪条通道
-lumenctl details 2       # 完整信息：物理尺寸、PPI、HDR、色彩空间、EDID
-lumenctl caps 2          # 显示器自报的 DDC capabilities
-lumenctl hidpi 2 show    # 预览强制 HiDPI 会写什么（不安装）
+pwelumenctl log 50          # 最近 50 行，两个进程共用
+pwelumenctl diag            # 每块屏走哪条通道
+pwelumenctl details 2       # 完整信息：物理尺寸、PPI、HDR、色彩空间、EDID
+pwelumenctl caps 2          # 显示器自报的 DDC capabilities
+pwelumenctl hidpi 2 show    # 预览强制 HiDPI 会写什么（不安装）
 ```
 
 ---
@@ -141,17 +141,17 @@ lumenctl hidpi 2 show    # 预览强制 HiDPI 会写什么（不安装）
 
 规则（`AudioEngine.displayOwningOutput` 是唯一判据）：
 
-- 当前系统输出 **正是某台外接显示器自己的音频端点** → Lumen 接管音量/静音键。
+- 当前系统输出 **正是某台外接显示器自己的音频端点** → PWE Lumen Bar 接管音量/静音键。
 - 其余一切（蓝牙、AirPlay、内建扬声器、USB 声卡、聚合设备）→ **原样交还 macOS**，让系统去调真正在发声的设备，保留原生 HUD 与反馈音。
 - 亮度键不受影响，仍然跟光标走。
 
 接管那一支不是锦上添花：DisplayPort 音频端点常常**不暴露任何音量控制**（Philips 27B1U3900 实测 `vmvc`/`VolumeScalar`/`Mute` 全部不存在），系统音量键按下毫无反应，而 DDC VCP `0x62` 可用。所以接管的正是系统做不到的那一档；按键被吃掉后系统不会再播反馈音，`playVolumeFeedback()` 自己补上（尊重 `com.apple.sound.beep.feedback`）。
 
-Lumen 自己的 `⌃⌥←→` 保持按光标走 —— 那是它字面的含义，预设一台显示器的音量再切过去是真实需求 —— 但 OSD 第二行会写出声音实际在哪里，不假装你听得到。菜单卡片同理。
+PWE Lumen Bar 自己的 `⌃⌥←→` 保持按光标走 —— 那是它字面的含义，预设一台显示器的音量再切过去是真实需求 —— 但 OSD 第二行会写出声音实际在哪里，不假装你听得到。菜单卡片同理。
 
 `AudioEngine.startWatchingDefaultOutput()` 监听默认输出变化，切到 AirPods 时刷新的是路由，**不重跑 DDC 探测**。
 
-**实测**：把系统输出切到 Philips → `lumenctl audio` 报「接管」；切回内建扬声器 → 报「交还 macOS」。真实按键仍未验证（辅助功能授权受 ad-hoc 签名影响）。
+**实测**：把系统输出切到 Philips → `pwelumenctl audio` 报「接管」；切回内建扬声器 → 报「交还 macOS」。真实按键仍未验证（辅助功能授权受 ad-hoc 签名影响）。
 
 ---
 
@@ -162,7 +162,7 @@ Lumen 自己的 `⌃⌥←→` 保持按光标走 —— 那是它字面的含�
 会随系统变的全是私有接口，一律 `dlsym` 运行时解析。因此支持性不靠版本号断言，靠自检：
 
 - `Platform.compatibilityReport()` —— 13 个私有符号 + 芯片 + 系统版本 + CGS 结构体布局。
-- `lumenctl compat` 打印它；设置 › 系统显示同一份。
+- `pwelumenctl compat` 打印它；设置 › 系统显示同一份。
 - CGS 模式表的布局**自校验**：结构体第 184 字节存着自己的长度，读回来不是 212 就说明 Apple 动过，`CGSModeTable` 直接退回公开 API 并把**实际读到的值**写进日志 —— 这是在一台你没有的机器上唯一有用的那个数字。
 
 Intel：`IOAVService` 不存在，首次启动弹一次说明（`intelWarningShown`），之后不再打扰。

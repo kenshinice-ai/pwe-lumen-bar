@@ -1,4 +1,4 @@
-# Lumen
+# PWE Lumen Bar
 
 English · [中文](README.md)
 
@@ -6,10 +6,10 @@ A macOS menu bar display controller. Per-display brightness, contrast, warmth, v
 
 > **Supports only Apple Silicon (M-series), on macOS 26 and 27.**
 >
-> Nothing in Lumen's own code needs an API newer than macOS 14 — the package is
+> Nothing in PWE Lumen Bar's own code needs an API newer than macOS 14 — the package is
 > compiled against that floor so a newer one cannot creep in unnoticed.
 > Everything version-sensitive is private and resolved at run time, so run
-> `lumenctl compat` to see, on your machine, whether every entry point Lumen
+> `pwelumenctl compat` to see, on your machine, whether every entry point PWE Lumen Bar
 > depends on is present. Development and verification happen on 27.
 > Resolution goes through the private CGS mode table, rotation through SkyLight, DDC through `IOAVService` —
 > all three are Apple Silicon paths. The Intel equivalents have been removed from the code and are not supported.
@@ -18,7 +18,7 @@ A macOS menu bar display controller. Per-display brightness, contrast, warmth, v
 
 ```bash
 ./scripts/build-app.sh
-cp -R build/Lumen.app /Applications/ && open /Applications/Lumen.app
+cp -R build/PWE Lumen Bar.app /Applications/ && open /Applications/PWE Lumen Bar.app
 ```
 
 Click the display icon in the menu bar to open the panel. **Scroll on the icon** to change the brightness of whatever display the pointer is on without opening anything; **right-click** to switch presets. The interface follows the system language and can be forced to Chinese or English in Settings.
@@ -56,7 +56,7 @@ Every capability is **probed at run time**. What cannot be probed is greyed out 
 
 ## The connection decides which controls exist
 
-`kCGDisplayIsAirPlay` and `kCGDisplayIsVirtualDevice` in `CoreDisplay_DisplayCreateInfoDictionary` identify displays with no physical link, definitively. AirPlay screens and DisplayLink-style virtual displays **have no I2C channel**, so Lumen skips DDC entirely for them — saving three failed retries (about a second) on every refresh — and says plainly that only software dimming is available.
+`kCGDisplayIsAirPlay` and `kCGDisplayIsVirtualDevice` in `CoreDisplay_DisplayCreateInfoDictionary` identify displays with no physical link, definitively. AirPlay screens and DisplayLink-style virtual displays **have no I2C channel**, so PWE Lumen Bar skips DDC entirely for them — saving three failed retries (about a second) on every refresh — and says plainly that only software dimming is available.
 
 ## Why HiDPI needs a private API
 
@@ -68,7 +68,7 @@ Private CGS: 960×600 2x   1024×640 2x   1280×800 2x   1440×900 2x ←current
              1680×1050 2x   1920×1200 1x   2048×1280 1x   2560×1600 1x
 ```
 
-The documented `kCGDisplayShowDuplicateLowResolutionModes` option has **no effect at all** on this release. Every HiDPI mode lives only in the window server's own table. The struct offsets were confirmed against hardware (`Sources/LumenCore/CGSModeTable.swift`), and **offset 184 holds the struct's own length, 212** — if that stops reading back as 212 the layout has moved, and the whole private path is abandoned in favour of the public API rather than trusting misaligned memory.
+The documented `kCGDisplayShowDuplicateLowResolutionModes` option has **no effect at all** on this release. Every HiDPI mode lives only in the window server's own table. The struct offsets were confirmed against hardware (`Sources/LumenBarCore/CGSModeTable.swift`), and **offset 184 holds the struct's own length, 212** — if that stops reading back as 212 the layout has moved, and the whole private path is abandoned in favour of the public API rather than trusting misaligned memory.
 
 ## Three safety decisions
 
@@ -86,48 +86,48 @@ The lesson: `kCGDisplaySupportsRotation` claimed `true` for the built-in panel w
 
 ## Automation
 
-The `lumen://` URL scheme, usable from the Shortcuts "Open URLs" action:
+The `pwelumen://` URL scheme, usable from the Shortcuts "Open URLs" action:
 
 ```
-lumen://brightness?display=cursor&value=60     display = cursor / main / builtin / ID / name fragment
-lumen://brightness?display=main&delta=-10      relative
-lumen://volume?display=LG&value=30
-lumen://warmth?display=main&value=40
-lumen://mute?display=main&state=toggle
-lumen://preset?name=Work
-lumen://rotate?display=2&angle=90
-lumen://mode?display=main&id=cgs:3
-lumen://input?display=LG&source=hdmi1
-lumen://arrange?tile          lumen://sleep
+pwelumen://brightness?display=cursor&value=60     display = cursor / main / builtin / ID / name fragment
+pwelumen://brightness?display=main&delta=-10      relative
+pwelumen://volume?display=LG&value=30
+pwelumen://warmth?display=main&value=40
+pwelumen://mute?display=main&state=toggle
+pwelumen://preset?name=Work
+pwelumen://rotate?display=2&angle=90
+pwelumen://mode?display=main&id=cgs:3
+pwelumen://input?display=LG&source=hdmi1
+pwelumen://arrange?tile          pwelumen://sleep
 ```
 
-**Screen capture is deliberately absent from the URL scheme.** Any app or web page can open a custom URL, and Lumen holds Screen Recording permission — exposing capture there would hand silent screenshots to anything that can open a link. The other commands only change display settings, which are visible and reversible.
+**Screen capture is deliberately absent from the URL scheme.** Any app or web page can open a custom URL, and PWE Lumen Bar holds Screen Recording permission — exposing capture there would hand silent screenshots to anything that can open a link. The other commands only change display settings, which are visible and reversible.
 
 ## Command line
 
-`lumenctl` shares the engines with the interface. Add `--lang zh|en` to switch the output language.
+`pwelumenctl` shares the engines with the interface. Add `--lang zh|en` to switch the output language.
 
 ```bash
-lumenctl diag                        # which channel each display uses
-lumenctl modes 1 --all               # every mode, HiDPI included
-lumenctl set-mode 1 cgs:2 --revert 3 # switch and auto-revert after 3s
-lumenctl brightness 1 70
-lumenctl input 1 hdmi1
-lumenctl rotate-probe 1              # probe the rotation channel without rotating
-lumenctl capture 1                   # capture this display to the desktop
-lumenctl color 1 "Display P3"
-lumenctl arrange 2 left              # put display 2 left of the main one
-lumenctl details 1                   # full report, EDID availability included
-lumenctl preset save Work            # save / apply / delete presets
-lumenctl off 2                       # turn one display off (reversible)
-lumenctl on                          # turn it back on
-lumenctl remember on|off|show|clear
+pwelumenctl diag                        # which channel each display uses
+pwelumenctl modes 1 --all               # every mode, HiDPI included
+pwelumenctl set-mode 1 cgs:2 --revert 3 # switch and auto-revert after 3s
+pwelumenctl brightness 1 70
+pwelumenctl input 1 hdmi1
+pwelumenctl rotate-probe 1              # probe the rotation channel without rotating
+pwelumenctl capture 1                   # capture this display to the desktop
+pwelumenctl color 1 "Display P3"
+pwelumenctl arrange 2 left              # put display 2 left of the main one
+pwelumenctl details 1                   # full report, EDID availability included
+pwelumenctl preset save Work            # save / apply / delete presets
+pwelumenctl off 2                       # turn one display off (reversible)
+pwelumenctl on                          # turn it back on
+pwelumenctl remember on|off|show|clear
 ```
 
 ## Layout
 
 ```
-LumenCore/   Engines. No UI, fully drivable from the command line
+LumenBarCore/   Engines. No UI, fully drivable from the command line
   Dyn            every private symbol resolved via dlsym; missing ones degrade
                  the feature instead of killing the app at launch
   CGSModeTable   the private mode table, with a layout version guard
@@ -137,11 +137,11 @@ LumenCore/   Engines. No UI, fully drivable from the command line
   PowerEngine / InputEngine / CaptureEngine
   ColorEngine / ArrangementEngine / PresetEngine / DisplayDetails
   SettingsStore  keyed by EDID identity, not by the display ID that changes
-LumenUI/     Menu views, controller, global shortcuts, settings window, URL commands
+LumenBarUI/     Menu views, controller, global shortcuts, settings window, URL commands
              StatusItemController manages the status item directly, because
              MenuBarExtra cannot see scroll events
-Lumen/       App shell (plain AppKit)
-lumenctl/    Command line
+PWE Lumen Bar/       App shell (plain AppKit)
+pwelumenctl/    Command line
 scripts/     Packaging and vector icon generation
 ```
 
