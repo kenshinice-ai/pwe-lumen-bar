@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PWE Lumen Bar — every display, its own controls</title>
+<meta name="description" content="A macOS menu bar display controller for Apple Silicon. Per-display brightness, contrast, warmth, volume, resolution, HiDPI, orientation, input source and power — the MacBook's own panel included.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="canonical" href="https://pwestudio.site/lumenbar">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PWE Studio">
+<meta property="og:url" content="https://pwestudio.site/lumenbar">
+<meta property="og:title" content="PWE Lumen Bar">
+<meta property="og:description" content="Every display, its own controls. A macOS menu bar display controller for Apple Silicon.">
+<meta name="theme-color" content="#0E1729">
+<style>
+/* Page-local: the product shots. Everything else is the shared system in /style.css. */
+.lb-shot { margin: 0; }
+.lb-shot img { display: block; width: 100%; height: auto; border-radius: 12px; }
+.lb-hero-shot { box-shadow: 0 14px 44px rgba(0,0,0,0.42); border-radius: 12px; overflow: hidden; }
+.lb-figure { margin: 34px 0; }
+.lb-figure img { display: block; width: 100%; height: auto; }
+</style>
+</head>
+<body>
+
+<header class="band">
+  <div class="wrap wide">
+    <div class="bar">
+      <a class="lockup" href="/">
+        <img src="/wing-amber.svg" alt="" width="44" height="30">
+        <span><span class="pwe">PWE</span><br><span class="sub">LUMEN&nbsp;BAR</span></span>
+      </a>
+      <div style="display:flex;align-items:center;gap:18px">
+        <nav>
+          <a href="/" data-lang="en">All tools</a>
+          <a href="/" data-lang="zh">全部工具</a>
+          <a href="#pro" data-lang="en">Pro</a>
+          <a href="#pro" data-lang="zh">Pro</a>
+        </nav>
+        <div class="langs">
+          <button type="button" data-set="en" aria-pressed="true">EN</button>
+          <button type="button" data-set="zh" aria-pressed="false">中文</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-split">
+      <div>
+        <p class="eyebrow" data-lang="en">macOS · Apple Silicon</p>
+        <p class="eyebrow" data-lang="zh">macOS · Apple Silicon</p>
+        <h1 data-lang="en">Every display, its own controls.</h1>
+        <h1 data-lang="zh">每块屏，单独控制。</h1>
+        <p class="dek" data-lang="en">One card per screen: brightness, contrast, warmth, volume,
+          resolution, orientation, input source, power and screenshots — the MacBook's own panel
+          included. What a given monitor cannot do is greyed out with the reason, rather than
+          quietly doing nothing.</p>
+        <p class="dek" data-lang="zh">一块屏一张卡片：亮度、对比度、色温、音量、分辨率、方向、
+          输入源、开关、截图 —— 包括 MacBook 自己那块屏。某台显示器做不到的事会灰掉并写明原因，
+          而不是按下去毫无反应。</p>
+
+        <div class="hero-cta">
+          <a class="cta amber" href="/lumenbar/download/PWE-Lumen-Bar.dmg" data-lang="en">Download for macOS</a>
+          <a class="cta amber" href="/lumenbar/download/PWE-Lumen-Bar.dmg" data-lang="zh">下载 macOS 版</a>
+          <a class="cta light" href="#pro" data-lang="en">What Pro adds →</a>
+          <a class="cta light" href="#pro" data-lang="zh">Pro 加了什么 →</a>
+        </div>
+        <p class="hero-note" data-lang="en">Signed and notarised by Apple, so it opens with no security
+          warning. Requires macOS 26 or later on an Apple Silicon Mac. It lives in the menu bar and has
+          no Dock icon.</p>
+        <p class="hero-note" data-lang="zh">已由 Apple 签名公证，打开不会有安全提示。需要 macOS 26
+          或更新版本、Apple Silicon 机型。它住在菜单栏里，没有 Dock 图标。</p>
+      </div>
+
+      <figure class="lb-shot lb-hero-shot">
+        <!-- 🔴 Replace with a real capture of the panel, one per language.
+             It needs a person at the keyboard: the popover cannot be captured
+             from a script. -->
+        <img src="/lumenbar/img/welcome.png" alt="The welcome window: the mark, and the three things about the app that are not obvious." loading="eager" width="920" height="1080">
+      </figure>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <h2 data-lang="en">Why your 4K display looks softer than the laptop</h2>
+  <h2 data-lang="zh">为什么你的 4K 显示器不如笔记本屏清楚</h2>
+  <p class="lede" data-lang="en">Almost everyone notices it, and almost nobody is told why. macOS
+    renders at 1× or 2× — there is no arbitrary scaling. A 27-inch 4K display sits right in the gap:
+    at 2× everything is too big, so macOS falls back to 1× and the text loses its edge.</p>
+  <p class="lede" data-lang="zh">大多数人接上外接显示器的第一感受，而且几乎没人被告知原因。
+    macOS 只有 1 倍和 2 倍两种渲染方式，没有任意比例缩放。27 吋 4K 恰好卡在中间：
+    2 倍下什么都太大，于是 macOS 退回 1 倍，文字就失去了锐度。</p>
+
+  <h2 data-lang="en">The keys follow the sound, not the pointer</h2>
+  <h2 data-lang="zh">音量键跟着声音走，不跟着光标走</h2>
+  <p data-lang="en">Brightness belongs to a display; volume belongs to an output device. Treating the
+    volume keys like the brightness keys means that when you are on AirPods, the keys move a monitor's
+    speakers you cannot hear — the HUD moves, the sound does not. So the volume keys are taken over in
+    exactly one case: when the system output <em>is</em> an external display's own speakers, which is
+    the case where DisplayPort audio often exposes no volume control at all and DDC does. Everything
+    else is handed back to macOS, native HUD and all.</p>
+  <p data-lang="zh">亮度是显示器的属性，音量是输出设备的属性。把音量键当亮度键处理，
+    结果是你戴着 AirPods 时，按键去调了一台你根本听不到的显示器扬声器 —— HUD 动了，声音没变。
+    所以音量键只在一种情况下被接管：系统输出<em>正是</em>某台外接显示器自己的音频端点 ——
+    这恰好是 DisplayPort 音频常常不暴露任何音量控制、而 DDC 可用的那一档。
+    其余一切原样交还 macOS，连原生 HUD 和反馈音都保留。</p>
+
+  <h2 data-lang="en">What it will not pretend to do</h2>
+  <h2 data-lang="zh">它不会假装能做的事</h2>
+  <div class="grid">
+    <div class="card">
+      <h3 data-lang="en">Apple displays ignore DDC</h3>
+      <h3 data-lang="zh">Apple 自家屏不响应 DDC</h3>
+      <p data-lang="en">A Studio Display speaks Apple's own protocol, not DDC/CI. Brightness works
+        through the Apple path; contrast and input switching are shown as unavailable, because they
+        are.</p>
+      <p data-lang="zh">Studio Display 用的是 Apple 自有协议，不是 DDC/CI。亮度走 Apple 的通道；
+        对比度和输入源会显示为不可用 —— 因为事实如此。</p>
+    </div>
+    <div class="card">
+      <h3 data-lang="en">Two operations cannot be undone</h3>
+      <h3 data-lang="zh">两个操作软件撤不回来</h3>
+      <p data-lang="en">On some monitors, a DDC power-off or an input switch takes the display out of
+        the system entirely — the physical button is the only way back. Both ask first, and both say
+        so.</p>
+      <p data-lang="zh">在有些显示器上，DDC 断电或切换输入会让显示器整个离开系统 ——
+        只能按物理按键回来。两者都会先确认，也都会说明清楚。</p>
+    </div>
+    <div class="card">
+      <h3 data-lang="en">Apple Silicon only</h3>
+      <h3 data-lang="zh">只支持 Apple Silicon</h3>
+      <p data-lang="en">DDC/CI here runs over <code>IOAVService</code>, which does not exist on Intel
+        Macs. Rather than ship a build that half-works, the Intel paths were removed.</p>
+      <p data-lang="zh">这里的 DDC/CI 走 <code>IOAVService</code>，Intel 机器上根本没有这个接口。
+        与其发一个半能用的版本，不如把 Intel 路径整个移除。</p>
+    </div>
+    <div class="card">
+      <h3 data-lang="en">Nothing leaves your Mac</h3>
+      <h3 data-lang="zh">没有任何东西离开你的 Mac</h3>
+      <p data-lang="en">There is no network code in the app. No account, no sync, no analytics, and the
+        licence is verified offline on your own machine.</p>
+      <p data-lang="zh">应用里没有网络代码。无账号、不同步、不收集分析数据，
+        授权在你自己的机器上离线校验。</p>
+    </div>
+  </div>
+
+  <div id="pro">
+    <h2 data-lang="en">Pro unlocks one thing</h2>
+    <h2 data-lang="zh">Pro 只解锁一件事</h2>
+  </div>
+  <p class="lede" data-lang="en">Forced HiDPI. Your monitor has the pixels; what it lacks are the modes
+    macOS will render at 2× into. Pro writes them into the system, and after a restart you get options
+    like "looks like 2560×1440" — rendered the way a Retina screen is, instead of a stretched
+    approximation. Everything else in the app is free.</p>
+  <p class="lede" data-lang="zh">强制开启 HiDPI。你的显示器像素足够多，缺的只是 macOS 愿意用 2 倍渲染的
+    那几档模式。Pro 把它们补进系统，重启后就多出「看起来像 2560×1440」这样的选项 ——
+    和 Retina 屏同一种渲染方式，而不是被拉伸过的近似值。应用里其余功能都是免费的。</p>
+  <p data-lang="en">It needs an administrator password, which macOS asks for directly — the app never
+    sees it — and the override can be removed from the same menu it was installed from.</p>
+  <p data-lang="zh">它需要管理员密码，由 macOS 自己弹窗索取 —— 应用不接触这个密码 ——
+    覆盖也可以从安装它的同一个菜单里移除。</p>
+
+  <!-- 🔴 定价未定。定下来之后，这里放价格与购买按钮；在那之前只留联系方式。 -->
+  <p data-lang="en"><a class="cta amber" href="mailto:lee.liu.melbourne@gmail.com?subject=PWE%20Lumen%20Bar%20Pro">Ask about a Pro licence</a></p>
+  <p data-lang="zh"><a class="cta amber" href="mailto:lee.liu.melbourne@gmail.com?subject=PWE%20Lumen%20Bar%20Pro">咨询 Pro 授权</a></p>
+
+  <h2 data-lang="en">Requirements</h2>
+  <h2 data-lang="zh">运行要求</h2>
+  <p data-lang="en">An Apple Silicon Mac (M1 or later) on macOS 26 or later. Two permissions are
+    optional and off until you ask: Accessibility, only if you want F1/F2 to act on an external
+    display; Screen Recording, only for per-display screenshots.</p>
+  <p data-lang="zh">Apple Silicon 机型（M1 及以后），macOS 26 或更新版本。两个权限都是可选的、
+    默认关闭：「辅助功能」只在你想让 F1/F2 作用于外接屏时需要；「屏幕录制」只在使用按屏截图时需要。</p>
+
+</main>
+
+<footer class="wrap wide">
+  <span><span class="sig">Tools from PWE Studio.</span><br>© PWE Group Pty Ltd · ABN 55 606 664 546</span>
+  <span class="credit"><img src="/wing-navy.svg" alt="" width="16" height="11">A PARADISE PRODUCTION</span>
+</footer>
+
+<script>
+(function () {
+  var saved = null;
+  try { saved = localStorage.getItem("pwe-lang"); } catch (e) {}
+  var prefersZh = (navigator.language || "en").toLowerCase().indexOf("zh") === 0;
+  set(saved || (prefersZh ? "zh" : "en"));
+  document.querySelectorAll(".langs button").forEach(function (b) {
+    b.addEventListener("click", function () { set(b.dataset.set); });
+  });
+  function set(l) {
+    document.documentElement.lang = l;
+    try { localStorage.setItem("pwe-lang", l); } catch (e) {}
+    document.querySelectorAll(".langs button").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.set === l));
+    });
+  }
+})();
+</script>
+</body>
+</html>

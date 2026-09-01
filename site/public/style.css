@@ -1,0 +1,468 @@
+/* PWE Studio — the same tokens the app and the printed guides use. */
+:root {
+  --navy: #0E1729; --navy-lift: #22355A; --paper: #F7F5F2; --paper-warm: #EFEAE2;
+  --ink: #0C0A09; --rule: #E3DFD8; --muted: #6B7280;
+  --amber: #F5B335;        /* dark grounds only — fails AA on paper */
+  --deep-amber: #A16207;   /* the accent that is legal on paper */
+  --on-dark: #F3F1EE; --on-dark-2: rgba(243,241,238,0.66);
+  --good: #1E7A46;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--paper); color: var(--ink); line-height: 1.65;
+  font-family: Inter, "PingFang SC", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 16px; -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+.wide { max-width: 980px; }
+
+/* ── header ── */
+header.band { background: linear-gradient(135deg, var(--navy-lift), var(--navy));
+  color: var(--on-dark); border-bottom: 3px solid var(--amber); }
+header.band .bar { display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 0; gap: 16px; flex-wrap: wrap; }
+.lockup { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.lockup svg { height: 30px; width: auto; }
+.lockup .pwe { font-family: "Playfair Display", Georgia, serif; font-weight: 500;
+  font-size: 24px; letter-spacing: 0.07em; color: var(--on-dark); line-height: 1; }
+.lockup .sub { font-size: 9px; letter-spacing: 0.44em; color: var(--amber); margin-top: 4px; }
+nav a { color: var(--on-dark-2); text-decoration: none; font-size: 14px; margin-left: 22px; }
+nav a:hover { color: var(--amber); }
+.langs { display: inline-flex; border: 1px solid rgba(243,241,238,0.28); border-radius: 6px; overflow: hidden; }
+.langs button { background: none; border: 0; color: var(--on-dark-2); font: inherit; font-size: 13px;
+  padding: 4px 12px; cursor: pointer; }
+.langs button[aria-pressed="true"] { background: var(--amber); color: var(--navy); font-weight: 600; }
+
+/* The brand signature. Small-label spec from brand-identity.html: Inter Semibold 600,
+   letter-spacing +0.18em, caps. Amber is legal here because the ground is navy. */
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--amber); margin-bottom: 2px; }
+footer .sig { font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--deep-amber); font-size: 11px; }
+
+header.band h1 { font-family: "Playfair Display", Georgia, serif; font-weight: 500;
+  font-size: clamp(28px, 5vw, 42px); line-height: 1.2; padding-top: 14px; max-width: 20ch;
+  /* Short headlines are the ones that strand a word on their own line — "So we made / it."
+     Balance splits them evenly instead, and is ignored where unsupported. */
+  text-wrap: balance; }
+header.band .dek { color: var(--on-dark-2); font-size: 17px; margin-top: 14px; max-width: 60ch; }
+
+/* Download sits in the hero, not below the fold — it is what most visitors came for.
+   Amber on navy is the brand's signature pairing and the one place it is legal. */
+.hero-cta { padding: 26px 0 46px; }
+.cta.amber { background: var(--amber); color: var(--navy); }
+.cta.amber:hover { background: #FFC65A; }
+.cta.light { background: none; color: var(--on-dark); border: 1.5px solid rgba(243,241,238,0.4); }
+.cta.light:hover { border-color: var(--amber); color: var(--amber); }
+.hero-note { color: var(--on-dark-2); font-size: 13.5px; margin: 14px 0 0; }
+header.band.slim h1 { font-size: clamp(24px, 4vw, 32px); }
+header.band.slim .dek { padding-bottom: 30px; }
+
+/* ── content ── */
+main { padding: 48px 0 20px; }
+h2 { font-size: 21px; font-weight: 600; margin: 40px 0 14px; }
+h2:first-child { margin-top: 0; }
+h3 { font-size: 16px; font-weight: 600; margin: 26px 0 8px; }
+p { margin-bottom: 14px; color: #3F3C39; }
+p.lede { font-size: 18px; color: var(--ink); }
+ul { margin: 0 0 16px 20px; color: #3F3C39; }
+li { margin-bottom: 7px; }
+a { color: var(--deep-amber); }
+code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13.5px; }
+.label { font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--deep-amber); margin-bottom: 10px; }
+
+.card { background: #fff; border: 1px solid var(--rule); border-radius: 12px;
+  padding: 22px 24px; margin-bottom: 16px; }
+.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+@media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }
+.grid .card { margin-bottom: 0; }
+.card h3 { margin-top: 0; }
+.card .en-tab { font-size: 11px; letter-spacing: 0.12em; color: var(--deep-amber);
+  font-weight: 600; margin-bottom: 10px; }
+.card li { font-size: 14.5px; }
+
+.panel { background: var(--paper-warm); border-radius: 12px; padding: 22px 24px; margin: 22px 0; }
+.panel.good { border-left: 4px solid var(--good); }
+pre { background: var(--navy); color: var(--on-dark); border-radius: 10px; padding: 16px 18px;
+  overflow-x: auto; font-size: 13px; line-height: 1.6; margin-bottom: 16px; }
+pre .k { color: var(--amber); }
+
+table { width: 100%; border-collapse: collapse; margin-bottom: 18px; }
+th { text-align: left; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); border-bottom: 2px solid var(--navy); padding-bottom: 8px; }
+td { padding: 10px 0; border-bottom: 1px solid var(--rule); font-size: 15px; color: #3F3C39;
+  vertical-align: top; }
+td:first-child { font-weight: 600; color: var(--ink); width: 34%; padding-right: 16px; }
+
+.cta { display: inline-block; background: var(--navy); color: var(--on-dark); text-decoration: none;
+  font-weight: 600; padding: 13px 28px; border-radius: 8px; margin: 4px 8px 4px 0; }
+.cta:hover { background: var(--navy-lift); }
+.cta.ghost { background: none; color: var(--deep-amber); border: 1.5px solid var(--deep-amber); }
+
+.tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.tier { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 22px 24px; }
+.tier.hero { border: 2px solid rgba(161,98,7,0.55); }
+.tier .top { display: flex; justify-content: space-between; align-items: baseline; }
+.tier .name { font-size: 18px; font-weight: 600; }
+.tier .price { font-size: 26px; font-weight: 600; }
+.tier.hero .price { color: var(--deep-amber); }
+.tier .who { color: var(--muted); font-size: 14px; margin: 4px 0 12px; }
+.tier li { font-size: 14.5px; }
+
+footer { border-top: 1px solid var(--rule); margin-top: 56px; padding: 24px 0 40px;
+  display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+footer, footer a { color: var(--muted); font-size: 13px; }
+footer .credit { display: flex; align-items: center; gap: 8px; letter-spacing: 0.16em; font-size: 11px; }
+footer .credit svg { height: 11px; width: auto; }
+footer .credit svg g { fill: var(--muted); }
+
+/* Language switching hides the OTHER language rather than hiding everything and
+   reverting the active one. `display: revert` returns the browser default, which loses
+   any author display (a flex row silently became a block), and the low specificity of
+   `[data-lang]` let any later rule with a display property win — showing both languages
+   at once. Hiding the inactive side leaves the active side's own styling untouched. */
+html[lang="en"] [data-lang="zh"] { display: none; }
+html[lang="zh"] [data-lang="en"] { display: none; }
+
+@media (prefers-color-scheme: dark) {
+  :root { --paper: #12161C; --paper-warm: #1A1F27; --ink: #F2F4F6; --rule: #2A3240; --muted: #97A1B0;
+          --deep-amber: #F5B335; }
+  body { background: var(--paper); color: var(--ink); }
+  p, ul, td { color: #C6CCD5; }
+  .card, .tier { background: #171C24; }
+  td:first-child { color: var(--ink); }
+}
+
+/* The footer mark ships as navy artwork; on a dark ground invert it rather than
+   shipping a third copy of the same wing. */
+footer .credit img { opacity: 0.75; }
+@media (prefers-color-scheme: dark) {
+  footer .credit img { filter: invert(1); opacity: 0.6; }
+}
+
+/* ── feature bullets: the amber tick the printed guides use ── */
+.card ul, .tier ul { list-style: none; margin-left: 0; }
+.card li, .tier li { padding-left: 20px; position: relative; }
+.card li::before, .tier li::before { content: "✓"; position: absolute; left: 0; top: 0;
+  color: var(--deep-amber); font-weight: 700; font-size: 13px; }
+
+/* ── the macOS menu bar, drawn ── */
+.macbar { background: linear-gradient(180deg, #2B2F36, #1E2228); border-radius: 8px 8px 0 0;
+  padding: 8px 16px; display: flex; align-items: center; gap: 16px; justify-content: flex-end; }
+.macbar .glyph { color: rgba(255,255,255,0.5); font-size: 13px; }
+.macbar .clock { color: rgba(255,255,255,0.85); font-size: 13px; font-weight: 500; }
+.macbar .wingslot { display: flex; align-items: center; padding: 4px 8px; border-radius: 5px;
+  background: rgba(245,179,53,0.18); outline: 2px solid var(--amber); }
+.macbar .wingslot img { height: 15px; width: auto; display: block; }
+.macbar-desktop { background: linear-gradient(180deg, #F2EFEA, #E7E2DA); height: 44px;
+  border-radius: 0 0 8px 8px; display: flex; align-items: center; justify-content: center;
+  font-size: 13px; color: #6B7280; text-align: center; padding: 0 16px; }
+.pointer { color: var(--deep-amber); font-weight: 600; margin-top: 12px; font-size: 15px; }
+
+/* ── the Settings → License panel, drawn ── */
+.uipanel { max-width: 340px; border: 1px solid var(--rule); border-radius: 10px; overflow: hidden;
+  background: #fff; box-shadow: 0 4px 18px rgba(14,23,41,0.12); }
+.uipanel .tabs { display: flex; background: linear-gradient(135deg, var(--navy-lift), var(--navy));
+  border-bottom: 2px solid var(--amber); }
+.uipanel .tab { flex: 1; text-align: center; padding: 11px 0 9px; font-size: 12px;
+  color: rgba(243,241,238,0.55); }
+.uipanel .tab.on { color: var(--amber); font-weight: 600; }
+.uipanel .pbody { padding: 14px 16px 16px; background: var(--paper); }
+.uipanel .box { border: 1px dashed var(--rule); border-radius: 7px; background: #fff; padding: 10px;
+  font-size: 11px; color: var(--muted); font-family: ui-monospace, monospace; line-height: 1.6;
+  min-height: 74px; }
+.uipanel .btn { margin-top: 12px; display: inline-block; background: var(--navy); color: var(--on-dark);
+  font-size: 13px; font-weight: 600; padding: 8px 22px; border-radius: 6px; }
+.figcap { font-size: 13px; color: var(--muted); text-align: center; margin-top: 10px; }
+
+.twocol { display: grid; grid-template-columns: 1.15fr 1fr; gap: 32px; align-items: start; }
+@media (max-width: 720px) { .twocol { grid-template-columns: 1fr; } }
+
+.steps { counter-reset: step; margin-top: 8px; }
+.stepblock { display: grid; grid-template-columns: 34px 1fr; gap: 16px; margin-bottom: 30px; }
+.stepblock .n { font-family: "Playfair Display", Georgia, serif; font-weight: 600; font-size: 24px;
+  color: var(--deep-amber); line-height: 1.1; }
+.stepblock h3 { margin: 0 0 8px; }
+kbd { font-family: Inter, sans-serif; font-weight: 600; font-size: 13px; border: 1px solid var(--rule);
+  border-bottom-width: 2px; border-radius: 4px; padding: 1px 6px; background: #fff; color: var(--ink);
+  white-space: nowrap; }
+@media (prefers-color-scheme: dark) { kbd, .uipanel, .uipanel .box { background: #171C24; } }
+
+.winnote { background: linear-gradient(135deg, var(--navy-lift), var(--navy)); color: var(--on-dark);
+  border-radius: 12px; padding: 24px 26px; margin: 26px 0; }
+.winnote h3 { color: var(--on-dark); margin: 0 0 8px; }
+.winnote p { color: var(--on-dark-2); margin-bottom: 12px; }
+.winnote a.cta { margin: 0; }
+.winnote .winrow { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.winnote .winmeta { font-size: 13px; color: var(--on-dark-2); margin: 14px 0 0; line-height: 1.6; }
+.winnote .winmeta b { color: var(--on-dark); font-weight: 600; }
+.winnote .winmeta i { font-style: normal; color: var(--on-dark); }
+
+/* ── hero: copy left, the exported card right ── */
+.hero-split { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 40px; align-items: center; }
+@media (max-width: 860px) { .hero-split { grid-template-columns: 1fr; }
+  .hero-split .shot { display: none; } }
+.shot .frame { background: #fff; border-radius: 10px; overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.35); }
+.shot .s-head { background: linear-gradient(135deg, var(--navy-lift), var(--navy));
+  padding: 12px 16px; border-bottom: 2px solid var(--amber);
+  display: flex; justify-content: space-between; align-items: center; }
+.shot .s-title { font-family: "Playfair Display", Georgia, serif; font-size: 15px; color: var(--on-dark); }
+.shot .s-head img { height: 13px; width: auto; }
+.shot .s-body { padding: 14px 16px 12px; background: #F7F5F2; }
+.shot .s-label { font-size: 9px; font-weight: 600; letter-spacing: 0.16em; color: #6B7280; }
+.shot .s-big { font-family: "Playfair Display", Georgia, serif; font-weight: 600; font-size: 30px;
+  color: #0E1729; margin: 3px 0 12px; }
+.shot .s-big small { font-family: Inter, sans-serif; font-size: 12px; font-weight: 500; color: #6B7280; }
+.shot .s-row { display: flex; justify-content: space-between; font-size: 12px; color: #3F3C39;
+  border-bottom: 1px solid #E3DFD8; padding: 6px 0; }
+.shot .s-row b { color: #0C0A09; }
+.shot .s-foot { display: flex; justify-content: flex-end; align-items: center; gap: 6px;
+  padding: 9px 16px 11px; background: #F7F5F2; font-size: 8px; letter-spacing: 0.16em; color: #6B7280; }
+.shot .s-foot img { height: 8px; width: auto; }
+.shot .cap { text-align: center; font-size: 13px; color: var(--on-dark-2); margin-top: 12px; }
+
+/* ── keyboard focus ──────────────────────────────────────────────────────────
+   There was no focus style at all: a keyboard user could tab the whole page and
+   never see where they were. :focus-visible rather than :focus, so a mouse click
+   does not leave a ring behind — the reason the default was removed everywhere in
+   the first place. Amber on navy, deep amber on paper: the same rule as the type. */
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--deep-amber);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+header.band :where(a, button):focus-visible,
+.winnote :where(a, button):focus-visible {
+  outline-color: var(--amber);
+}
+@media (prefers-color-scheme: dark) {
+  :where(a, button, [tabindex]):focus-visible { outline-color: var(--amber); }
+}
+
+/* Skip link — the header carries a lockup, six nav links and a language toggle
+   before the first word of the page. */
+.skip {
+  position: absolute; left: 8px; top: -60px; z-index: 100;
+  background: var(--amber); color: var(--navy);
+  font-weight: 600; font-size: 14px; padding: 10px 18px; border-radius: 6px;
+  text-decoration: none; transition: top 120ms ease;
+}
+.skip:focus { top: 8px; }
+
+/* ── reduced motion ──────────────────────────────────────────────────────────
+   html { scroll-behavior: smooth } is a motion effect, and an in-page anchor that
+   glides is exactly what this setting exists to stop. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── product shots ───────────────────────────────────────────────────────────
+   Rendered from the app itself by `PWE Loan Bar --shots` (see MarketingShots.swift),
+   at the window's own 470x700, so the page cannot advertise an interface that has
+   moved on. width/height are declared on every <img> to reserve the box before the
+   file arrives — otherwise each one shoves the section below it down on load. */
+.appshot { margin: 0; }
+.appshot img {
+  display: block; width: 100%; height: auto;
+  border-radius: 12px; background: var(--navy);
+  box-shadow: 0 12px 40px rgba(14, 23, 41, 0.30);
+}
+.appshot figcaption { font-size: 13px; color: var(--muted); margin-top: 10px; }
+.featurerow { display: grid; grid-template-columns: 1fr 0.72fr; gap: 34px; align-items: center;
+  margin: 34px 0; }
+.featurerow.flip { grid-template-columns: 0.72fr 1fr; }
+.featurerow.flip .featurecopy { order: 2; }
+@media (max-width: 760px) {
+  .featurerow, .featurerow.flip { grid-template-columns: 1fr; gap: 21px; }
+  .featurerow.flip .featurecopy { order: 0; }
+}
+
+/* A conversion path in the middle of the page. The hero and the pricing block were
+   160 lines apart with nothing between them. */
+.midcta { border: 1px solid var(--rule); border-radius: 12px; padding: 26px 28px;
+  margin: 34px 0; display: flex; flex-wrap: wrap; gap: 16px;
+  align-items: center; justify-content: space-between; background: var(--paper-warm); }
+.midcta p { margin: 0; max-width: 46ch; }
+.midcta .cta { margin: 0; }
+@media (prefers-color-scheme: dark) { .midcta { background: #171C24; } }
+
+/* ── the app, drawn ──────────────────────────────────────────────────────────
+   A vector replica of the window rather than a screen capture: it stays sharp at
+   any size, follows the page into dark mode, carries its labels in both languages
+   and weighs nothing. It is a replica, so it can drift — when a tab changes shape,
+   this changes with it. Scale is set by --u so the whole window can be resized from
+   one number; everything inside is expressed in it. */
+.appwin {
+  --u: 1px;
+  width: 100%; max-width: calc(470 * var(--u));
+  background: #101B31; border-radius: calc(11 * var(--u));
+  box-shadow: 0 calc(18 * var(--u)) calc(52 * var(--u)) rgba(0,0,0,.42);
+  overflow: hidden; font-size: calc(11 * var(--u)); line-height: 1.35;
+  color: var(--on-dark); border: 1px solid rgba(255,255,255,.07);
+}
+.appwin * { box-sizing: border-box; }
+.appwin .tbar { display: flex; gap: calc(6 * var(--u)); padding: calc(11 * var(--u)) calc(13 * var(--u)); }
+.appwin .tbar i { width: calc(9 * var(--u)); height: calc(9 * var(--u)); border-radius: 50%;
+  background: rgba(255,255,255,.16); display: block; }
+.appwin .head { padding: 0 calc(16 * var(--u)) calc(11 * var(--u)); }
+.appwin .idrow { display: flex; align-items: center; justify-content: center; gap: calc(8 * var(--u));
+  position: relative; }
+.appwin .idrow img { height: calc(13 * var(--u)); width: auto; }
+.appwin .wordmark { font-family: "Playfair Display", Georgia, serif; font-size: calc(15 * var(--u));
+  letter-spacing: .06em; line-height: 1; }
+.appwin .wordmark small { display: block; font-family: Inter, sans-serif; font-size: calc(6 * var(--u));
+  letter-spacing: .36em; color: var(--amber); margin-top: calc(2 * var(--u)); }
+.appwin .au { border: 1px solid rgba(245,179,53,.5); color: var(--amber); border-radius: 999px;
+  font-size: calc(7.5 * var(--u)); font-weight: 600; padding: calc(1.5 * var(--u)) calc(6 * var(--u)); }
+.appwin .tools { position: absolute; right: 0; display: flex; gap: calc(9 * var(--u));
+  color: rgba(243,241,238,.45); font-size: calc(10 * var(--u)); }
+.appwin .tools svg { width: calc(11 * var(--u)); height: calc(11 * var(--u)); display: block;
+  fill: none; stroke: currentColor; stroke-width: .9; stroke-linejoin: round; }
+.appwin .tools .on { color: var(--amber); }
+/* Frequency carries three words; Extra /mth carries a number. Splitting them evenly
+   ran the segmented control's labels together. */
+.appwin .freqrow { display: grid; grid-template-columns: 1.75fr 1fr; gap: calc(8 * var(--u)); }
+.appwin .freqrow .seg span { font-size: calc(8.5 * var(--u)); padding: calc(6.5 * var(--u)) calc(2 * var(--u)); }
+.appwin .tabs { display: flex; margin: calc(10 * var(--u)) 0 0;
+  border: 1px solid rgba(255,255,255,.08); border-radius: calc(8 * var(--u)); overflow: hidden; }
+.appwin .tabs span { flex: 1; text-align: center; padding: calc(7 * var(--u)) 0;
+  font-size: calc(9.5 * var(--u)); color: rgba(243,241,238,.5); }
+.appwin .tabs span.on { color: var(--on-dark); font-weight: 600; background: rgba(255,255,255,.05); }
+.appwin .rule { height: calc(2 * var(--u)); background: var(--amber); }
+.appwin .body { padding: calc(13 * var(--u)); display: grid; gap: calc(10 * var(--u)); }
+.appwin .panel { background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.06);
+  border-radius: calc(9 * var(--u)); padding: calc(12 * var(--u)); }
+.appwin .plabel { font-size: calc(7.5 * var(--u)); font-weight: 600; letter-spacing: .17em;
+  color: var(--amber); }
+.appwin .plabel.dim { color: rgba(243,241,238,.45); }
+.appwin .big { font-family: Inter, sans-serif; font-weight: 600; font-size: calc(30 * var(--u));
+  letter-spacing: -.015em; margin: calc(3 * var(--u)) 0 calc(9 * var(--u)); }
+.appwin .big u { text-decoration: none; font-size: calc(11 * var(--u)); font-weight: 500;
+  color: rgba(243,241,238,.55); }
+.appwin .split2 { display: grid; grid-template-columns: 1fr 1fr; gap: calc(8 * var(--u)); }
+.appwin .chip { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.07);
+  border-radius: calc(6 * var(--u)); padding: calc(7 * var(--u)) calc(9 * var(--u)); }
+.appwin .chip small { display: block; font-size: calc(8 * var(--u)); color: rgba(243,241,238,.5); }
+.appwin .chip b { font-size: calc(11.5 * var(--u)); font-weight: 600; }
+.appwin .field small { display: block; font-size: calc(8.5 * var(--u)); color: rgba(243,241,238,.5);
+  margin-bottom: calc(3 * var(--u)); }
+.appwin .field div { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.09);
+  border-radius: calc(6 * var(--u)); padding: calc(7 * var(--u)) calc(9 * var(--u));
+  font-size: calc(11 * var(--u)); font-weight: 500; display: flex; justify-content: space-between; }
+.appwin .field div em { font-style: normal; color: rgba(243,241,238,.4); }
+.appwin .seg { display: flex; border: 1px solid rgba(255,255,255,.09); border-radius: calc(6 * var(--u));
+  overflow: hidden; font-size: calc(9.5 * var(--u)); }
+.appwin .seg span { flex: 1; text-align: center; padding: calc(6 * var(--u)) 0;
+  color: rgba(243,241,238,.5); }
+.appwin .seg span.on { background: rgba(255,255,255,.09); color: var(--on-dark); font-weight: 600; }
+.appwin .toggle { width: calc(26 * var(--u)); height: calc(15 * var(--u)); border-radius: 999px;
+  background: rgba(255,255,255,.14); position: relative; }
+.appwin .toggle::after { content: ""; position: absolute; top: calc(2 * var(--u)); left: calc(2 * var(--u));
+  width: calc(11 * var(--u)); height: calc(11 * var(--u)); border-radius: 50%; background: #fff; }
+.appwin .row { display: flex; align-items: center; justify-content: space-between; }
+.appwin .sum { display: flex; align-items: center; gap: calc(14 * var(--u)); margin-top: calc(9 * var(--u)); }
+.appwin .donut { width: calc(62 * var(--u)); height: calc(62 * var(--u)); border-radius: 50%; flex: none;
+  background: conic-gradient(var(--amber) 0 53%, #8FA6C9 53% 100%);
+  display: grid; place-items: center; }
+.appwin .donut::after { content: ""; width: calc(42 * var(--u)); height: calc(42 * var(--u));
+  border-radius: 50%; background: #101B31; grid-area: 1/1; }
+.appwin .donut b { grid-area: 1/1; z-index: 1; font-size: calc(13 * var(--u)); font-weight: 600; }
+.appwin .sumrows { flex: 1; display: grid; gap: calc(5 * var(--u)); font-size: calc(10 * var(--u)); }
+.appwin .sumrows div { display: flex; justify-content: space-between; align-items: center; }
+.appwin .sumrows i { width: calc(6 * var(--u)); height: calc(6 * var(--u)); border-radius: 50%;
+  display: inline-block; margin-right: calc(6 * var(--u)); }
+.appwin .sumrows span { color: rgba(243,241,238,.62); }
+.appwin .sumrows b { font-weight: 600; }
+
+/* ── readout fragments ───────────────────────────────────────────────────────
+   A whole window beside every feature would be four near-identical pictures. Each
+   section gets the part of the app that section is about instead — the number that
+   tab exists to produce, and the two or three lines under it that explain the number. */
+.frag { --u: 1px; background: #101B31; border: 1px solid rgba(255,255,255,.07);
+  border-radius: calc(10 * var(--u)); padding: calc(15 * var(--u)) calc(16 * var(--u));
+  color: var(--on-dark); font-size: calc(11 * var(--u)); }
+.frag .plabel { font-size: calc(7.5 * var(--u)); font-weight: 600; letter-spacing: .17em;
+  color: var(--amber); }
+.frag .big { font-weight: 600; font-size: calc(27 * var(--u)); letter-spacing: -.015em;
+  margin: calc(4 * var(--u)) 0 calc(10 * var(--u)); }
+.frag .big u { text-decoration: none; font-size: calc(11 * var(--u)); font-weight: 500;
+  color: rgba(243,241,238,.55); }
+.frag dl { display: grid; grid-template-columns: 1fr auto; gap: calc(6 * var(--u)) calc(12 * var(--u));
+  margin: 0; font-size: calc(10.5 * var(--u)); }
+.frag dt { color: rgba(243,241,238,.58); }
+.frag dd { margin: 0; font-weight: 600; text-align: right; }
+.frag dd.amber { color: var(--amber); }
+.frag hr { border: 0; border-top: 1px solid rgba(255,255,255,.09); margin: calc(10 * var(--u)) 0; }
+.frag .bar { height: calc(6 * var(--u)); border-radius: 999px; background: rgba(255,255,255,.10);
+  overflow: hidden; margin: calc(9 * var(--u)) 0 calc(6 * var(--u)); }
+.frag .bar i { display: block; height: 100%; background: var(--amber); border-radius: 999px; }
+.frag .note { font-size: calc(9.5 * var(--u)); color: rgba(243,241,238,.5); margin: 0; }
+.frag .cmp { display: grid; grid-template-columns: 1fr 1fr; gap: calc(9 * var(--u));
+  margin-top: calc(4 * var(--u)); }
+.frag .cmp div { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.07);
+  border-radius: calc(6 * var(--u)); padding: calc(8 * var(--u)) calc(10 * var(--u)); }
+.frag .cmp small { display: block; font-size: calc(8.5 * var(--u)); color: rgba(243,241,238,.5); }
+.frag .cmp b { font-size: calc(14 * var(--u)); font-weight: 600; }
+.frag .cmp .win b { color: var(--amber); }
+
+/* The tab's English name now sits above the heading. In a card it was a sub-label; in a
+   feature row it was a second title in caps, competing with the real one. */
+.featurecopy .en-tab { margin-bottom: calc(2px); }
+.featurecopy h3 { margin-top: 4px; }
+
+/* ── guide figures ───────────────────────────────────────────────────────────
+   Drawn, like the window on /app, for the same reasons: sharp at any size, follows
+   the theme, and no screenshot to go stale. */
+
+/* The disk image, as it opens. */
+.dmg { --u: 1px; max-width: calc(300 * var(--u)); background: var(--paper-warm);
+  border: 1px solid var(--rule); border-radius: calc(9 * var(--u)); overflow: hidden;
+  box-shadow: 0 calc(8 * var(--u)) calc(26 * var(--u)) rgba(14,23,41,.16); }
+.dmg .bar { display: flex; gap: calc(5 * var(--u)); padding: calc(9 * var(--u)) calc(11 * var(--u));
+  background: linear-gradient(180deg, #FBFAF8, #EFEAE2); border-bottom: 1px solid var(--rule); }
+.dmg .bar i { width: calc(8 * var(--u)); height: calc(8 * var(--u)); border-radius: 50%;
+  background: rgba(14,23,41,.16); }
+.dmg .floor { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+  gap: calc(6 * var(--u)); padding: calc(22 * var(--u)) calc(16 * var(--u)) calc(18 * var(--u)); }
+.dmg .icon { text-align: center; font-size: calc(10 * var(--u)); color: var(--ink); }
+.dmg .icon .tile { width: calc(52 * var(--u)); height: calc(52 * var(--u)); margin: 0 auto calc(7 * var(--u));
+  border-radius: calc(12 * var(--u)); display: grid; place-items: center;
+  background: linear-gradient(150deg, #22355A, #0E1729); box-shadow: 0 calc(3 * var(--u)) calc(9 * var(--u)) rgba(14,23,41,.28); }
+.dmg .icon .tile img { width: calc(30 * var(--u)); height: auto; }
+.dmg .icon .tile.folder { background: linear-gradient(150deg, #9DB4D8, #6E88B4); }
+.dmg .icon .tile.folder svg { width: calc(28 * var(--u)); height: auto; fill: rgba(255,255,255,.92); }
+.dmg .arrow { color: var(--deep-amber); font-size: calc(20 * var(--u)); line-height: 1; }
+@media (prefers-color-scheme: dark) {
+  .dmg { background: #1A2233; border-color: rgba(255,255,255,.09); }
+  .dmg .bar { background: linear-gradient(180deg, #222C40, #1A2233); border-bottom-color: rgba(255,255,255,.07); }
+  .dmg .icon { color: var(--on-dark); }
+}
+
+/* Settings, with the fields that end up on an exported card. */
+.uipanel .frow { display: grid; grid-template-columns: 84px 1fr; gap: 8px 10px;
+  align-items: center; font-size: 11.5px; }
+.uipanel .frow span { color: var(--muted); }
+.uipanel .frow b { font-weight: 500; background: var(--white); border: 1px solid var(--rule);
+  border-radius: 5px; padding: 5px 8px; color: var(--ink); }
+.uipanel .frow b.ghost { color: var(--muted); font-weight: 400; }
+@media (prefers-color-scheme: dark) { .uipanel .frow b { background: #101722; border-color: rgba(255,255,255,.1); } }
+
+/* A callout number that ties a picture to a row in the table beside it. */
+.callout { display: inline-grid; place-items: center; width: 17px; height: 17px; border-radius: 50%;
+  background: var(--deep-amber); color: #fff; font-size: 10.5px; font-weight: 700;
+  font-variant-numeric: tabular-nums; flex: none; }
+@media (prefers-color-scheme: dark) { .callout { background: var(--amber); color: var(--navy); } }
+/* Inline, in front of the label it numbers — an absolutely positioned variant was
+   written first and put every number on top of the word beside it. */
+.frag dt .callout, .frag .note .callout { margin-right: 7px; vertical-align: -3px; }
+.frag .plabel .callout { margin-right: 7px; vertical-align: -4px; }
+.labeltable td:first-child { white-space: nowrap; }
+.labeltable .callout { margin-right: 7px; vertical-align: middle; }

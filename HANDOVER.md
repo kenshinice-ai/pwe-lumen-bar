@@ -2,6 +2,9 @@
 
 > 最后更新：2026-09-01 · 约 8600 行 Swift · 已安装于 `/Applications/PWE Lumen Bar.app`
 > Last updated 1 Sep 2026 · ~8,600 lines of Swift · installed at `/Applications/PWE Lumen Bar.app`
+>
+> 仓库 / Repository：<https://github.com/kenshinice-ai/pwe-lumen-bar>（private）
+> 品牌与命名的全部决定见 [BRANDING.md](BRANDING.md) / every branding and naming decision is in BRANDING.md
 
 ---
 
@@ -12,10 +15,16 @@ macOS 菜单栏显示器控制器，**仅支持 Apple Silicon（M 系列）+ mac
 A macOS menu bar display controller. **Apple Silicon (M-series) on macOS 27 only** — the Intel code paths have been removed, not just disabled.
 
 ```bash
-./scripts/build-app.sh                                   # → build/PWE Lumen Bar.app
-cp -R build/PWE Lumen Bar.app /Applications/ && open /Applications/PWE Lumen Bar.app
-.build/debug/pwelumenctl                                    # 命令行，与 app 共用引擎和设置
+./scripts/build-app.sh --install     # 构建、用 Developer ID 签名、装进 /Applications 并启动
+./scripts/package.sh --notarize      # 发布：签名 + 公证 + 装订 + dist/ 里的 .dmg
+./tools/issue.sh --email buyer@…     # 签发一张 Pro 授权（--cn 出中文邮件）
+.build/debug/pwelumenctl             # 命令行，与 app 共用引擎和设置
 ```
+
+> **构建产物不在仓库里。** 项目住在 iCloud Drive，file provider 会在几秒内把
+> `com.apple.FinderInfo` 贴回目录，而 codesign 拒绝签名或校验带它的 bundle
+> （`resource fork, Finder information, or similar detritus not allowed`），
+> 清掉也会立刻回来。所以一切要带签名的东西都在 `$TMPDIR` 下组装，只有最终的 .dmg 回到 `dist/`。
 
 ---
 
@@ -51,6 +60,12 @@ Learned the hard way, not from documentation. Read before touching the related c
 5. **`.clear` 混合模式在 PDF 上下文里不生效**，会退化成用当前颜色实心涂满（画图标时踩过，改用奇偶填充和反向裁剪）。
 
 6. **DDC 断电不可逆** — Philips 27B1U3900 上 `VCP 0xD6 = 0x05` 会让显示器连同它的 `DCPAVServiceProxy` 一起从系统消失，没有任何软件途径唤醒，只能按物理电源键。**所以「熄屏」一律走软断开**，DDC 断电和输入源切换都必须带确认弹窗。
+
+---
+
+7. **iCloud Drive 会让 codesign 失败** —— file provider 在几秒内给目录贴上
+   `com.apple.FinderInfo`，codesign 拒绝签名或校验带它的 bundle，`xattr -cr` 清掉后它立刻
+   回来。**要签名的东西一律在仓库外组装**（两个脚本都这么做了）。
 
 ---
 
@@ -92,8 +107,9 @@ Worth calling out because neither produced an error — both just made features 
 ## 六、Pro 授权机制 / Pro licensing
 
 - 密钥 = 用 Ed25519 私钥对**买家邮箱**的签名，离线验证，无账号、无回连。
-- 公钥内嵌在 `LicenseStore.swift`；**私钥在仓库根目录 `.license-signing-key`，已被 .gitignore 排除**。丢了就再也签不出新密钥，泄露则任何人都能签。
-- 签发：`swift scripts/make-license.swift buyer@example.com`
+- 公钥内嵌在 `LicenseStore.swift`；**私钥在保险库 `~/.pwe-lumenbar-signing/signing-key`**（不在仓库里，`tools/issue.sh` 第一次运行时会自动从旧位置搬过去）。丢了就再也签不出新密钥，泄露则任何人都能签 —— **这个目录是唯一需要备份的东西**，里面还有 ledger 和每一张已签发的密钥。
+- 签发：`./tools/issue.sh --email buyer@example.com --name "Jo"`（`--cn` 出中文邮件、`--list` 查账、`--reissue N` 补发）。它生成密钥、记账、渲染客户邮件并放进剪贴板，**自己不发送任何东西**。
+- 授权邮件里的一键激活：`pwelumen://activate?email=…&key=…`。密钥是应用自己校验的签名，所以链接不比手动粘贴更可信 —— 错的密钥只是验不过。已实测：签发的密钥能通过应用内嵌公钥校验，链接能激活运行中的构建。
 - 目前只锁一个功能：强制开启 HiDPI。
 - **离线密钥无法限制机器数**（BetterDisplay 用 Paddle 的激活服务器做到 2 台）。要限制就需要一个授权服务器，代价是失去离线可用性。
 - **上不了 Mac App Store**：私有 API、不能沙盒、辅助功能事件拦截、向 `/Library` 写管理员文件 —— 每条都是拒绝项。只能直接分发 + 许可证密钥。定价与支付方案**用户已明确搁置**。
@@ -102,10 +118,24 @@ Worth calling out because neither produced an error — both just made features 
 
 ## 七、当前未决 / Open items
 
-1. **签名**：目前是 ad-hoc 签名。macOS 的辅助功能授权绑定代码签名哈希，**每次重新构建都会让已授予的权限失效** —— 这正是「权限给了但媒体键还是不工作」的原因。用户表示会用自己的开发者账号处理。对外分发还需要 Developer ID + 公证。
-2. **媒体键接管尚未在真机验证**。死锁 bug 已修（回调本就在主线程，却又 `DispatchQueue.main.sync` 等自己），但修复本身还没被真正按下 F1 验证过。授权稳定后按一次 F1 即可确认。
+1. ~~**签名**~~ **已解决**：`build-app.sh` 与 `package.sh` 都用
+   `Developer ID Application: Li Liu (2SQV3H5MH9)` 签名，钥匙串里有私钥，公证用
+   `PWE_NOTARY` 这个 keychain profile。**开发构建也签**，因为 macOS 把辅助功能授权绑在
+   代码签名哈希上 —— ad-hoc 每次重建都会静默作废它。现在签名跨构建稳定，授权不会再掉。
+2. **媒体键接管仍未在真机验证**。死锁 bug 已修（回调本就在主线程，却又
+   `DispatchQueue.main.sync` 等自己）。签名问题已经排除，现在只差**按一次 F1**。
 3. **DDC 多通道配对未测** —— 需要同时接两台第三方显示器。
 4. **`Colorimetry` / `PixelEncoding` 枚举含义未知**。IORegistry 以裸整数暴露，无公开文档。当前只报告能确定的（RGB=0、位深、动态范围），其余按原始值展示 —— **不要凭猜测给它们贴标签**。
+5. 🔴 **定价与售卖路径**未定（用户明确搁置）。`tools/config.sh` 的 `DOWNLOAD_URL` 是空的，
+   授权邮件会退回「安装包随邮件附上」；产品页的 Pro 段落没有价格，只留了联系方式和一处
+   🔴 注释标出价格该放的位置。
+6. 🔴 **产品页尚未部署**。`site/public/lumenbar/` 是成品，需要复制进
+   `PWE Loan Bar/site/public/` 再 `./deploy.sh`（集团站点，Cloudflare Pages）。
+   **部署是对外发布动作，要单独确认。**
+7. **真机截图**：README 与产品页现在用的是欢迎窗的真实渲染与示意图。面板本身的截图需要人在
+   键盘前点开 popover —— 脚本抓不到（`ImageRenderer` 画不出 AppKit 控件，`screencapture`
+   需要屏幕录制授权）。发布前应补上，中英各一张。
+8. **版本号定在 `1.0.0`**（`scripts/version.sh`，唯一来源）。首发前确认。
 
 ---
 
