@@ -1,0 +1,56 @@
+Hi {{first_name}},
+
+Thank you for buying PWE Lumen Bar Pro. Your licence is below, and
+the file is attached.
+
+First, install it (skip this if the app is already on your Mac):
+
+{{download}}
+
+Open the disk image, drag PWE Lumen Bar onto Applications, and
+launch it from there. It lives in the menu bar — the display icon
+near the clock, top right. There is no Dock icon, so nothing will
+appear in your Dock and nothing has gone wrong.
+
+Then activate. Two things go in: the key, and this email address —
+{{email}} — which is the address the licence is registered to.
+
+1.  Click this link. The app opens, activates, and tells you what
+    happened:
+
+{{link}}
+
+2.  Or open Settings (⌘,), and paste the key below — everything
+    between the dashed lines — along with the address above:
+
+-----BEGIN PWE LUMEN BAR LICENCE-----
+{{key}}
+-----END PWE LUMEN BAR LICENCE-----
+
+"Unlocked" appearing at the top of Settings is how you know it
+worked.
+
+Your licence — order {{order}} — is registered to {{email}} and
+works on every Mac you personally work on. It needs no connection:
+the key is verified on your own machine, and the app has no network
+code at all.
+
+What Pro unlocks is one thing: forced HiDPI. If your 4K display's
+text looks softer than the built-in screen, that is the setting
+that fixes it — card ⋯ menu → Force HiDPI on. It writes a display
+override and needs a restart, and macOS will ask for your
+administrator password to allow the write. The app never sees that
+password.
+
+Two things worth knowing before you explore:
+
+  · Scroll on the menu bar icon to change the brightness of
+    whichever display your pointer is on, without opening anything.
+  · DDC power-off and input switching cannot be undone from
+    software on some monitors — both ask first, and both say so.
+
+Any trouble, reply to this email.
+
+Lee Liu
+PWE Group Pty Ltd · A PARADISE PRODUCTION
+{{support}}
