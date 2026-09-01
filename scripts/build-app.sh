@@ -114,10 +114,21 @@ IDENTITY="$(security find-identity -v -p codesigning \
   | sed -E 's/.*"(.*)".*/\1/' || true)"
 
 if [[ -n "$IDENTITY" ]]; then
+# The command line tool ships inside the bundle, and it has to be signed in its
+# own right — inside out, nested code first.
+#
+# `Contents/Resources` is not one of the locations codesign treats as nested
+# code, so signing only the bundle seals pwelumenctl as a *resource* and leaves
+# the Mach-O inside it unsigned. Nothing local complains; notarisation rejects
+# the whole submission with three errors about that one file (no Developer ID,
+# no secure timestamp, no hardened runtime).
+  codesign --force --options runtime --timestamp --sign "$IDENTITY" \
+    "$APP/Contents/Resources/pwelumenctl" >/dev/null
   codesign --force --options runtime --timestamp --sign "$IDENTITY" "$APP" >/dev/null
 else
   echo "==> no Developer ID identity found; falling back to ad-hoc"
   echo "    (every rebuild will revoke the Accessibility grant — media keys will need re-approving)"
+  codesign --force --sign - --timestamp=none "$APP/Contents/Resources/pwelumenctl" >/dev/null 2>&1
   codesign --force --sign - --timestamp=none "$APP" >/dev/null 2>&1
 fi
 codesign --verify --deep --strict "$APP"

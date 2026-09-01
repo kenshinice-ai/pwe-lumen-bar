@@ -25,6 +25,10 @@ VERSION="$(./scripts/version.sh)"
 # codesign refuses to verify a bundle that has it. Only the finished disk image
 # comes back into dist/.
 WORK="${TMPDIR:-/tmp}/pwelumenbar-release"
+# Where build-app.sh assembles the bundle. Same reason it is not in the repository:
+# iCloud's file provider stamps com.apple.FinderInfo on anything it manages, and
+# codesign will not sign or verify a bundle that carries it.
+BUILT="${TMPDIR:-/tmp}/pwelumenbar-build/$APP_NAME.app"
 STAGE="$WORK/stage"
 DIST_DIR="dist"
 DMG="$DIST_DIR/$APP_NAME $VERSION.dmg"
@@ -43,7 +47,7 @@ done
 
 echo "▸ Building $APP_NAME $VERSION…"
 ./scripts/build-app.sh >/dev/null
-APP="$WORK/../pwelumenbar-build/$APP_NAME.app"
+APP="$BUILT"
 [[ -d "$APP" ]] || { echo "✗ $APP not found"; exit 1; }
 
 # ---------------------------------------------------------------- pre-flight
@@ -91,6 +95,16 @@ WARN
 fi
 
 echo "▸ Signing identity : $IDENTITY"
+# The command line tool ships inside the bundle, and it has to be signed in its
+# own right — inside out, nested code first.
+#
+# `Contents/Resources` is not one of the locations codesign treats as nested
+# code, so signing only the bundle seals pwelumenctl as a *resource* and leaves
+# the Mach-O inside it unsigned. Nothing local complains; notarisation rejects
+# the whole submission with three errors about that one file (no Developer ID,
+# no secure timestamp, no hardened runtime).
+codesign --force --options runtime --timestamp --sign "$IDENTITY" \
+  "$APP/Contents/Resources/pwelumenctl"
 codesign --force --options runtime --timestamp --sign "$IDENTITY" "$APP"
 codesign --verify --deep --strict --verbose=2 "$APP" 2>&1 | sed 's/^/    /'
 
@@ -106,8 +120,19 @@ if [[ "$NOTARIZE" == "1" ]]; then
   APP_ZIP="$WORK/notarize-app.zip"
   mkdir -p "$WORK"
   ditto -c -k --keepParent "$APP" "$APP_ZIP"
-  xcrun notarytool submit "$APP_ZIP" --keychain-profile "$PROFILE" --wait
+  # notarytool exits 0 even when Apple rejects the submission — "Invalid" is a
+  # status, not an error — so the status has to be read out of the output. The
+  # first release was rejected this way and the failure only surfaced two steps
+  # later, in stapler.
+  SUBMIT="$(xcrun notarytool submit "$APP_ZIP" --keychain-profile "$PROFILE" --wait 2>&1)"
+  echo "$SUBMIT" | sed 's/^/    /'
   rm -f "$APP_ZIP"
+  if ! grep -q "status: Accepted" <<<"$SUBMIT"; then
+    ID="$(grep -m1 "  id: " <<<"$SUBMIT" | awk '{print $2}')"
+    echo "✗ Apple did not accept the app. What it objected to:"
+    xcrun notarytool log "$ID" --keychain-profile "$PROFILE" 2>&1 | sed 's/^/    /'
+    exit 1
+  fi
   echo "▸ Stapling the app…"
   xcrun stapler staple "$APP"
   xcrun stapler validate "$APP"
@@ -139,7 +164,14 @@ codesign --force --sign "$IDENTITY" --timestamp "$WORK/image.dmg"
 
 if [[ "$NOTARIZE" == "1" ]]; then
   echo "▸ Submitting the disk image to Apple…"
-  xcrun notarytool submit "$WORK/image.dmg" --keychain-profile "$PROFILE" --wait
+  SUBMIT="$(xcrun notarytool submit "$WORK/image.dmg" --keychain-profile "$PROFILE" --wait 2>&1)"
+  echo "$SUBMIT" | sed 's/^/    /'
+  if ! grep -q "status: Accepted" <<<"$SUBMIT"; then
+    ID="$(grep -m1 "  id: " <<<"$SUBMIT" | awk '{print $2}')"
+    echo "✗ Apple did not accept the disk image."
+    xcrun notarytool log "$ID" --keychain-profile "$PROFILE" 2>&1 | sed 's/^/    /'
+    exit 1
+  fi
   xcrun stapler staple "$WORK/image.dmg"
   xcrun stapler validate "$WORK/image.dmg"
 fi

@@ -13,10 +13,10 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="canonical" href="https://pwestudio.site/lumenbar">
+<link rel="canonical" href="https://pwestudio.site/lumen">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="PWE Studio">
-<meta property="og:url" content="https://pwestudio.site/lumenbar">
+<meta property="og:url" content="https://pwestudio.site/lumen">
 <meta property="og:title" content="PWE Lumen Bar">
 <meta property="og:description" content="Every display, its own controls. A macOS menu bar display controller for Apple Silicon.">
 <meta name="theme-color" content="#0E1729">
@@ -44,6 +44,8 @@
           <a href="/" data-lang="zh">全部工具</a>
           <a href="#pro" data-lang="en">Pro</a>
           <a href="#pro" data-lang="zh">Pro</a>
+          <a href="/lumen/guide" data-lang="en">Guide</a>
+          <a href="/lumen/guide" data-lang="zh">使用指南</a>
         </nav>
         <div class="langs">
           <button type="button" data-set="en" aria-pressed="true">EN</button>
@@ -67,8 +69,8 @@
           而不是按下去毫无反应。</p>
 
         <div class="hero-cta">
-          <a class="cta amber" href="/lumenbar/download/PWE-Lumen-Bar.dmg" data-lang="en">Download for macOS</a>
-          <a class="cta amber" href="/lumenbar/download/PWE-Lumen-Bar.dmg" data-lang="zh">下载 macOS 版</a>
+          <a class="cta amber" href="/lumen/download/PWE-Lumen-Bar.dmg" data-lang="en">Download for macOS</a>
+          <a class="cta amber" href="/lumen/download/PWE-Lumen-Bar.dmg" data-lang="zh">下载 macOS 版</a>
           <a class="cta light" href="#pro" data-lang="en">What Pro adds →</a>
           <a class="cta light" href="#pro" data-lang="zh">Pro 加了什么 →</a>
         </div>
@@ -83,7 +85,7 @@
         <!-- 🔴 Replace with a real capture of the panel, one per language.
              It needs a person at the keyboard: the popover cannot be captured
              from a script. -->
-        <img src="/lumenbar/img/welcome.png" alt="The welcome window: the mark, and the three things about the app that are not obvious." loading="eager" width="920" height="1080">
+        <img src="/lumen/img/welcome.png" alt="The welcome window: the mark, and the three things about the app that are not obvious." loading="eager" width="920" height="1080">
       </figure>
     </div>
   </div>
@@ -169,9 +171,34 @@
   <p data-lang="zh">它需要管理员密码，由 macOS 自己弹窗索取 —— 应用不接触这个密码 ——
     覆盖也可以从安装它的同一个菜单里移除。</p>
 
-  <!-- 🔴 定价未定。定下来之后，这里放价格与购买按钮；在那之前只留联系方式。 -->
-  <p data-lang="en"><a class="cta amber" href="mailto:lee.liu.melbourne@gmail.com?subject=PWE%20Lumen%20Bar%20Pro">Ask about a Pro licence</a></p>
-  <p data-lang="zh"><a class="cta amber" href="mailto:lee.liu.melbourne@gmail.com?subject=PWE%20Lumen%20Bar%20Pro">咨询 Pro 授权</a></p>
+  <div class="grid">
+    <div class="card">
+      <h3 data-lang="en">Free</h3>
+      <h3 data-lang="zh">免费</h3>
+      <p data-lang="en">Everything else. Per-display brightness, contrast, warmth, volume, resolution,
+        orientation, input source, power, screenshots, presets, global shortcuts, the media keys, the
+        command line. No trial period, no nag, no feature held back except the one below.</p>
+      <p data-lang="zh">其余全部功能。按屏亮度、对比度、色温、音量、分辨率、方向、输入源、开关、
+        截图、场景、全局快捷键、媒体键、命令行。没有试用期，没有催促弹窗，除了下面那一项之外
+        不扣任何功能。</p>
+    </div>
+    <div class="card">
+      <h3 data-lang="en">Pro — A$9.99, once</h3>
+      <h3 data-lang="zh">Pro —— A$9.99，一次性</h3>
+      <p data-lang="en">Forced HiDPI, on every Mac you personally work on. The licence is registered to
+        your email address and verified offline; there is no subscription and nothing to renew.</p>
+      <p data-lang="zh">强制开启 HiDPI，你自己用的每一台 Mac 都能激活。授权登记在你的邮箱名下、
+        离线校验；没有订阅，没有需要续的东西。</p>
+      <p>
+        <a class="cta amber" href="mailto:lee.liu.melbourne@gmail.com?subject=PWE%20Lumen%20Bar%20Pro%20licence&body=Hi%20Lee%2C%0A%0AI%27d%20like%20to%20buy%20a%20PWE%20Lumen%20Bar%20Pro%20licence%20%28A%249.99%29.%0A%0AName%3A%0AEmail%20the%20licence%20should%20be%20registered%20to%3A%0A%0AThanks%2C%0A" data-lang="en">Buy a licence — A$9.99</a>
+        <a class="cta amber" href="mailto:lee.liu.melbourne@gmail.com?subject=PWE%20Lumen%20Bar%20Pro%20%E6%8E%88%E6%9D%83&body=Lee%20%E4%BD%A0%E5%A5%BD%EF%BC%8C%0A%0A%E6%88%91%E6%83%B3%E8%B4%AD%E4%B9%B0%E4%B8%80%E5%BC%A0%20PWE%20Lumen%20Bar%20Pro%20%E6%8E%88%E6%9D%83%EF%BC%88A%249.99%EF%BC%89%E3%80%82%0A%0A%E5%A7%93%E5%90%8D%EF%BC%9A%0A%E6%8E%88%E6%9D%83%E7%99%BB%E8%AE%B0%E9%82%AE%E7%AE%B1%EF%BC%9A%0A%0A%E8%B0%A2%E8%B0%A2%EF%BC%8C%0A" data-lang="zh">购买授权 —— A$9.99</a>
+      </p>
+    </div>
+  </div>
+  <p class="hero-note" data-lang="en">Licences are issued by hand, usually the same day: you get the key,
+    a one-click activation link, and an invoice from PWE Group Pty Ltd.</p>
+  <p class="hero-note" data-lang="zh">授权是人工签发的，通常当天发出：你会收到密钥、一个一键激活链接，
+    以及 PWE Group Pty Ltd 开具的发票。</p>
 
   <h2 data-lang="en">Requirements</h2>
   <h2 data-lang="zh">运行要求</h2>

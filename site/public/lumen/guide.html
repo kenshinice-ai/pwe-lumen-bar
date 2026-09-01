@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PWE Lumen Bar — guide</title>
+<meta name="description" content="How to use PWE Lumen Bar: the three menu bar gestures, the panel, presets, HiDPI, shortcuts, the URL scheme, the command line, and what to do when a monitor will not cooperate.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="canonical" href="https://pwestudio.site/lumen/guide">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="PWE Studio">
+<meta property="og:url" content="https://pwestudio.site/lumen/guide">
+<meta property="og:title" content="PWE Lumen Bar — guide">
+<meta property="og:description" content="The three gestures, the panel, presets, HiDPI, shortcuts, automation, and what to do when a monitor will not cooperate.">
+<meta name="theme-color" content="#0E1729">
+</head>
+<body>
+
+<header class="band">
+  <div class="wrap wide">
+    <div class="bar">
+      <a class="lockup" href="/">
+        <img src="/wing-amber.svg" alt="" width="44" height="30">
+        <span><span class="pwe">PWE</span><br><span class="sub">LUMEN&nbsp;BAR</span></span>
+      </a>
+      <div style="display:flex;align-items:center;gap:18px">
+        <nav>
+          <a href="/lumen" data-lang="en">Overview</a>
+          <a href="/lumen" data-lang="zh">产品页</a>
+          <a href="/lumen#pro" data-lang="en">Pro</a>
+          <a href="/lumen#pro" data-lang="zh">Pro</a>
+        </nav>
+        <div class="langs">
+          <button type="button" data-set="en" aria-pressed="true">EN</button>
+          <button type="button" data-set="zh" aria-pressed="false">中文</button>
+        </div>
+      </div>
+    </div>
+
+    <p class="eyebrow" data-lang="en">Guide</p>
+    <p class="eyebrow" data-lang="zh">使用指南</p>
+    <h1 data-lang="en">Everything it does, and what to do when a monitor will not.</h1>
+    <h1 data-lang="zh">它能做的一切，以及显示器不配合时怎么办。</h1>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <h2 data-lang="en">Install</h2>
+  <h2 data-lang="zh">安装</h2>
+  <p data-lang="en">Open the disk image, drag <strong>PWE Lumen Bar</strong> onto Applications, and launch
+    it from there. It has no Dock icon — after launching, look for the display glyph in the menu bar near
+    the clock. Nothing appearing in the Dock is the app working, not failing.</p>
+  <p data-lang="zh">打开磁盘映像，把 <strong>PWE Lumen Bar</strong> 拖进「应用程序」，再从那里启动。
+    它没有 Dock 图标 —— 启动后请在时钟附近的菜单栏里找那个显示器字形。Dock 里什么都没出现，
+    是它在正常工作，不是失败。</p>
+  <p data-lang="en">A welcome window appears once. If you dismissed it and want it back, it is under the
+    ⋯ menu at the bottom of the panel, as <em>Tips…</em>.</p>
+  <p data-lang="zh">欢迎窗只出现一次。关掉之后想再看，在面板底部 ⋯ 菜单里的「使用提示…」。</p>
+
+  <h2 data-lang="en">Three gestures on the icon</h2>
+  <h2 data-lang="zh">图标上的三个手势</h2>
+  <div class="grid">
+    <div class="card">
+      <h3 data-lang="en">Click</h3>
+      <h3 data-lang="zh">点击</h3>
+      <p data-lang="en">Opens the panel: one card per display, the built-in panel included.</p>
+      <p data-lang="zh">打开面板：一块屏一张卡片，包括内建屏。</p>
+    </div>
+    <div class="card">
+      <h3 data-lang="en">Scroll</h3>
+      <h3 data-lang="zh">滚轮</h3>
+      <p data-lang="en">Changes the brightness of whichever display the pointer is on, without opening
+        anything. The fastest thing in the app, and the least discoverable.</p>
+      <p data-lang="zh">直接调节光标所在那块屏的亮度，不用打开任何东西。全 app 最快的操作，
+        也是最不容易被发现的一个。</p>
+    </div>
+    <div class="card">
+      <h3 data-lang="en">Right-click</h3>
+      <h3 data-lang="zh">右键</h3>
+      <p data-lang="en">Jumps straight to a saved preset — a whole desk arrangement in one click.</p>
+      <p data-lang="zh">直接切换到已保存的场景 —— 一整套桌面配置，一次点击。</p>
+    </div>
+  </div>
+
+  <h2 data-lang="en">The card</h2>
+  <h2 data-lang="zh">卡片</h2>
+  <p data-lang="en">Each card carries what that display can actually do. Brightness, contrast, warmth and
+    volume are sliders; resolution and orientation are menus; capture, turn-off and match-all are
+    buttons. <strong>Anything the display cannot do is greyed out with the reason on hover</strong> — a
+    monitor that ignores DDC says so, rather than accepting a change and doing nothing.</p>
+  <p data-lang="zh">每张卡片上只有那块屏真正能做的事。亮度、对比度、色温、音量是滑块；分辨率和方向是菜单；
+    截图、熄屏、对齐全部是按钮。<strong>做不到的会灰掉，悬停有原因</strong> ——
+    不响应 DDC 的显示器会直说，而不是接受了改动却什么都不做。</p>
+  <p data-lang="en">The ⋯ at the top right of a card is that display only: rename, colour profile, input
+    source, force HiDPI, lock the configuration. The ⋯ at the bottom of the panel is global: presets,
+    language, shortcuts, launch at login.</p>
+  <p data-lang="zh">卡片右上角的 ⋯ 只作用于这块屏：重命名、颜色配置、输入源、强制 HiDPI、锁定配置。
+    面板底部的 ⋯ 是全局的：场景、语言、快捷键、开机启动。</p>
+
+  <h2 data-lang="en">Sharpness: what HiDPI is, and when to force it</h2>
+  <h2 data-lang="zh">锐度：HiDPI 是什么，什么时候该强制开</h2>
+  <p data-lang="en">macOS renders at 1× or 2×; there is no arbitrary scaling. A 27-inch 4K display is
+    about 163 PPI — too coarse for 2× to be comfortable, too fine for 1× to look sharp — so macOS picks
+    1× and text loses its edge. Forced HiDPI writes the missing 2× modes into the system, and after a
+    restart the resolution menu offers things like "looks like 2560×1440", rendered the way a Retina
+    screen renders rather than stretched.</p>
+  <p data-lang="zh">macOS 只有 1 倍和 2 倍两种渲染，没有任意比例缩放。27 吋 4K 约 163 PPI ——
+    2 倍下太大，1 倍下不够锐 —— 于是 macOS 选了 1 倍，文字就失去了边缘。强制 HiDPI 把缺失的
+    2 倍模式写进系统，重启后分辨率菜单里就会出现「看起来像 2560×1440」这样的选项，
+    按 Retina 屏那种方式渲染，而不是拉伸。</p>
+  <p data-lang="en">It is the one Pro feature. It writes a display override file into <code>/Library</code>,
+    so macOS asks for an administrator password — the app never sees it — and it needs a restart. Remove
+    it from the same menu it was installed from.</p>
+  <p data-lang="zh">这是唯一的 Pro 功能。它往 <code>/Library</code> 写一个显示器覆盖文件，
+    所以 macOS 会索取管理员密码 —— 应用不接触它 —— 并且需要重启。
+    从安装它的同一个菜单里可以移除。</p>
+
+  <h2 data-lang="en">Activating Pro</h2>
+  <h2 data-lang="zh">激活 Pro</h2>
+  <p data-lang="en">Your licence email carries a one-click link. Clicking it opens the app, activates, and
+    tells you what happened. If you would rather do it by hand, open Settings (⌘,) and paste the key
+    together with the email address the licence was issued to. "Unlocked" at the top of Settings is how
+    you know it worked. The key is verified on your own machine — the app has no network code at all.</p>
+  <p data-lang="zh">授权邮件里有一个一键激活链接。点它，应用会打开、激活，并告诉你结果。
+    想手动也行：打开设置（⌘,），把密钥和购买时使用的邮箱一起填进去。设置顶部出现「已解锁」
+    就说明成功了。密钥在你自己的机器上校验 —— 应用里根本没有网络代码。</p>
+
+  <h2 data-lang="en">Keys and shortcuts</h2>
+  <h2 data-lang="zh">按键与快捷键</h2>
+  <p data-lang="en">Two switches in Settings, both off until you ask:</p>
+  <p data-lang="zh">设置里的两个开关，默认都关着：</p>
+  <div class="grid">
+    <div class="card">
+      <h3 data-lang="en">Global shortcuts</h3>
+      <h3 data-lang="zh">全局快捷键</h3>
+      <p data-lang="en"><code>⌃⌥↑↓</code> brightness, <code>⌃⌥←→</code> volume, <code>⌃⌥M</code> mute,
+        <code>⌃⌥S</code> capture, <code>⌃⌥P</code> off/on — all acting on the display under the pointer.
+        Rebindable, and they need no permission at all.</p>
+      <p data-lang="zh"><code>⌃⌥↑↓</code> 亮度、<code>⌃⌥←→</code> 音量、<code>⌃⌥M</code> 静音、
+        <code>⌃⌥S</code> 截图、<code>⌃⌥P</code> 熄屏/唤醒 —— 全部作用于光标所在的那块屏。
+        可以改键，而且不需要任何权限。</p>
+    </div>
+    <div class="card">
+      <h3 data-lang="en">The keyboard's own keys</h3>
+      <h3 data-lang="zh">键盘自带的那几个键</h3>
+      <p data-lang="en">Makes F1/F2 act on an external display instead of the built-in one. This needs
+        Accessibility permission, because taking a key over means intercepting it.</p>
+      <p data-lang="zh">让 F1/F2 作用于外接屏而不是内建屏。这需要「辅助功能」权限 ——
+        接管一个按键就意味着拦截它。</p>
+    </div>
+  </div>
+  <p data-lang="en"><strong>The volume keys are different on purpose.</strong> They are taken over only
+    when the system's audio output <em>is</em> an external display's own speakers. On AirPods, AirPlay,
+    the built-in speakers or a USB interface, they are handed back to macOS — otherwise the keys would
+    move a monitor's volume you cannot hear.</p>
+  <p data-lang="zh"><strong>音量键是刻意区别对待的。</strong>只有当系统音频输出<em>正是</em>
+    某台外接显示器自己的扬声器时才接管。戴 AirPods、走 AirPlay、用内建扬声器或 USB 声卡时，
+    按键原样交还 macOS —— 否则你调的是一台自己听不到的显示器音量。</p>
+
+  <h2 data-lang="en">Presets, Shortcuts and the command line</h2>
+  <h2 data-lang="zh">场景、快捷指令与命令行</h2>
+  <p data-lang="en">A preset stores every display's brightness, warmth, volume, resolution and
+    orientation under a name. Save one from the panel's ⋯ menu; apply it from there, from a right-click
+    on the menu bar icon, or from a URL.</p>
+  <p data-lang="zh">场景把每块屏的亮度、色温、音量、分辨率和方向存成一个名字。
+    在面板的 ⋯ 菜单里保存；从那里、从菜单栏图标右键，或者用一条 URL 应用它。</p>
+  <p data-lang="en">Anything you can do in the panel, the Shortcuts app can do through the
+    <code>pwelumen://</code> scheme using its "Open URLs" action:</p>
+  <p data-lang="zh">面板里能做的事，「快捷指令」都能通过 <code>pwelumen://</code> 用「打开 URL」做到：</p>
+  <pre><code>pwelumen://brightness?display=cursor&amp;value=60
+pwelumen://volume?display=LG&amp;value=30
+pwelumen://preset?name=Evening
+pwelumen://rotate?display=2&amp;angle=90</code></pre>
+  <p data-lang="en">Screen capture is deliberately <em>not</em> exposed there: any web page can open a
+    URL scheme, and the app holds Screen Recording permission. Display settings are visible and
+    reversible, so they are safe to automate; silent screenshots are not.</p>
+  <p data-lang="zh">截图<em>刻意</em>没有暴露在这里：任何网页都能打开一个 URL scheme，
+    而这个应用持有「屏幕录制」权限。显示设置是可见且可逆的，可以放心自动化；静默截图不是。</p>
+  <p data-lang="en">There is also a command line, <code>pwelumenctl</code>, inside the app bundle at
+    <code>PWE Lumen Bar.app/Contents/Resources/pwelumenctl</code>. It shares the engine and the settings
+    with the app, so anything it changes shows up in the panel immediately.</p>
+  <p data-lang="zh">还有一个命令行 <code>pwelumenctl</code>，在应用包里的
+    <code>PWE Lumen Bar.app/Contents/Resources/pwelumenctl</code>。它和 app 共用引擎与设置，
+    所以它改的东西会立刻反映在面板上。</p>
+
+  <h2 data-lang="en">When something looks wrong</h2>
+  <h2 data-lang="zh">看起来不对劲的时候</h2>
+
+  <h3 data-lang="en">A monitor offers no contrast, no input source, and brightness says "Software"</h3>
+  <h3 data-lang="zh">某台显示器没有对比度、没有输入源，亮度写着「软件」</h3>
+  <p data-lang="en">That display is not answering DDC/CI. Apple's own displays never do — a Studio
+    Display speaks Apple's protocol instead, and its brightness works through that. Third-party monitors
+    usually need "DDC/CI" enabled in their own on-screen menu, and some USB-C docks and KVMs do not carry
+    the channel at all.</p>
+  <p data-lang="zh">那块屏没有应答 DDC/CI。Apple 自家的屏从来不会 —— Studio Display 用的是 Apple 自有协议，
+    它的亮度走那条通道。第三方显示器通常需要在自己的 OSD 菜单里打开「DDC/CI」；
+    有些 USB-C 扩展坞和 KVM 根本不传这条通道。</p>
+
+  <h3 data-lang="en">A display never came back after being powered down</h3>
+  <h3 data-lang="zh">显示器断电后再也没回来</h3>
+  <p data-lang="en">DDC power-off is the one operation software cannot undo: on some monitors the display
+    leaves the system entirely and only its physical power button brings it back. That is why the app
+    confirms first and says so. <em>Turn off</em> in the menu is a different thing — a software
+    disconnect, always reversible, and the display it switched off keeps its own row in the panel so you
+    can bring it back.</p>
+  <p data-lang="zh">DDC 断电是软件唯一撤不回来的操作：在有些显示器上，屏幕会整个离开系统，
+    只有物理电源键能让它回来。所以这个操作会先确认并说明。菜单里的「熄屏」是另一回事 ——
+    软件断开，永远可逆，被熄掉的屏在面板里保留自己的一行，随时能开回来。</p>
+
+  <h3 data-lang="en">Forced HiDPI is installed but nothing changed</h3>
+  <h3 data-lang="zh">强制 HiDPI 装了，但什么都没变</h3>
+  <p data-lang="en">It needs a restart — the override is read when the system starts. After restarting,
+    the new modes are in the card's resolution menu, marked with a sparkle.</p>
+  <p data-lang="zh">它需要重启 —— 覆盖文件是在系统启动时读取的。重启之后，新模式会出现在卡片的
+    分辨率菜单里，带一个星芒标记。</p>
+
+  <h3 data-lang="en">The resolution or orientation went back on its own</h3>
+  <h3 data-lang="zh">分辨率或方向自己变回去了</h3>
+  <p data-lang="en">By design. A change that could leave you looking at an unusable screen is applied with
+    a 15-second confirmation: say nothing and it reverts. If it reverts on its own <em>later</em>, that
+    display's configuration is locked — the padlock badge on the card — and outside changes are undone
+    on purpose.</p>
+  <p data-lang="zh">这是设计。可能让你面对一块没法用的屏幕的改动，都带 15 秒确认：不确认就回滚。
+    如果是<em>之后</em>自己变回去的，说明那块屏的配置被锁定了 —— 卡片上有「已锁定」标记 ——
+    外部改动会被有意还原。</p>
+
+  <h3 data-lang="en">Something is wrong and you want to send a log</h3>
+  <h3 data-lang="zh">出了问题，想把日志发过来</h3>
+  <p data-lang="en">The app and the command line both write to
+    <code>~/Library/Logs/PWE Lumen Bar/pwelumenbar.log</code>. Reply to your licence email and attach
+    it, along with what the Settings window's System section reports.</p>
+  <p data-lang="zh">应用和命令行都写同一个日志：
+    <code>~/Library/Logs/PWE Lumen Bar/pwelumenbar.log</code>。回复授权邮件把它附上，
+    再带上设置窗口「系统」一段里显示的自检结果。</p>
+
+  <p data-lang="en"><a class="cta light" href="/lumen">← Back to the overview</a></p>
+  <p data-lang="zh"><a class="cta light" href="/lumen">← 回到产品页</a></p>
+
+</main>
+
+<footer class="wrap wide">
+  <span><span class="sig">Tools from PWE Studio.</span><br>© PWE Group Pty Ltd · ABN 55 606 664 546</span>
+  <span class="credit"><img src="/wing-navy.svg" alt="" width="16" height="11">A PARADISE PRODUCTION</span>
+</footer>
+
+<script>
+(function () {
+  var saved = null;
+  try { saved = localStorage.getItem("pwe-lang"); } catch (e) {}
+  var prefersZh = (navigator.language || "en").toLowerCase().indexOf("zh") === 0;
+  set(saved || (prefersZh ? "zh" : "en"));
+  document.querySelectorAll(".langs button").forEach(function (b) {
+    b.addEventListener("click", function () { set(b.dataset.set); });
+  });
+  function set(l) {
+    document.documentElement.lang = l;
+    try { localStorage.setItem("pwe-lang", l); } catch (e) {}
+    document.querySelectorAll(".langs button").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.set === l));
+    });
+  }
+})();
+</script>
+</body>
+</html>

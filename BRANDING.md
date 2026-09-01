@@ -135,10 +135,14 @@ navy `#0E1729` 圆角底 + 琥珀 `#F5B335` 翅膀（宽度 60%），与
 
 ## 十、未决
 
-- 🔴 **定价与售卖路径**（用户明确搁置）。`tools/config.sh` 里的 `DOWNLOAD_URL` 在产品页
-  上线前是空的，授权邮件会退回「安装包随邮件附上」。
-- 🔴 **产品页**：`site/` 下已有一版，需要合并进 `PWE Loan Bar/site`（集团站点，
-  Cloudflare Pages）后部署。部署是对外发布动作，需要单独确认。
+- **定价：Pro 一次性 A$9.99**（2026-09-01 定）。写法跟随家族惯例（Loan Bar 用 `A$58`），
+  产品页与购买邮件里都是 A$ —— **如果要卖美元，产品页、邮件模板和 `tools/config.sh` 三处一起改。**
+  应用本身免费，没有试用期。
+- 产品页与使用指南在 `site/public/lumen/`（`/lumen` 与 `/lumen/guide`），已复制进
+  `PWE Loan Bar/site/public/`，集团首页也加了卡片，`deploy.sh` 已接上（样式指纹、
+  磁盘映像暂存、上线自检）。🔴 **部署本身是对外发布动作，等确认。**
+- `tools/config.sh` 的 `DOWNLOAD_URL` 上线后应填
+  `https://pwestudio.site/lumen/download/PWE-Lumen-Bar.dmg`。
 - README 里的面板图目前是示意图（`docs/images/guide-menu.svg`）。发布前应换成真机截图 ——
   这一步需要人在键盘前点开面板，脚本做不了。
 - 版本号定在 `1.0.0`（`scripts/version.sh`），首发前确认。

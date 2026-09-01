@@ -63,7 +63,14 @@ Learned the hard way, not from documentation. Read before touching the related c
 
 ---
 
-7. **iCloud Drive 会让 codesign 失败** —— file provider 在几秒内给目录贴上
+7. **`Contents/Resources` 里的可执行文件必须单独签名。** `pwelumenctl` 随包发布，
+   而 `Resources` 不在 codesign 视为「嵌套代码」的位置 —— 只签 bundle 会把它当**资源**封装，
+   里面的 Mach-O 仍然没签。本地一切正常，公证会因为这一个文件整份驳回（没有 Developer ID、
+   没有安全时间戳、没有 hardened runtime 三条错误）。两个脚本现在都是由内向外签。
+   **`notarytool submit --wait` 在被驳回时仍然返回 0** —— Invalid 是状态不是错误 ——
+   所以 `package.sh` 自己读状态，不是 Accepted 就打印 Apple 的日志并退出。
+
+8. **iCloud Drive 会让 codesign 失败** —— file provider 在几秒内给目录贴上
    `com.apple.FinderInfo`，codesign 拒绝签名或校验带它的 bundle，`xattr -cr` 清掉后它立刻
    回来。**要签名的东西一律在仓库外组装**（两个脚本都这么做了）。
 
