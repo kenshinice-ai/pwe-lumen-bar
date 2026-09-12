@@ -1051,15 +1051,24 @@ public final class DisplayController: ObservableObject {
             : nil
     }
 
+    /// Returns why it could not be turned on, or nil when it was.
+    ///
+    /// It used to return a bare `Bool` and write the reason into `status`, which only the panel
+    /// draws — and these keys can only be switched on from the Settings window. So the one place
+    /// the failure could happen was the one place the explanation could not be read: the switch
+    /// flipped itself back, System Settings opened by itself, and nothing said why either
+    /// happened. Handing the reason to the caller lets it be shown where the switch was thrown.
     @discardableResult
-    func applyMediaKeySetting(_ enabled: Bool) -> Bool {
+    func applyMediaKeySetting(_ enabled: Bool) -> String? {
         let ok = mediaKeys.setEnabled(enabled)
         mediaKeysEnabled = enabled && ok
-        if enabled && !ok {
-            status = L10n.t("需要「辅助功能」权限才能接管亮度/音量键。已打开系统设置，勾选 PWE Lumen Bar 后再试一次。",
+        guard enabled, !ok else { return nil }
+        let reason = L10n.t("需要「辅助功能」权限才能接管亮度/音量键。已打开系统设置，勾选 PWE Lumen Bar 后再试一次。",
                             "Taking over the brightness and volume keys needs Accessibility permission. System Settings is open — tick PWE Lumen Bar, then try again.")
-        }
-        return ok
+        // Still set on the panel too: whoever is looking at it should not be left with keys that
+        // quietly stopped working.
+        status = reason
+        return reason
     }
 
     private func refreshAmbientSync() {

@@ -13,6 +13,11 @@ import SwiftUI
 /// It is deliberately only this window. `ImageRenderer` cannot draw AppKit-backed
 /// controls — sliders, pickers and menus come out as placeholder tiles — so the
 /// panel and the settings window have to be captured from the running app.
+///
+/// Re-tested on macOS 26.6 (2026-09-12), because the main surface having no check at all is
+/// worth ten minutes to recheck: still placeholder tiles. The panel's header and empty state
+/// do render, but a shot that draws a third of the panel and leaves the display list blank is
+/// worse than no shot — it looks like the bug it is not.
 @MainActor
 public enum Shots {
 

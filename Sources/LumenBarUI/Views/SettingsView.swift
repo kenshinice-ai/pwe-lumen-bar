@@ -16,6 +16,7 @@ struct SettingsView: View {
     @State private var bindingLabels: [UInt32: String] = [:]
     @State private var monitor: Any?
     @State private var conflictWarning: String?
+    @State private var mediaKeysNote: String?
     @State private var licenseEmail = ""
     @State private var licenseKey = ""
     @State private var licenseMessage: String?
@@ -132,9 +133,18 @@ struct SettingsView: View {
             Section(L10n.t("键盘亮度/音量键", "Keyboard brightness & volume keys")) {
                 Toggle(L10n.t("接管这些按键", "Take these keys over"), isOn: $mediaKeysEnabled)
                     .onChange(of: mediaKeysEnabled) { _, newValue in
-                        let ok = controller.applyMediaKeySetting(newValue)
-                        if !ok { mediaKeysEnabled = false }
+                        mediaKeysNote = controller.applyMediaKeySetting(newValue)
+                        if mediaKeysNote != nil { mediaKeysEnabled = false }
                     }
+
+                // Shown here, next to the switch that was thrown. Same shape as the shortcut
+                // conflict two sections down, and for the same reason.
+                if let mediaKeysNote {
+                    Label(mediaKeysNote, systemImage: "exclamationmark.triangle")
+                        .font(.caption)
+                        .foregroundStyle(.orange)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
                 Text(L10n.t("亮度键作用于光标所在的那块屏；光标在内建屏上时交还 macOS。需要「辅助功能」权限。",
                             "The brightness keys act on the display under the pointer; on the built-in panel they are left to macOS. Requires Accessibility permission."))
                     .font(.caption)

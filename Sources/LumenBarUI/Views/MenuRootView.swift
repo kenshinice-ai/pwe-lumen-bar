@@ -59,16 +59,31 @@ public struct MenuRootView: View {
     @ViewBuilder
     private var displayList: some View {
         if controller.cards.isEmpty && controller.offDisplays.isEmpty {
-            VStack(spacing: 6) {
+            // Every Mac has at least one screen, so this state is not "nothing is plugged in" —
+            // it is "detection came back empty", which is a fault and not a situation. Naming
+            // the fault and stopping is half an empty state: it has to say what to do next, and
+            // the thing to do is right there in the header where nobody is looking at that
+            // moment. The button repeats it here, where the reader already is.
+            VStack(spacing: 8) {
                 Image(systemName: "display.trianglebadge.exclamationmark")
                     .font(.title2)
                     .foregroundStyle(.tertiary)
                 Text(L10n.t("没有检测到显示器", "No displays detected"))
                     .font(.callout)
                     .foregroundStyle(.secondary)
+                Text(L10n.t("这台 Mac 至少有一块屏，所以这多半是检测没成功，而不是真的没有。",
+                            "Every Mac has at least one screen, so this is more likely a detection that came back empty than a Mac with no display."))
+                    .font(.caption)
+                    .foregroundStyle(.tertiary)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.horizontal, 20)
+                Button(L10n.t("重新检测", "Detect again")) { controller.refresh() }
+                    .disabled(controller.isRefreshing)
+                    .padding(.top, 2)
             }
             .frame(maxWidth: .infinity)
-            .padding(.vertical, 32)
+            .padding(.vertical, 28)
         } else {
             ScrollView {
                 VStack(spacing: 13) {

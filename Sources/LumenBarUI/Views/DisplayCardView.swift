@@ -217,8 +217,15 @@ struct DisplayCardView: View {
                     controller.turnOffBacklight(card)
                 }
             }
-            Button(L10n.t("仅从桌面移除（显示器仍通电）",
-                          "Remove from the desktop only (monitor stays powered)")) {
+            // The label carries its own reason when it cannot be used. A greyed menu item says
+            // only "not now" — and a disabled item is the one place a `.help` tooltip cannot be
+            // relied on to say the rest, because macOS does not show them on disabled items.
+            // Hiding it instead would be worse: then nobody learns the action exists.
+            Button(controller.cards.count < 2
+                   ? L10n.t("仅从桌面移除（这是唯一一块屏）",
+                            "Remove from the desktop only (this is your only display)")
+                   : L10n.t("仅从桌面移除（显示器仍通电）",
+                            "Remove from the desktop only (monitor stays powered)")) {
                 controller.softDisconnect(card)
             }
             .disabled(controller.cards.count < 2)

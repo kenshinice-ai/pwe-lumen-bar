@@ -44,15 +44,36 @@ VERSION="$(./scripts/version.sh)"
 # version-sensitive here is private and resolved at run time — `pwelumenctl compat`
 # checks it on the machine in front of you.
 
-echo "==> generating vector icons"
-# Compiled rather than run as a script because it shares BrandMark with the app:
-# the wing in the icon and the wing in the interface are the same geometry, and
-# a second copy of it is exactly how a mark drifts.
-mkdir -p build
-swiftc -O scripts/icon/main.swift Sources/LumenBarUI/Brand/BrandMark.swift \
-  -o build/make-icons -framework AppKit
-build/make-icons .
-iconutil -c icns build/AppIcon.iconset -o Resources/AppIcon.icns
+# Only when the geometry or the generator actually changed.
+#
+# These outputs are committed, and Quartz stamps a fresh CreationDate and file ID into every PDF
+# it writes — so regenerating unconditionally left `Resources/AppIcon.pdf` and
+# `Resources/MenuBarIcon.pdf` modified after every single build, with identical artwork inside.
+# That costs twice: the first step of cutting a release is "working tree must be empty", and a
+# tree that is always dirty is a tree nobody reads, which is where a real change goes to hide.
+ICON_SOURCES=(scripts/icon/main.swift Sources/LumenBarUI/Brand/BrandMark.swift)
+icons_stale() {
+  [[ ! -f Resources/AppIcon.icns ]] && return 0
+  local src
+  for src in "${ICON_SOURCES[@]}"; do
+    [[ "$src" -nt Resources/AppIcon.icns ]] && return 0
+  done
+  return 1
+}
+
+if icons_stale; then
+  echo "==> generating vector icons"
+  # Compiled rather than run as a script because it shares BrandMark with the app:
+  # the wing in the icon and the wing in the interface are the same geometry, and
+  # a second copy of it is exactly how a mark drifts.
+  mkdir -p build
+  swiftc -O scripts/icon/main.swift Sources/LumenBarUI/Brand/BrandMark.swift \
+    -o build/make-icons -framework AppKit
+  build/make-icons .
+  iconutil -c icns build/AppIcon.iconset -o Resources/AppIcon.icns
+else
+  echo "==> icons are current"
+fi
 
 echo "==> swift build -c $CONFIG"
 swift build -c "$CONFIG" --product PWELumenBar
@@ -135,6 +156,23 @@ codesign --verify --deep --strict "$APP"
 
 echo "==> built $APP  ($VERSION)"
 codesign -dv "$APP" 2>&1 | grep -E "Identifier|Authority=Developer" | head -2 || true
+
+# The finished bundle, where somebody would look for it.
+#
+# It is assembled in $TMPDIR because iCloud's file provider keeps re-attaching com.apple.FinderInfo
+# and codesign refuses to sign anything carrying it. Nothing copied it back, so `build/` held
+# whatever was left there by the last run that did — a bundle from eleven days earlier, sitting
+# under exactly the name anyone would reach for to check what they just built. Same `ditto` the
+# Mac Monitor build uses, for the same reason.
+#
+# `--norsrc --noextattr --noacl`, not a plain ditto: the destination is inside iCloud Drive, and a
+# plain copy carries com.apple.FinderInfo across with it — at which point `codesign --verify` on
+# the copy answers "resource fork, Finder information, or similar detritus not allowed". A build
+# nobody can verify in the place everybody looks for it is worse than no copy at all.
+rm -rf "build/$(basename "$APP")"
+mkdir -p build
+ditto --norsrc --noextattr --noacl "$APP" "build/$(basename "$APP")"
+echo "==> build/$(basename "$APP")"
 
 if [[ "$INSTALL" == "1" ]]; then
   # A menu bar app is almost always running when a new build arrives, and
