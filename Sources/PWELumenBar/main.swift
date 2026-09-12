@@ -20,7 +20,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         // After the interface exists, never before it: an update check is a convenience, and a
         // convenience must not sit between launching and the menu bar appearing.
-        Task { await controller.updates.checkIfDue() }
+        Task { await controller.updates.checkIfDue(enabled: UpdateCheck.isEnabled) }
     }
 
     /// PWE Lumen Bar is an Apple Silicon app: DDC/CI here runs over `IOAVService`, which

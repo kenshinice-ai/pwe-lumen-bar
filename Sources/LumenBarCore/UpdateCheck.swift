@@ -14,10 +14,20 @@ import Foundation
 ///
 /// Off until it is turned on. Pressing "Check for Updates" is that one check's own consent.
 ///
-/// **This file is duplicated, deliberately.** PWE AI Bar and PWE Monitor carry copies differing
-/// only in `product` and `downloadPage`; the three are separate repositories with three build
-/// systems, so there is nowhere shared to put it yet. Planning doc 22 §D1 is where that is fixed.
-/// Until then: change all three, or none.
+/// **This file is duplicated in three apps, deliberately, and the duplication is checked.**
+/// PWE AI Bar, PWE Monitor and PWE Lumen Bar each carry a copy differing only in `product`, in
+/// `downloadPage`, and in which function answers "is the interface in Chinese".
+///
+/// A shared package was designed and then measured against what it would buy. Three repositories
+/// and three build systems -- SwiftPM, a raw `swiftc` line, and an Xcode project -- mean a package
+/// costs a fourth repository, a build-system migration for one app, and "edit, tag, bump three
+/// dependents" on every change: the same work moved somewhere else, plus a mechanism to learn.
+/// What the duplication actually costs is one thing, and only one: nobody being told when a fix
+/// reaches one copy and not the others.
+///
+/// `07 TOOLS/check-shared-sources.py` is that one thing. It compares the five functions carrying
+/// the behaviour, ignores the configuration that is supposed to differ, and all three release
+/// scripts run it. **Change all three -- and the release will tell you if you did not.**
 @MainActor
 public final class UpdateCheck: ObservableObject {
 
@@ -80,9 +90,8 @@ public final class UpdateCheck: ObservableObject {
     }
 
     /// Runs at most once a day, does nothing without consent, and fails silently.
-    public func checkIfDue(enabled: Bool = UpdateCheck.isEnabled,
-                           version: String = UpdateCheck.currentVersion) async {
-        guard enabled else { return }
+    public func checkIfDue(enabled: Bool?, version: String = UpdateCheck.currentVersion) async {
+        guard enabled == true else { return }
         if let last = defaults.object(forKey: lastCheckKey) as? Date,
            now().timeIntervalSince(last) < Self.interval { return }
         await check(version: version)

@@ -57,6 +57,15 @@ APP="$BUILT"
 # packaging — if one has gone missing, the build in front of you is not a
 # release, it is a bug report.
 
+# The other apps carry a copy of UpdateCheck - three repositories, three build systems, nowhere
+# shared to put it. This is the one thing that duplication actually costs: nobody being told when
+# a fix reaches one copy and not the others. Skipped quietly when the file is not beside this app,
+# so a lone clone can still cut a release.
+if [[ -x ../check-shared-sources.py ]]; then
+  echo "== shared sources =========================================="
+  ../check-shared-sources.py || exit 1
+fi
+
 if [[ "$SKIP_CHECKS" == "0" ]]; then
   echo "▸ Pre-flight: the private interfaces…"
   REPORT="$("$APP/Contents/Resources/pwelumenctl" compat 2>&1)"
