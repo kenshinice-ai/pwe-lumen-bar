@@ -87,6 +87,12 @@ struct WelcomeView: View {
         }
         .padding(24)
         .frame(width: 460, height: 540)
+        // Amber here, and only here. `Brand` argues — correctly — that a slider ignoring the
+        // accent colour somebody chose in System Settings looks broken rather than branded, so
+        // every display control keeps the system tint. This window controls nothing: it is the
+        // product introducing itself, which is exactly where the brand belongs. Without this the
+        // first thing anyone ever saw of PWE Lumen Bar was five blue glyphs and a blue button.
+        .tint(Brand.accent)
     }
 
     private func tip(_ symbol: String, _ title: String, _ detail: String) -> some View {

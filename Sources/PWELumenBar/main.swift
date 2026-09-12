@@ -17,6 +17,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         self.controller = controller
         self.statusItem = StatusItemController(controller: controller)
         controller.showWelcomeIfFirstRun()
+
+        // After the interface exists, never before it: an update check is a convenience, and a
+        // convenience must not sit between launching and the menu bar appearing.
+        Task { await controller.updates.checkIfDue() }
     }
 
     /// PWE Lumen Bar is an Apple Silicon app: DDC/CI here runs over `IOAVService`, which

@@ -61,6 +61,9 @@ public struct OffDisplay: Identifiable {
 @MainActor
 public final class DisplayController: ObservableObject {
     @Published public private(set) var cards: [DisplayCard] = []
+    /// The update check. Owned here because the settings window and the menu are rebuilt freely
+    /// and neither should be the thing that remembers whether an answer arrived.
+    public let updates = UpdateCheck()
     @Published var status: String?
     /// Installed ICC profiles are system-wide, so they are enumerated once
     /// rather than per display card.

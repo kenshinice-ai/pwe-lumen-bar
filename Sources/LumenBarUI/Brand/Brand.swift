@@ -38,15 +38,18 @@ enum Brand {
 
     /// The signature line.
     ///
-    /// The brand standard's own format is the bilingual pair
-    /// "A PARADISE PRODUCTION · 天域文创出品". Inside a product that already runs
-    /// entirely in one language, printing both halves means every reader reads
-    /// half a line of a language they did not choose, so each interface carries
-    /// its own half. The paired form stays in place on outward-facing material —
-    /// the README, the disk image, the site — where the audience is both.
-    static var signature: String {
-        L10n.t("天域文创出品", "A PARADISE PRODUCTION")
-    }
+    /// Was "天域文创出品" / "A PARADISE PRODUCTION". Both halves are retired: the house is
+    /// PWE · 天域, and 「文创」 drifted in Chinese towards merchandise and craft goods — too
+    /// light for a company shipping SaaS and Mac tools (planning doc 17 §2.3).
+    ///
+    /// The standard's form is the pair `PWE · 天域出品`, and unlike the old one it is worth
+    /// printing whole in both languages: "PWE" is the brand rather than English, and 天域出品 is
+    /// four characters. Nobody is made to read half a line of a language they did not choose.
+    ///
+    /// It is drawn by `BrandSignature`, which sets the two scripts separately — see there.
+    static let signature = "PWE · 天域出品"
+    static let signatureLatin = "PWE"
+    static let signatureHan = "天域出品"
 
     static let copyright = "© 2026 PWE Group Pty Ltd"
 
@@ -145,10 +148,16 @@ struct BrandSignature: View {
     var body: some View {
         HStack(spacing: 6) {
             WingMark(height: 11)
-            Text(Brand.signature)
-                .font(.caption2.weight(.medium))
-                .tracking(1.4)
-                .foregroundStyle(.secondary)
+            // Two runs, because this one line is two scripts that want opposite things. Latin
+            // small caps need the tracking; Han has no small caps, and spacing 天域出品 apart
+            // reads as four separate words rather than as an opened line.
+            HStack(spacing: 3) {
+                Text(verbatim: Brand.signatureLatin).tracking(1.4)
+                Text(verbatim: "·")
+                Text(verbatim: Brand.signatureHan)
+            }
+            .font(.caption2.weight(.medium))
+            .foregroundStyle(.secondary)
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Brand.signature)

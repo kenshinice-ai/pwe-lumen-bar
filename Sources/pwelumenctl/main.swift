@@ -106,6 +106,7 @@ func usage() {
       remember on|off|show|clear    每块屏的设置记忆
       audio                         列出音频输出设备（并说明音量键归谁）
       compat                        系统兼容性自检（私有接口是否都在）
+      updatecheck                   更新检查自检（它到底发了什么出去）
       sleep                         让所有显示器休眠
 
     <屏> 可以是显示器 ID、序号，或名字的一部分。
@@ -147,6 +148,7 @@ func usage() {
       remember on|off|show|clear    per-display settings memory
       audio                         list audio output devices (and who owns the volume keys)
       compat                        system compatibility self-check (are the private entry points there)
+      updatecheck                   update-check self-check (what it actually sends)
       sleep                         put all displays to sleep
 
     <disp> can be a display ID, an index, or part of the name.
@@ -843,6 +845,64 @@ case "compat":
     } else {
         print(L10n.t("\(failures) 项不可用。对应功能会自动降级，不会崩溃；把这份输出贴进 issue 即可。",
                      "\(failures) unavailable. The matching features degrade rather than crash — paste this output into an issue."))
+    }
+
+case "updatecheck":
+    // What the update check sends, and when it declines to run.
+    //
+    // This project has no test target, so the invariants that matter travel as a self-check the
+    // way `compat` does. The one worth gating is negative: **three fields, none of which
+    // identifies the machine.** That promise is printed in Settings and on the download page,
+    // and this app reads EDIDs and panel serials all day — so a fourth field added without
+    // thinking would be a broken promise rather than a bug.
+    var updateFailures = 0
+    func expect(_ ok: Bool, _ what: String) {
+        print("\(ok ? "✅" : "❌")  \(what)")
+        if !ok { updateFailures += 1 }
+    }
+    let payload = UpdateCheck.payload(version: "1.0.0")
+    expect(Set(payload.keys) == ["product", "version", "os"], "sends exactly product, version, os")
+    expect(payload["product"] == "lumenbar", "names this product")
+    for forbidden in ["machine", "serial", "edid", "displays", "order", "state", "user"] {
+        expect(payload[forbidden] == nil, "never sends \(forbidden)")
+    }
+    expect(UpdateCheck.isNewer("1.10.0", than: "1.9.0"), "1.10 is newer than 1.9, not older")
+    expect(UpdateCheck.isNewer("1.1.0", than: "1.0.0"), "1.1 is newer than 1.0")
+    expect(!UpdateCheck.isNewer("1.0.0", than: "1.0.0"), "the same version is not an update")
+    expect(!UpdateCheck.isNewer("0.9.9", than: "1.0.0"), "an older answer is not an update")
+    expect(!UpdateCheck.isNewer("", than: "1.0.0"), "an empty answer is not an update")
+
+    let suite = "PWELumenBarSelfTest.\(UUID().uuidString)"
+    let scratch = UserDefaults(suiteName: suite)!
+    var attempts = 0
+    var clock = Date(timeIntervalSince1970: 1_800_000_000)
+    let group = DispatchGroup()
+    group.enter()
+    Task { @MainActor in
+        let updates = UpdateCheck(defaults: scratch, now: { clock },
+                                  fetch: { _ in attempts += 1; throw CancellationError() })
+        await updates.checkIfDue(enabled: false)
+        expect(attempts == 0, "off means no request")
+        await updates.checkIfDue(enabled: true)
+        expect(attempts == 1, "on means a request")
+        clock += 3600
+        await updates.checkIfDue(enabled: true)
+        expect(attempts == 2, "a failed check is retried rather than parked for a day")
+        group.leave()
+    }
+    while group.wait(timeout: .now()) == .timedOut {
+        RunLoop.main.run(until: Date().addingTimeInterval(0.01))
+    }
+    scratch.removePersistentDomain(forName: suite)
+    UserDefaults.standard.removeSuite(named: suite)
+
+    print("")
+    if updateFailures == 0 {
+        print(L10n.t("全部通过 —— 更新检查只发它说好要发的三样东西。",
+                     "All clear — the update check sends only the three things it says it does."))
+    } else {
+        print(L10n.t("\(updateFailures) 项不符。", "\(updateFailures) failed."))
+        exit(1)
     }
 
 case "sleep":

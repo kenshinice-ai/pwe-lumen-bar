@@ -66,6 +66,16 @@ if [[ "$SKIP_CHECKS" == "0" ]]; then
     exit 1
   fi
   echo "$REPORT" | tail -3 | sed 's/^/    /'
+
+  # The update check is the only outgoing request this app makes, and what it does not send is
+  # printed in Settings and on the download page. Gate that promise before anything ships.
+  echo "▸ Pre-flight: what the update check sends…"
+  if ! "$APP/Contents/Resources/pwelumenctl" updatecheck > /tmp/pwelumen-updatecheck.txt 2>&1; then
+    echo "✗ The update check self-test failed — not packaging."
+    sed 's/^/    /' /tmp/pwelumen-updatecheck.txt
+    exit 1
+  fi
+  tail -2 /tmp/pwelumen-updatecheck.txt | sed 's/^/    /'
 fi
 
 # ---------------------------------------------------------------- sign

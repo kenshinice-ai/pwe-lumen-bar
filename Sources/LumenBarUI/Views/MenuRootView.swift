@@ -283,6 +283,14 @@ public struct MenuRootView: View {
                 }
 
                 Divider()
+                // Only ever shown when there is something to say. A permanently-present
+                // "Check for Updates" that usually reports nothing trains people to ignore it;
+                // a line that appears means a line worth reading.
+                if let release = controller.updates.available {
+                    Button(L10n.t("下载 \(release.version) 版…", "Download version \(release.version)…")) {
+                        NSWorkspace.shared.open(UpdateCheck.downloadPage)
+                    }
+                }
                 Button(L10n.t("使用提示…", "Tips…")) { controller.showWelcome() }
                 Button(L10n.t("设置…", "Settings…")) { controller.openSettings() }
                 Button(L10n.t("退出 PWE Lumen Bar", "Quit PWE Lumen Bar")) { NSApplication.shared.terminate(nil) }

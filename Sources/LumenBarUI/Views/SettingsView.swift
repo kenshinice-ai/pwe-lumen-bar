@@ -8,6 +8,8 @@ struct SettingsView: View {
     @ObservedObject var controller: DisplayController
 
     @State private var launchesAtLogin = LoginItem.isEnabled
+    @State private var updateChecks = UpdateCheck.isEnabled
+    @State private var checkingForUpdate = false
     @State private var shortcutsEnabled = HotKeyCenter.isEnabledInDefaults
     @State private var mediaKeysEnabled = MediaKeyTap.isEnabledInDefaults
     @State private var recording: HotKeyCenter.Action?
@@ -99,6 +101,7 @@ struct SettingsView: View {
                         LoginItem.setEnabled(newValue)
                         launchesAtLogin = LoginItem.isEnabled
                     }
+                updatesRow
             }
 
             Section(L10n.t("显示器信息", "Display information")) {
@@ -193,6 +196,55 @@ struct SettingsView: View {
 
     // MARK: - About
 
+    /// The updates control.
+    ///
+    /// Off until it is turned on, and the note prints what leaves the machine rather than linking
+    /// to a policy: this app reads EDIDs and panel serials to do its job, so "we send three
+    /// fields and none of them is any of that" is worth saying where it can be read in place.
+    @ViewBuilder private var updatesRow: some View {
+        Toggle(L10n.t("有新版本时告诉我", "Tell me when there is a new version"), isOn: $updateChecks)
+            .onChange(of: updateChecks) { _, newValue in
+                UpdateCheck.isEnabled = newValue
+                // Answer the question it was just asked: turning this on and seeing nothing
+                // happen reads as a switch that did not work.
+                if newValue { Task { await controller.updates.check() } }
+            }
+
+        if let release = controller.updates.available {
+            LabeledContent(L10n.t("新版本", "New version")) {
+                HStack(spacing: 8) {
+                    Text(verbatim: release.version).monospacedDigit()
+                    Button(L10n.t("下载", "Download")) {
+                        NSWorkspace.shared.open(UpdateCheck.downloadPage)
+                    }
+                    Button(L10n.t("以后", "Later")) { controller.updates.dismiss() }
+                        .buttonStyle(.link)
+                }
+            }
+            if let notes = release.notes {
+                Text(notes).font(.caption).foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        } else if updateChecks {
+            HStack(spacing: 8) {
+                Button(L10n.t("现在检查", "Check now")) {
+                    checkingForUpdate = true
+                    Task {
+                        await controller.updates.check()
+                        checkingForUpdate = false
+                    }
+                }
+                .disabled(checkingForUpdate)
+                if checkingForUpdate { ProgressView().controlSize(.small) }
+            }
+        }
+
+        Text(L10n.t("每天向 pwestudio.site 问一次有没有更新的版本。它只发三样东西:这是 PWE Lumen Bar、它是哪个版本、运行在哪个 macOS 上。不发显示器型号、不发序列号、不发任何设置,也不发能认出这台机器的东西。",
+                    "Asks pwestudio.site once a day whether a newer version exists. It sends three things and nothing else: that this is PWE Lumen Bar, which version it is, and which macOS it runs on. No display models, no serial numbers, no settings, and nothing that identifies the machine."))
+            .font(.caption).foregroundStyle(.secondary)
+            .fixedSize(horizontal: false, vertical: true)
+    }
+
     /// Who made it, which build this is, and how to reach us — the three things
     /// someone filing a bug report has to be able to read off the app itself.
     private var aboutSection: some View {
@@ -208,9 +260,14 @@ struct SettingsView: View {
                 Spacer()
             }
             VStack(alignment: .leading, spacing: 3) {
-                Text(Brand.signature)
-                    .font(.caption.weight(.medium))
-                    .tracking(1.2)
+                // Split by script, for the reason given on `BrandSignature`: a Latin tracking
+                // value pressed onto 天域出品 spaces it into four separate words.
+                HStack(spacing: 3) {
+                    Text(verbatim: Brand.signatureLatin).tracking(1.2)
+                    Text(verbatim: "·")
+                    Text(verbatim: Brand.signatureHan)
+                }
+                .font(.caption.weight(.medium))
                 Text(Brand.copyright)
                     .font(.caption2)
                     .foregroundStyle(.secondary)
