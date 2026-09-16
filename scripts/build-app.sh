@@ -75,11 +75,17 @@ else
   echo "==> icons are current"
 fi
 
-echo "==> swift build -c $CONFIG"
-swift build -c "$CONFIG" --product PWELumenBar
-swift build -c "$CONFIG" --product pwelumenctl
+# The compiler's scratch directory sits outside the repository for the same reason the app is
+# assembled in $TMPDIR further down: iCloud's file provider keeps re-attaching
+# com.apple.FinderInfo, and since Swift 6.4 the build signs the resource bundle as it produces
+# it — codesign refuses anything carrying that attribute, so a .build inside iCloud fails on the
+# first step. (2026-09-16, after it stopped PWE AI Bar building at all.)
+SCRATCH="${PWELUMEN_BUILD_ROOT:-${TMPDIR:-/tmp}/pwelumenbar-spm}"
+echo "==> swift build -c $CONFIG  (scratch: $SCRATCH)"
+swift build -c "$CONFIG" --scratch-path "$SCRATCH" --product PWELumenBar
+swift build -c "$CONFIG" --scratch-path "$SCRATCH" --product pwelumenctl
 
-BIN="$(swift build -c "$CONFIG" --show-bin-path)"
+BIN="$(swift build -c "$CONFIG" --scratch-path "$SCRATCH" --show-bin-path)"
 
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
