@@ -66,6 +66,12 @@ if [[ -x ../check-shared-sources.py ]]; then
   ../check-shared-sources.py || exit 1
 fi
 
+# iCloud writes "Forecast 2.swift" beside "Forecast.swift" and nothing warns; a published tag
+# once carried fourteen of them. Same "skip quietly when absent" rule as above.
+if [[ -x ../check-icloud-copies.py ]]; then
+  ../check-icloud-copies.py . || exit 1
+fi
+
 if [[ "$SKIP_CHECKS" == "0" ]]; then
   echo "▸ Pre-flight: the private interfaces…"
   REPORT="$("$APP/Contents/Resources/pwelumenctl" compat 2>&1)"
