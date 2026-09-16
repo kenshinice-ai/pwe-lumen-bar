@@ -64,7 +64,7 @@ navy `#0E1729` 圆角底 + 琥珀 `#F5B335` 翅膀（宽度 60%），与
 两条独立理由，任一条都足够：
 
 1. 标准 §7.1 的仪表破例已由 PWE MAC MONITOR 实尺验证：**22px 高度下逐羽辨色不成立**
-   （见 `07 TOOLS/PWE MAC MONITOR/docs/wing-states.md`）。
+   （见 `07 TOOLS/PWE Monitor/docs/wing-states.md`）。
 2. 同一条菜单栏上如果两个 PWE 应用都是翅膀，用户分不出哪个是哪个。
    菜单栏图标的职责是功能识别，不是身份。
 
