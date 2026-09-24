@@ -145,7 +145,7 @@ public final class StatusItemController: NSObject, NSPopoverDelegate {
             }
         }
         menu.addItem(.separator())
-        let quit = NSMenuItem(title: L10n.t("退出 PWE Lumen Bar", "Quit PWE Lumen Bar"),
+        let quit = NSMenuItem(title: controller.quitTitle,
                               action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         menu.addItem(quit)
 

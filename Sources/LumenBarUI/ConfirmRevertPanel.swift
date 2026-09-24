@@ -16,6 +16,8 @@ final class ConfirmRevertPanel {
     private let model: Model
     private let onKeep: () -> Void
     private let onRevert: () -> Void
+    private let keepIsDefault: Bool
+    private let avoiding: CGDirectDisplayID?
 
     final class Model: ObservableObject {
         @Published var remaining: Int
@@ -32,24 +34,36 @@ final class ConfirmRevertPanel {
         }
     }
 
+    /// - Parameters:
+    ///   - keepIsDefault: whether Return keeps the change. Off when the change
+    ///     may have left someone unable to see — a reflexive Return must not
+    ///     make that stick.
+    ///   - avoiding: a display the panel must not appear on, because the change
+    ///     being confirmed is that display going dark.
     static func present(title: String,
                         message: String,
                         seconds: Int = 15,
+                        keepIsDefault: Bool = true,
+                        avoiding: CGDirectDisplayID? = nil,
                         onKeep: @escaping () -> Void,
                         onRevert: @escaping () -> Void) {
         // Supersede by *reverting* the pending change, not by dropping it.
         // Abandoning it would leave an unconfirmed change permanently applied —
         // exactly the outcome this panel exists to prevent.
         active?.dismiss(keep: false, runHandler: true)
-        let instance = ConfirmRevertPanel(title: title, message: message,
-                                          seconds: seconds, onKeep: onKeep, onRevert: onRevert)
+        let instance = ConfirmRevertPanel(title: title, message: message, seconds: seconds,
+                                          keepIsDefault: keepIsDefault, avoiding: avoiding,
+                                          onKeep: onKeep, onRevert: onRevert)
         active = instance
         instance.show()
     }
 
     private init(title: String, message: String, seconds: Int,
+                 keepIsDefault: Bool, avoiding: CGDirectDisplayID?,
                  onKeep: @escaping () -> Void, onRevert: @escaping () -> Void) {
         self.model = Model(title: title, message: message, remaining: seconds)
+        self.keepIsDefault = keepIsDefault
+        self.avoiding = avoiding
         self.onKeep = onKeep
         self.onRevert = onRevert
     }
@@ -57,6 +71,7 @@ final class ConfirmRevertPanel {
     private func show() {
         let content = ConfirmRevertView(
             model: model,
+            keepIsDefault: keepIsDefault,
             keep: { [weak self] in self?.dismiss(keep: true, runHandler: true) },
             revert: { [weak self] in self?.dismiss(keep: false, runHandler: true) })
 
@@ -70,7 +85,7 @@ final class ConfirmRevertPanel {
         panel.level = .floating
         panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
         panel.contentView = NSHostingView(rootView: content)
-        panel.center()
+        place(panel)
         panel.orderFrontRegardless()
         self.panel = panel
 
@@ -83,6 +98,27 @@ final class ConfirmRevertPanel {
                 if self.model.remaining <= 0 { self.dismiss(keep: false, runHandler: true) }
             }
         }
+    }
+
+    /// On the screen the pointer is on — that is where the eyes and the hand
+    /// are — unless that is the display going dark, in which case on one that
+    /// is not. `NSScreen.screens` can still list the departing display for a
+    /// moment after it leaves, which is why it is excluded by ID, not trusted
+    /// to be gone.
+    private func place(_ panel: NSPanel) {
+        func number(_ screen: NSScreen) -> CGDirectDisplayID? {
+            (screen.deviceDescription[NSDeviceDescriptionKey("NSScreenNumber")] as? NSNumber)
+                .map { CGDirectDisplayID($0.uint32Value) }
+        }
+        let usable = NSScreen.screens.filter { avoiding == nil || number($0) != avoiding }
+        let mouse = NSEvent.mouseLocation
+        guard let screen = usable.first(where: { $0.frame.contains(mouse) }) ?? usable.first else {
+            panel.center()
+            return
+        }
+        let area = screen.visibleFrame
+        let size = panel.frame.size
+        panel.setFrameOrigin(NSPoint(x: area.midX - size.width / 2, y: area.midY - size.height / 2))
     }
 
     private func dismiss(keep: Bool, runHandler: Bool) {
@@ -98,6 +134,7 @@ final class ConfirmRevertPanel {
 
 private struct ConfirmRevertView: View {
     @ObservedObject var model: ConfirmRevertPanel.Model
+    let keepIsDefault: Bool
     let keep: () -> Void
     let revert: () -> Void
 
@@ -119,9 +156,19 @@ private struct ConfirmRevertView: View {
                 // Escape reverts: the safe action deserves the reflexive key.
                 Button(L10n.t("恢复", "Revert"), action: revert)
                     .keyboardShortcut(.cancelAction)
-                Button(L10n.t("保留", "Keep"), action: keep)
-                    .keyboardShortcut(.defaultAction)
+                if keepIsDefault {
+                    Button(L10n.t("保留", "Keep"), action: keep)
+                        .keyboardShortcut(.defaultAction)
+                } else {
+                    Button(L10n.t("保留", "Keep"), action: keep)
+                }
             }
+            // ⌘. is the Mac's other "stop"; it reverts too.
+            Button("", action: revert)
+                .keyboardShortcut(".", modifiers: .command)
+                .frame(width: 0, height: 0)
+                .opacity(0)
+                .accessibilityHidden(true)
         }
         .padding(20)
         .frame(width: 340)

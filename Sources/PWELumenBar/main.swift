@@ -94,6 +94,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // Gamma changes outlive the process — never leave a screen dimmed or
         // tinted with no app around to undo it.
         BrightnessEngine.shared.restoreAllGamma()
+        // So does a display taken off the desktop, for the same reason and with
+        // more at stake: without the app there is no row to bring it back from.
+        controller?.restoreDisplaysForQuit()
     }
 }
 

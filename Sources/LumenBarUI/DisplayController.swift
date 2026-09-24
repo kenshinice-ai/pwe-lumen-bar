@@ -51,13 +51,6 @@ public struct DisplayCard: Identifiable {
     var canControlVolume: Bool { volumeChannel != .none }
 }
 
-/// A display PWE Lumen Bar switched off, and how — the route decides how it comes back.
-public struct OffDisplay: Identifiable {
-    public let info: DisplayInfo
-    public let method: PowerEngine.SleepMethod
-    public var id: CGDirectDisplayID { info.id }
-}
-
 @MainActor
 public final class DisplayController: ObservableObject {
     @Published public private(set) var cards: [DisplayCard] = []
@@ -80,8 +73,6 @@ public final class DisplayController: ObservableObject {
     @Published private(set) var rememberEnabled = DisplaySettingsStore.shared.isEnabled
     @Published private(set) var autoDisconnectBuiltIn =
         Defaults.shared.bool(forKey: "autoDisconnectBuiltIn")
-    /// Only the panel this feature put away, so manual disconnects are left alone.
-    private var autoDisconnectedBuiltIn: DisplayInfo?
     /// Routes the keyboard's own brightness and volume keys to the display the
     /// pointer is on. Keys aimed at the built-in panel are declined so macOS
     /// keeps handling them natively.
@@ -166,10 +157,24 @@ public final class DisplayController: ObservableObject {
     }
     @Published private(set) var isRefreshing = false
 
-    /// Displays PWE Lumen Bar has switched off, with the route used — a display taken
-    /// off the desktop vanishes from the online list, so without this record
-    /// there would be nothing left to switch it back on with.
-    @Published private(set) var offDisplays: [OffDisplay] = []
+    /// Displays PWE Lumen Bar has switched off. A display taken off the desktop
+    /// vanishes from the online list, so without these records there would be
+    /// nothing left to switch it back on with — and they are persisted, because
+    /// the window server keeps the display off even after this process is gone.
+    @Published private(set) var offRecords: [OffRecord] = []
+    /// Displays with a turn-off in flight: the card says so at once, and a second
+    /// press cannot queue a second disconnect behind the first.
+    @Published private(set) var turningOff: Set<String> = []
+    /// A result that belongs to one display, shown on that display's card or row
+    /// rather than in the status line at the foot of the panel.
+    @Published private(set) var notes: [String: String] = [:]
+    /// Offered once, on the row of a built-in panel someone switched off by hand
+    /// while an external display was connected — the moment the automatic rule is
+    /// most obviously what they wanted.
+    @Published private(set) var offersAutoCollapse = false
+    /// After the automatic rule is switched on: it only works while the app runs.
+    @Published private(set) var offersLoginItem = false
+    private static let autoCollapseOfferedKey = "autoCollapseOffered"
 
     private var cancellables = Set<AnyCancellable>()
     /// Identities seen in a previous refresh — anything else just arrived.
@@ -230,6 +235,7 @@ public final class DisplayController: ObservableObject {
 
     public func refresh() {
         let displays = DisplayRegistry.shared.onlineDisplays()
+        offRecords = OffDisplayStore.shared.reconcile(active: displays)
         // Show the skeleton at once — DDC reads can take a moment and the menu
         // should never feel like it is hanging.
         let known = Dictionary(uniqueKeysWithValues: cards.map { ($0.id, $0) })
@@ -293,7 +299,7 @@ public final class DisplayController: ObservableObject {
             card.refreshOptions = rates.count > 1 ? rates : []
         }
         card.rotationSupported = RotationEngine.isSupported(for: info)
-        card.isAsleep = PowerEngine.sleepStates[info.persistentKey] != nil
+        card.isAsleep = PowerEngine.darkenedByDDC.contains(info.persistentKey)
         card.isProtected = DisplaySettingsStore.shared.isProtected(info.persistentKey)
         card.hasHiDPIOverride = !info.isBuiltin && HiDPIOverride.isInstalled(for: info)
         // "Has DDC" must mean the display answers, not that a service exists.
@@ -329,8 +335,12 @@ public final class DisplayController: ObservableObject {
             seenKeys = Set(displays.map(\.persistentKey))
             return
         }
+        // Two identical monitors that report no serial share an identity. Settings
+        // restored by identity could land on the wrong one, so neither gets any.
+        let counts = Dictionary(displays.map { ($0.persistentKey, 1) }, uniquingKeysWith: +)
         let arrivals = displays.filter {
             !seenKeys.contains($0.persistentKey) && !restoringKeys.contains($0.persistentKey)
+                && counts[$0.persistentKey] == 1
         }
         seenKeys = Set(displays.map(\.persistentKey))
         guard !arrivals.isEmpty else { return }
@@ -391,43 +401,51 @@ public final class DisplayController: ObservableObject {
         }
     }
 
-    /// Clamshell-style behaviour: when an external display shows up, take the
-    /// built-in panel off the desktop, and put it back when the external one
-    /// leaves. Opt-in, and it only ever undoes what it itself did.
+    /// Clamshell-style behaviour without the clamshell: when an external display
+    /// shows up, take the built-in panel off the desktop, and put it back when the
+    /// last external one leaves. Opt-in, and it only ever undoes what it did
+    /// itself — the record's reason says which ones those are, and because the
+    /// record is persisted, that still holds after a relaunch.
     private func applyAutoDisconnect(among displays: [DisplayInfo]) {
         guard autoDisconnectBuiltIn else { return }
         let externals = displays.filter { !$0.isBuiltin }
         let builtIn = displays.first(where: \.isBuiltin)
+        let autoRecord = offRecords.first { $0.reason == .automatic }
 
-        if !externals.isEmpty, let builtIn, autoDisconnectedBuiltIn == nil {
-            let result = PowerEngine.setEnabled(false, display: builtIn)
-            if case .ok = result {
-                autoDisconnectedBuiltIn = builtIn
-                PowerEngine.sleepStates[builtIn.persistentKey] = .softDisconnect
-                offDisplays.append(OffDisplay(info: builtIn, method: .softDisconnect))
+        if !externals.isEmpty, let builtIn, autoRecord == nil {
+            let slot = cards.firstIndex { $0.id == builtIn.id } ?? 0
+            if case .ok = PowerEngine.setEnabled(false, display: builtIn) {
+                record(builtIn, reason: .automatic, slot: slot, among: displays)
                 status = L10n.t("检测到外接屏，已收起内建屏",
                                 "External display detected — the built-in panel was put away")
             }
-        } else if externals.isEmpty, let remembered = autoDisconnectedBuiltIn {
-            _ = PowerEngine.setEnabled(true, display: remembered)
-            PowerEngine.sleepStates.removeValue(forKey: remembered.persistentKey)
-            offDisplays.removeAll { $0.id == remembered.id }
-            autoDisconnectedBuiltIn = nil
+        } else if externals.isEmpty, let autoRecord {
+            // Through the same path as the button, so the record goes only once
+            // the panel is seen to be back.
+            turnOn(autoRecord)
         }
     }
 
     func setAutoDisconnectBuiltIn(_ enabled: Bool) {
         Defaults.shared.set(enabled, forKey: "autoDisconnectBuiltIn")
         autoDisconnectBuiltIn = enabled
-        if !enabled, let remembered = autoDisconnectedBuiltIn {
-            _ = PowerEngine.setEnabled(true, display: remembered)
-            PowerEngine.sleepStates.removeValue(forKey: remembered.persistentKey)
-            offDisplays.removeAll { $0.id == remembered.id }
-            autoDisconnectedBuiltIn = nil
-            refresh()
+        offersAutoCollapse = false
+        if enabled {
+            // A built-in panel already switched off by hand is exactly what the
+            // rule would have done; from now on the rule owns it, so unplugging
+            // the external display brings it back.
+            for var record in offRecords where record.key == "builtin" && record.reason == .manual {
+                record.reason = .automatic
+                OffDisplayStore.shared.add(record)
+            }
+            // The rule acts only while the app runs, so it is only as good as
+            // the app being there after a restart.
+            offersLoginItem = !LoginItem.isEnabled
         } else {
-            refresh()
+            offersLoginItem = false
+            for record in offRecords where record.reason == .automatic { turnOn(record) }
         }
+        refresh()
     }
 
     private func handleReconfiguration() {
@@ -969,50 +987,181 @@ public final class DisplayController: ObservableObject {
 
     /// Turn one display off. The route is chosen per display — DDC power for
     /// monitors that speak it, taken off the desktop for the ones that do not.
-    func sleepDisplay(_ card: DisplayCard) {
+    /// Turn one display off, reversibly: it leaves the desktop, the monitor
+    /// keeps its power, and a row takes its card's place in the panel.
+    ///
+    /// If it is the display the pointer is on, the person may be left looking
+    /// at a screen that just went dark, so the result is offered for keeping on
+    /// the display that remains — and reverts by itself if nobody answers.
+    func turnOff(_ card: DisplayCard) {
         guard let info = live(card) else {
-            status = L10n.t("这块屏已经不在线了", "That display is no longer attached")
+            notes[card.info.persistentKey] = L10n.t("这块屏已经不在线了", "That display is no longer attached")
             return
         }
+        let key = info.persistentKey
+        guard !turningOff.contains(key) else { return }
+        let underPointer = cardUnderCursor()?.id == info.id
+        let slot = cards.firstIndex { $0.id == info.id } ?? cards.count
+        let displays = DisplayRegistry.shared.onlineDisplays()
+        turningOff.insert(key)
+        notes[key] = nil
+
         HardwareQueue.shared.run {
             let outcome = PowerEngine.sleepDisplay(info)
             DispatchQueue.main.async {
-                if case .slept(let method) = outcome {
-                    PowerEngine.sleepStates[info.persistentKey] = method
-                    // A DDC-powered-off monitor stays online, so its card
-                    // remains; one taken off the desktop does not, and only
-                    // this record can bring it back.
-                    if method == .softDisconnect {
-                        self.offDisplays.append(OffDisplay(info: info, method: method))
-                    } else {
-                        self.update(info.id) { $0.isAsleep = true }
-                    }
+                self.turningOff.remove(key)
+                guard case .slept = outcome else {
+                    self.notes[key] = outcome.message
+                    return
                 }
-                self.status = outcome.message
+                let record = self.record(info, reason: .manual, slot: slot, among: displays)
+                if info.isBuiltin, !self.autoDisconnectBuiltIn,
+                   displays.contains(where: { !$0.isBuiltin }),
+                   !Defaults.shared.bool(forKey: Self.autoCollapseOfferedKey) {
+                    self.offersAutoCollapse = true
+                }
+                self.refresh()
+                if underPointer { self.offerToKeep(record) }
+            }
+        }
+    }
+
+    /// The safety net for switching off the screen someone is looking at.
+    /// Return is deliberately not "keep": a reflexive press on a screen you
+    /// cannot see must not make the dark state stick.
+    private func offerToKeep(_ record: OffRecord) {
+        ConfirmRevertPanel.present(
+            title: L10n.t("让 \(record.name) 保持熄灭？", "Keep \(record.name) off?"),
+            message: L10n.t("你熄掉的是光标所在的那块屏。如果看不到这条提示也没关系 —— 不做任何操作，它会自己亮回来。",
+                            "That was the display the pointer was on. If you cannot see this, do nothing — it comes back on by itself."),
+            keepIsDefault: false,
+            avoiding: record.displayID,
+            onKeep: {},
+            onRevert: { [weak self] in self?.turnOn(record) })
+    }
+
+    @discardableResult
+    private func record(_ info: DisplayInfo, reason: OffRecord.Reason, slot: Int,
+                        among displays: [DisplayInfo]) -> OffRecord {
+        let shared = displays.filter { $0.persistentKey == info.persistentKey }.count > 1
+        let record = OffRecord(key: info.persistentKey, displayID: info.id, name: info.name,
+                               reason: reason, slot: slot, keyWasShared: shared)
+        OffDisplayStore.shared.add(record)
+        offRecords.removeAll { $0.displayID == record.displayID }
+        offRecords.append(record)
+        return record
+    }
+
+    func turnOn(_ record: OffRecord) {
+        guard !turningOff.contains(record.key) else { return }
+        turningOff.insert(record.key)
+        notes[record.key] = nil
+        HardwareQueue.shared.run {
+            let back = PowerEngine.turnBackOn(record)
+            let asleep = PowerEngine.displaysAreAsleep
+            DispatchQueue.main.async {
+                self.turningOff.remove(record.key)
+                if back {
+                    OffDisplayStore.shared.remove(record)
+                    self.offRecords.removeAll { $0.id == record.id }
+                    if record.key == "builtin" { self.offersAutoCollapse = false }
+                } else {
+                    // Keep the record: it is still the only way back. Say why it
+                    // did not work, on the row, where the button was pressed.
+                    self.notes[record.key] = asleep
+                        ? L10n.t("屏幕在睡眠时点不亮 —— 唤醒后再试一次。",
+                                 "A display cannot come back while the screens are asleep — wake them and try again.")
+                        : L10n.t("没能点亮。如果这块屏已经拔掉了，可以移除这一行 —— 重新接上时它会自己出现。",
+                                 "It did not come back. If it has been unplugged, remove this row — it will appear by itself when reconnected.")
+                }
                 self.refresh()
             }
         }
     }
 
-    func wake(_ info: DisplayInfo) {
-        let method = PowerEngine.sleepStates[info.persistentKey] ?? .softDisconnect
-        HardwareQueue.shared.run {
-            let ok = PowerEngine.wakeDisplay(info, method: method)
-            DispatchQueue.main.async {
-                if ok {
-                    PowerEngine.sleepStates.removeValue(forKey: info.persistentKey)
-                    self.offDisplays.removeAll { $0.info.persistentKey == info.persistentKey }
-                    self.update(info.id) { $0.isAsleep = false }
-                } else {
-                    self.status = L10n.t("唤醒失败", "Could not bring that display back")
-                }
-                self.refresh()
-            }
+    /// For a display that is gone — unplugged since it was switched off. Its
+    /// record could otherwise never retire, because nothing will ever report
+    /// its ID or identity as back.
+    func forget(_ record: OffRecord) {
+        OffDisplayStore.shared.remove(record)
+        offRecords.removeAll { $0.id == record.id }
+        notes[record.key] = nil
+    }
+
+    func turnOnAll() {
+        for record in offRecords { turnOn(record) }
+    }
+
+    /// Put every display this app switched off back on the desktop — on quit,
+    /// synchronously, because nothing will be left running to do it later.
+    /// The same rule as the gamma tables: never leave a change behind with no
+    /// app around to undo it.
+    ///
+    /// Only records whose display is seen to come back are cleared. One that
+    /// does not — the screens asleep at logout, say — stays, and the next launch
+    /// shows it as off with its row, instead of the display being off with no
+    /// record anywhere.
+    public func restoreDisplaysForQuit() {
+        let records = OffDisplayStore.shared.records
+        for record in records { _ = PowerEngine.setEnabled(true, id: record.displayID) }
+        for record in records where PowerEngine.waitUntilOnline(record, timeout: 2) {
+            OffDisplayStore.shared.remove(record)
         }
+    }
+
+    /// What Quit will do, said before it happens.
+    var quitTitle: String {
+        offRecords.isEmpty
+            ? L10n.t("退出 PWE Lumen Bar", "Quit PWE Lumen Bar")
+            : L10n.t("退出（熄掉的屏会重新亮起）", "Quit (switched-off displays come back on)")
+    }
+
+    func acceptAutoCollapse() {
+        Defaults.shared.set(true, forKey: Self.autoCollapseOfferedKey)
+        setAutoDisconnectBuiltIn(true)
+    }
+
+    func declineAutoCollapse() {
+        Defaults.shared.set(true, forKey: Self.autoCollapseOfferedKey)
+        offersAutoCollapse = false
+    }
+
+    func enableLoginItemFromOffer() {
+        LoginItem.setEnabled(true)
+        offersLoginItem = false
+    }
+
+    func dismissLoginItemOffer() {
+        offersLoginItem = false
+    }
+
+    /// Everything this app deliberately does not do — three displays, mixed
+    /// mirroring, arrangement by dragging — is one click away where macOS does it.
+    func openDisplaySettings() {
+        dismissPopover?()
+        if let url = URL(string: "x-apple.systempreferences:com.apple.Displays-Settings.extension") {
+            NSWorkspace.shared.open(url)
+        }
+    }
+
+    /// The display a mirror shows, by name, for the badge that says so.
+    func mirrorSourceName(of card: DisplayCard) -> String? {
+        guard card.info.isMirrored else { return nil }
+        return cards.first { $0.id == card.info.mirrorSource }?.info.name
     }
 
     func toggleSleep(_ card: DisplayCard) {
-        card.isAsleep ? wake(card.info) : sleepDisplay(card)
+        if card.isAsleep {
+            // Backlight cut over DDC: the monitor is still on the desktop, so
+            // bring the backlight back rather than re-enabling anything.
+            let info = card.info
+            HardwareQueue.shared.run {
+                PowerEngine.setDDCPower(.on, display: info)
+                DispatchQueue.main.async { self.refresh() }
+            }
+        } else {
+            turnOff(card)
+        }
     }
 
     func sleepUnderCursor() {
@@ -1247,17 +1396,7 @@ public final class DisplayController: ObservableObject {
     }
 
     func softDisconnect(_ card: DisplayCard) {
-        let info = card.info
-        let result = PowerEngine.setEnabled(false, display: info)
-        switch result {
-        case .ok:
-            PowerEngine.sleepStates[info.persistentKey] = .softDisconnect
-            offDisplays.append(OffDisplay(info: info, method: .softDisconnect))
-            status = L10n.t("\(info.name) 已从桌面移除", "\(info.name) removed from the desktop")
-            refresh()
-        default:
-            status = result.message
-        }
+        turnOff(card)
     }
 
     func toggleMirror(_ card: DisplayCard) {

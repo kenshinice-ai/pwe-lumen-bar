@@ -1,11 +1,11 @@
 # PWE Lumen Bar — 交接文档 / Handover
 
-> 最后更新：2026-09-01 · 约 8600 行 Swift · 已安装于 `/Applications/PWE Lumen Bar.app`
-> Last updated 1 Sep 2026 · ~8,600 lines of Swift · installed at `/Applications/PWE Lumen Bar.app`
+> 最后更新：2026-09-24 · 约 10,500 行 Swift · 已安装于 `/Applications/PWE Lumen Bar.app`
+> Last updated 24 Sep 2026 · ~10,500 lines of Swift · installed at `/Applications/PWE Lumen Bar.app`
 >
 > 仓库 / Repository：<https://github.com/kenshinice-ai/pwe-lumen-bar>（private）
 > 产品页 / Product page：<https://pwestudio.site/lumen> · 使用指南 `/lumen/guide`
-> 版本 1.0.0，已签名公证并上线；Pro 一次性 **A$9.99**，应用本身免费
+> 版本 1.1.2，已签名公证并上线；Pro 一次性 **A$9.99**，应用本身免费
 > 品牌与命名的全部决定见 [BRANDING.md](BRANDING.md) / every branding and naming decision is in BRANDING.md
 
 ---
@@ -95,6 +95,20 @@ Learned the hard way, not from documentation. Read before touching the related c
 8. **iCloud Drive 会让 codesign 失败** —— file provider 在几秒内给目录贴上
    `com.apple.FinderInfo`，codesign 拒绝签名或校验带它的 bundle，`xattr -cr` 清掉后它立刻
    回来。**要签名的东西一律在仓库外组装**（两个脚本都这么做了）。
+   测试同理：`swift test` 要给 `.xctest` 签名，所以一律带 `--scratch-path "$TMPDIR/…"`。
+
+9. **私有的 `CGSConfigureDisplayEnabled` 不理会配置作用域。**（2026-09-24 实测）用
+   `.forAppOnly` 熄掉一块屏，发起的进程正常退出后，那块屏**没有**亮回来（退出后 3 秒、7 秒各查一次）。
+   所以 WindowServer 不会替我们撤销熄屏，恢复只能靠自己：`OffDisplayStore` 把熄灭记录写进共享设置，
+   退出时主动点亮，崩溃后重启时对账。别再指望「换个作用域就崩溃安全」。
+
+10. **点亮的返回值不是证据。** 屏幕处于显示器睡眠时调用点亮，调用报成功、屏却没回来；唤醒后同样的
+    调用立即生效。曾经的代码据此删掉了记录，于是一块仍熄着的屏在 app 里彻底丢失。现在一律
+    `PowerEngine.turnBackOn` —— 点亮后**观察**它出现在在线列表里（按 ID 或身份，最多 3 秒），
+    看到了才删记录；没看到就保留那一行并说明原因。
+
+11. **一次配置里批量点亮多个 ID，一个失败全体作废。** 命令行兜底扫描曾把 1…64 放进同一个配置，
+    不存在的 ID 被拒后整个配置失效，真正熄着的那块也没亮。现在每个 ID 一次配置，只在接受时提交。
 
 ---
 
@@ -112,9 +126,11 @@ LumenBarCore/    引擎，无 UI，可被命令行完整驱动
   PowerEngine InputEngine CaptureEngine ColorEngine
   ArrangementEngine PresetEngine DisplayDetails HiDPIOverride
   SettingsStore DisplayNameStore LicenseStore
+  OffDisplayStore 被熄掉的屏的持久记录 —— 熄屏后唯一能把它找回来的东西
 LumenBarUI/      菜单、控制器、快捷键、媒体键、OSD、设置窗、URL 命令
 PWE Lumen Bar/        应用外壳（纯 AppKit，自管 NSStatusItem —— MenuBarExtra 收不到滚轮事件）
 pwelumenctl/     命令行
+Tests/LumenBarCoreTests/  纯值测试：熄屏守卫、记录对账（swift test --scratch-path "$TMPDIR/pwelumenbar-test"）
 ```
 
 ---
@@ -168,17 +184,16 @@ Worth calling out because neither produced an error — both just made features 
 4. **DDC 多通道配对仍未测** —— 两条通道的绑定与隔离已经在 M4 Max + 两台 Studio Display 上跑过，
    但两端都不应答 VCP。真正没验证的是「两台**第三方**显示器同时收发 DDC」，需要两台非 Apple 屏。
 5. **`Colorimetry` / `PixelEncoding` 枚举含义未知**。IORegistry 以裸整数暴露，无公开文档。当前只报告能确定的（RGB=0、位深、动态范围），其余按原始值展示 —— **不要凭猜测给它们贴标签**。
-6. 🔴 **定价与售卖路径**未定（用户明确搁置）。`tools/config.sh` 的 `DOWNLOAD_URL` 是空的，
-   授权邮件会退回「安装包随邮件附上」；产品页的 Pro 段落没有价格，只留了联系方式和一处
-   🔴 注释标出价格该放的位置。
-6. 🔴 **产品页尚未部署**。`site/public/lumenbar/` 是成品，需要复制进
-   `PWE Loan Bar/site/public/` 再 `./deploy.sh`（集团站点，Cloudflare Pages）。
-   **部署是对外发布动作，要单独确认。**
-8. **真机截图**：站点与文档现在用的是示意图（矢量，中英各一份，见
-   `scripts/docs-en-figures.py`）。面板本身的真机截图需要人在键盘前点开 popover ——
-   脚本抓不到（`ImageRenderer` 画不出 AppKit 控件，`screencapture` 需要屏幕录制授权）。
-   有了就替换 `site/public/lumen/img/panel*.svg` 那两张。
-9. **版本号定在 `1.0.0`**（`scripts/version.sh`，唯一来源）。首发前确认。
+6. ~~定价、产品页~~ **已完成**：Pro A$9.99，<https://pwestudio.site/lumen> 已上线。
+7. **真机截图**：站点与文档用的是示意图（矢量，中英各一份，见 `scripts/docs-en-figures.py`）。
+   面板的真机截图需要人在键盘前点开 popover —— 脚本抓不到（`ImageRenderer` 画不出 AppKit 控件，
+   也画不出 ScrollView 里的内容；`screencapture` 需要屏幕录制授权）。
+8. **1.1.2 熄屏加固里没在真机上跑过的部分**（本机是合盖的 M4 Max + 两台 Studio Display）：
+   - 「接外接屏时自动收起内建屏」和那两条一次性建议 —— 需要内建屏在线，合盖测不了；
+   - 「剩下的屏背光是 DDC 关的」那条守卫 —— Studio Display 不响应 DDC，只有单元测试覆盖；
+   - 被软断开的屏**重启后**是否还熄着 —— 没有重启这台机器来验证；
+   - 面板里收起行的样子 —— 由用户肉眼确认，我没有截到图。
+   睡眠中点亮失败只复现过一次（空闲进入的显示器睡眠）；`pmset displaysleepnow` 触发的睡眠下点亮是成功的。
 
 ---
 
@@ -202,7 +217,11 @@ pwelumenctl hidpi 2 show    # 预览强制 HiDPI 会写什么（不安装）
 
 - 改分辨率、改方向 → **必须走 15 秒确认回滚**；被新操作顶掉时要**回滚**，不能静默丢弃。
 - 会让显示器脱离系统的操作（DDC 断电、切换输入源）→ **必须先确认**，并说明只能靠物理按键恢复。
-- 「熄屏」→ 走软断开，永远可逆；被关闭的屏必须单独记录，否则它离开在线列表后就再也开不回来。
+- 「熄屏」→ 走软断开，永远可逆；被熄的屏**必须写进 `OffDisplayStore`**，否则它离开在线列表后就再也开不回来。
+  - 只在**看到它回来之后**删记录（`turnBackOn` 观察在线列表），不信点亮调用的返回值。
+  - 退出时点亮所有被熄的屏（`restoreDisplaysForQuit`，和 `restoreAllGamma()` 同一个理由）；没亮回来的记录保留，下次启动接着显示。
+  - 熄之前必须还剩一块**亮着的**屏：镜像屏不算，背光被 DDC 关掉的不算（拒绝一次并说明，然后信任用户）。
+  - 熄掉光标所在的屏 → 在剩下那块屏上弹 15 秒回退；Esc / ⌘. / 超时都点亮，**回车不等于保留**。
 - 软件调光下限 0.08，**硬件通道不设下限**（0 是面板最低背光，仍可读）。
 - 退出时必须 `restoreAllGamma()` —— gamma 修改是进程外生效的。
 

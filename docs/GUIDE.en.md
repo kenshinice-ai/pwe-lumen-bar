@@ -264,12 +264,21 @@ so. That is the problem [section 7](#7-pwe-lumen-bar-pro-forcing-hidpi-on) solve
    display under the pointer).
 2. The screen goes dark and leaves the desktop. **Every other display is
    untouched**, and windows move to the ones that remain.
-3. A row appears at the top of the panel — "off and removed from the desktop,
-   still powered" — with **Turn back on** next to it.
+3. The card collapses, in place, into a row — "off and removed from the desktop,
+   the monitor itself is still powered" — with **Turn back on** next to it.
 
-This path is always reversible. To genuinely power a monitor down, use the item
-in the ⋯ menu and read its confirmation. **The last remaining display cannot be
-switched off** — PWE Lumen Bar says so rather than leaving you with no picture.
+If the display you switched off is **the one the pointer was on**, a "Keep it
+off?" prompt appears in the middle of the display that remains and counts down
+15 seconds. Doing nothing, Esc or ⌘. all bring the display back; Return does
+**not** choose Keep, because you may be looking at a screen that just went dark.
+
+This path is always reversible. Quitting PWE Lumen Bar turns every display it
+switched off back on first — the Quit item says so beforehand — and if the app is
+ever stopped abruptly, the record is kept and the row is still there the next time
+it starts. To genuinely power a monitor down, use the item in the ⋯ menu and read
+its confirmation. **A lit display must remain** — the last one cannot be switched
+off, and PWE Lumen Bar refuses once, with the reason, if the only other display
+had its backlight cut over DDC.
 
 ### 5.3 Match every display's brightness to one of them
 
@@ -638,9 +647,11 @@ the panel; the line under it names what you are actually hearing.
 
 ### A display I switched off is nowhere to be found
 
-The **Turn back on** row at the top of the panel is the way back. If the panel
-itself will not open: `pwelumenctl on` (with no argument it restores every display
-PWE Lumen Bar switched off).
+Its card collapsed into a **Turn back on** row in the same place — that is the
+way back, and it survives a crash. If turning it on says the screens are asleep,
+wake them and press it again. If the panel itself will not open: `pwelumenctl on`
+(with no argument it restores every display on record, and with nothing on record
+it asks every inactive display ID to come back).
 
 ### Rotation failed
 

@@ -8,6 +8,14 @@ struct DisplayCardView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 13) {
             titleRow
+            if let note = controller.notes[card.info.persistentKey] {
+                // A result that belongs to this display is said here, on it,
+                // not in the status line at the foot of the panel.
+                Label(note, systemImage: "info.circle")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
             quickActions
             if card.canControlBrightness {
                 brightnessRow
@@ -49,7 +57,11 @@ struct DisplayCardView: View {
                                          "The menu bar and Dock live on this display"))
                     }
                     if card.info.isMirrored {
-                        badge(L10n.t("镜像", "Mirrored"))
+                        // Say which display it shows: "Mirrored" alone leaves
+                        // the reader to work out the other half of the relationship.
+                        let source = controller.mirrorSourceName(of: card)
+                        badge(source.map { L10n.t("镜像 \($0)", "Mirroring \($0)") }
+                              ?? L10n.t("镜像", "Mirrored"))
                             .help(L10n.t("正在显示另一块屏的画面",
                                          "Showing another display's picture"))
                     }
@@ -83,8 +95,13 @@ struct DisplayCardView: View {
                 controller.captureToFile(card)
             }
 
+            // Feedback on the press, not after the display has finished leaving:
+            // a reconfiguration takes a moment, and a button that does nothing
+            // visible for that moment invites a second press.
+            let leaving = controller.turningOff.contains(card.info.persistentKey)
             quickButton(icon: card.isAsleep ? "power.circle.fill" : "moon.fill",
-                        title: card.isAsleep ? L10n.t("点亮", "Turn on") : L10n.t("熄屏", "Turn off"),
+                        title: leaving ? L10n.t("正在熄灭…", "Turning off…")
+                            : card.isAsleep ? L10n.t("点亮", "Turn on") : L10n.t("熄屏", "Turn off"),
                         help: card.isAsleep
                             ? L10n.t("重新点亮这块屏", "Bring this display back")
                             : L10n.t("把这块屏移出桌面，画面熄灭，随时可以点亮回来，其余屏幕不受影响。\(shortcutHint("⌃⌥P"))",
@@ -92,6 +109,7 @@ struct DisplayCardView: View {
                         tint: card.isAsleep ? .green : nil) {
                 controller.toggleSleep(card)
             }
+            .disabled(leaving)
 
             if canMatchBrightness {
                 quickButton(icon: "equal.circle.fill",
@@ -412,7 +430,7 @@ struct DisplayCardView: View {
             Text(label)
                 .font(.caption)
                 .foregroundStyle(.secondary)
-                .frame(width: 34, alignment: .leading)
+                .frame(width: Self.labelWidth, alignment: .leading)
             Text(reason)
                 .font(.caption)
                 .foregroundStyle(.tertiary)
@@ -547,8 +565,13 @@ struct DisplayCardView: View {
         Text(text)
             .font(.caption)
             .foregroundStyle(.secondary)
-            .frame(width: 34, alignment: .leading)
+            .lineLimit(1)
+            .frame(width: Self.labelWidth, alignment: .leading)
     }
+
+    /// Wide enough for the longest label in each language on one line —
+    /// "方向" needs 34pt, "Orientation" about 64.
+    private static var labelWidth: CGFloat { L10n.isChinese ? 34 : 66 }
 }
 
 /// Icon + slider + right-hand caption, sized so the captions line up down the card.

@@ -43,18 +43,23 @@ public enum URLCommands {
             guard let card = resolve(query["display"], controller: controller) else {
                 report(controller, L10n.t("找不到那块屏", "No such display")); return
             }
-            controller.sleepDisplay(card)
+            controller.turnOff(card)
 
         case "on":
-            let token = query["display"]
-            if let entry = controller.offDisplays.first(where: {
-                guard let token, !token.isEmpty else { return true }
-                return $0.info.name.localizedCaseInsensitiveContains(token)
-                    || String($0.id) == token
-            }) {
-                controller.wake(entry.info)
+            // No display named: bring back everything this app switched off.
+            // One of several would be a guess about which one was meant.
+            guard !controller.offRecords.isEmpty else {
+                report(controller, L10n.t("没有被关闭的屏幕", "No display is switched off")); return
+            }
+            if let token = query["display"], !token.isEmpty {
+                guard let record = controller.offRecords.first(where: {
+                    $0.name.localizedCaseInsensitiveContains(token) || String($0.displayID) == token
+                }) else {
+                    report(controller, L10n.t("找不到那块被关闭的屏", "No switched-off display matches that")); return
+                }
+                controller.turnOn(record)
             } else {
-                report(controller, L10n.t("没有被关闭的屏幕", "No display is switched off"))
+                controller.turnOnAll()
             }
 
         case "link":

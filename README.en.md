@@ -79,7 +79,7 @@ Every capability is **probed at run time**. What cannot be probed is greyed out 
 
 ### Switching one display off
 
-A software disconnect, always reversible — and the reason it earns a line of its own: a MacBook on a stand still drives its own panel, and the usual way to stop that is to close the lid, which also closes off one of the surfaces the machine sheds heat through. Turning the panel off in software leaves the lid open. Settings can do it automatically whenever an external display connects, and a switched-off display keeps a row at the top of the panel, which is how it comes back.
+A software disconnect, always reversible — and the reason it earns a line of its own: a MacBook on a stand still drives its own panel, and the usual way to stop that is to close the lid, which also closes off one of the surfaces the machine sheds heat through. Turning the panel off in software leaves the lid open. Settings can do it automatically whenever an external display connects. A switched-off display's card collapses in place into a row, which is how it comes back — and that row cannot be lost: quitting turns every switched-off display back on first, and the record behind the row is kept on disk, so after a crash it is still there on the next launch. Switch off the screen you are looking at and the display that remains asks you to keep it for 15 seconds; do nothing and it comes back.
 
 Cutting a monitor's power over DDC is a different thing entirely — irreversible on some monitors, and behind its own confirmation.
 

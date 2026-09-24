@@ -73,6 +73,15 @@ if [[ -x ../check-icloud-copies.py ]]; then
 fi
 
 if [[ "$SKIP_CHECKS" == "0" ]]; then
+  # The decisions about whether a display may be switched off, and whether one that was
+  # is still off, are the ones that can lose a screen. They are tested; a release that
+  # fails them does not get built into a disk image.
+  echo "▸ Pre-flight: the tests…"
+  swift test --scratch-path "${TMPDIR:-/tmp}/pwelumenbar-test" > "${TMPDIR:-/tmp}/pwelumenbar-tests.log" 2>&1 || {
+    echo "✗ The tests failed — not packaging."
+    tail -30 "${TMPDIR:-/tmp}/pwelumenbar-tests.log"; exit 1; }
+  grep -E "Test run with" "${TMPDIR:-/tmp}/pwelumenbar-tests.log" | sed 's/^/    /'
+
   echo "▸ Pre-flight: the private interfaces…"
   REPORT="$("$APP/Contents/Resources/pwelumenctl" compat 2>&1)"
   if grep -qi "missing" <<<"$REPORT"; then

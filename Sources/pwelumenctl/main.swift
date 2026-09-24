@@ -408,65 +408,63 @@ case "power":
           ? L10n.t("已发送 DDC 电源指令", "DDC power command sent")
           : L10n.t("失败（需要外接屏且支持 DDC）", "Failed (needs an external display with DDC)"))
 
-case "off":
-    // Turns one display off by whichever route it supports, and remembers the
-    // route so `on` can undo exactly that.
+case "off", "disconnect":
+    // Takes one display off the desktop and records it in the same store the
+    // app reads, so the app shows it as off and can bring it back.
     let display = requireDisplay(arguments.count > 1 ? arguments[1] : nil)
+    let online = DisplayRegistry.shared.onlineDisplays()
     let outcome = PowerEngine.sleepDisplay(display)
-    if case .slept(let method) = outcome {
-        PowerEngine.sleepStates[display.persistentKey] = method
-        var stored = Defaults.shared.dictionary(forKey: "cliSleepStates") as? [String: String] ?? [:]
-        stored[display.persistentKey] = method.rawValue
-        Defaults.shared.set(stored, forKey: "cliSleepStates")
+    if case .slept = outcome {
+        OffDisplayStore.shared.add(OffRecord(
+            key: display.persistentKey, displayID: display.id, name: display.name,
+            reason: .commandLine, slot: online.count,
+            keyWasShared: online.filter { $0.persistentKey == display.persistentKey }.count > 1))
     }
     print(outcome.message)
 
-case "on":
-    let all = displays()
+case "on", "connect":
+    let records = OffDisplayStore.shared.reconcile(active: DisplayRegistry.shared.onlineDisplays())
     let token = arguments.count > 1 ? arguments[1] : nil
-    var stored = Defaults.shared.dictionary(forKey: "cliSleepStates") as? [String: String] ?? [:]
-    // A display taken off the desktop is no longer in the online list, so it
-    // has to be woken by the identity recorded when it was switched off.
-    if let token, let display = all.first(where: { $0.name.localizedCaseInsensitiveContains(token) || String($0.id) == token }) {
-        let method = stored[display.persistentKey].flatMap { PowerEngine.SleepMethod(rawValue: $0) } ?? .softDisconnect
-        print(PowerEngine.wakeDisplay(display, method: method)
-              ? L10n.t("已重新点亮", "Turned back on") : L10n.t("唤醒失败", "Could not turn it back on"))
-        stored.removeValue(forKey: display.persistentKey)
-    } else {
-        // Nothing matched online: re-enable every display we switched off.
-        var enabled = 0
-        var ids = [CGDirectDisplayID](repeating: 0, count: 32)
-        var count: UInt32 = 0
-        CGGetOnlineDisplayList(32, &ids, &count)
-        for key in stored.keys {
-            for candidate in DisplayRegistry.shared.onlineDisplays() where candidate.persistentKey == key {
-                _ = PowerEngine.wakeDisplay(candidate, method: .softDisconnect)
-                enabled += 1
-            }
+    if let token {
+        guard let record = records.first(where: {
+            $0.name.localizedCaseInsensitiveContains(token) || String($0.displayID) == token
+        }) else {
+            print(L10n.t("没有匹配的已关闭屏幕。`pwelumenctl on` 不带参数会点亮所有被关掉的屏。",
+                         "No switched-off display matches. `pwelumenctl on` with no argument turns them all back on."))
+            exit(1)
         }
-        // Soft-disconnected displays are invisible, so ask CoreGraphics to
-        // re-enable by ID across the full hardware list.
-        if enabled == 0 {
-            for id in 1 ... 8 {
-                var config: CGDisplayConfigRef?
-                guard CGBeginDisplayConfiguration(&config) == .success, let config else { continue }
-                if let fn = Dyn.symbol("CGSConfigureDisplayEnabled",
-                                       as: (@convention(c) (CGDisplayConfigRef, CGDirectDisplayID, Bool) -> CGError).self) {
-                    _ = fn(config, CGDirectDisplayID(id), true)
-                }
-                _ = CGCompleteDisplayConfiguration(config, .permanently)
-            }
-            print(L10n.t("已尝试重新点亮所有被关闭的屏", "Attempted to turn every switched-off display back on"))
+        if PowerEngine.turnBackOn(record) {
+            OffDisplayStore.shared.remove(record)
+            print(L10n.t("已重新点亮 \(record.name)", "Turned \(record.name) back on"))
         } else {
-            print(L10n.t("已重新点亮 \(enabled) 块屏", "Turned \(enabled) display(s) back on"))
+            print(PowerEngine.displaysAreAsleep
+                  ? L10n.t("\(record.name) 没有亮起来：屏幕在睡眠。唤醒后再试。",
+                           "\(record.name) did not come back: the screens are asleep. Wake them and try again.")
+                  : L10n.t("\(record.name) 没有亮起来，记录保留。",
+                           "\(record.name) did not come back; its record is kept."))
+            exit(1)
         }
-        stored.removeAll()
+    } else if !records.isEmpty {
+        var back = 0
+        for record in records where PowerEngine.turnBackOn(record) {
+            OffDisplayStore.shared.remove(record)
+            back += 1
+        }
+        print(L10n.t("已重新点亮 \(back)/\(records.count) 块屏", "Turned \(back) of \(records.count) display(s) back on"))
+        if back < records.count { exit(1) }
+    } else {
+        // Nothing on record — switched off by an older version, or by another
+        // tool. Last resort only: ask for every display ID that is not active to
+        // be enabled, in one configuration. IDs that do not exist are refused
+        // individually and cost nothing; the range is wide because display IDs
+        // keep climbing across reconnects.
+        let enabled = PowerEngine.enableEveryInactive(upTo: 64)
+        print(enabled > 0
+              ? L10n.t("没有记录可查，已尝试重新点亮 \(enabled) 个不在桌面上的显示器编号",
+                       "Nothing on record — asked \(enabled) inactive display ID(s) to come back")
+              : L10n.t("没有被关闭的屏幕", "No display is switched off"))
     }
-    Defaults.shared.set(stored, forKey: "cliSleepStates")
-
-case "disconnect", "connect":
-    let display = requireDisplay(arguments.count > 1 ? arguments[1] : nil)
-    print(PowerEngine.setEnabled(arguments[0] == "connect", display: display).message)
+    Defaults.shared.removeObject(forKey: "cliSleepStates")
 
 case "main":
     let display = requireDisplay(arguments.count > 1 ? arguments[1] : nil)

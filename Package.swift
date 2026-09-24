@@ -20,5 +20,9 @@ let package = Package(
         .executableTarget(name: "PWELumenBar", dependencies: ["LumenBarUI"], swiftSettings: [.swiftLanguageMode(.v5)]),
         .executableTarget(name: "pwelumenctl", dependencies: ["LumenBarCore"], swiftSettings: [.swiftLanguageMode(.v5)]),
         .executableTarget(name: "pwelumenshots", dependencies: ["LumenBarUI"], swiftSettings: [.swiftLanguageMode(.v5)]),
+        // The logic that decides whether a display can be switched off, and whether one
+        // that was is still off — pure values, so it is tested without touching a screen.
+        .testTarget(name: "LumenBarCoreTests", dependencies: ["LumenBarCore"],
+                    swiftSettings: [.swiftLanguageMode(.v5)]),
     ]
 )

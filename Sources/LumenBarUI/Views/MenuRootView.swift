@@ -5,6 +5,7 @@ public struct MenuRootView: View {
     public init() {}
 
     @EnvironmentObject private var controller: DisplayController
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var launchesAtLogin = LoginItem.isEnabled
 
     public var body: some View {
@@ -58,7 +59,7 @@ public struct MenuRootView: View {
 
     @ViewBuilder
     private var displayList: some View {
-        if controller.cards.isEmpty && controller.offDisplays.isEmpty {
+        if controller.cards.isEmpty && controller.offRecords.isEmpty {
             // Every Mac has at least one screen, so this state is not "nothing is plugged in" —
             // it is "detection came back empty", which is a fault and not a situation. Naming
             // the fault and stopping is half an empty state: it has to say what to do next, and
@@ -90,14 +91,24 @@ public struct MenuRootView: View {
                     if controller.cards.filter(\.canControlBrightness).count > 1 {
                         masterBrightnessRow
                     }
-                    ForEach(controller.cards) { card in
-                        DisplayCardView(card: card)
-                    }
-                    ForEach(controller.offDisplays) { entry in
-                        offDisplayRow(entry)
+                    ForEach(entries) { entry in
+                        switch entry {
+                        case .card(let card):
+                            DisplayCardView(card: card)
+                                .transition(collapse)
+                        case .off(let record):
+                            offRow(record)
+                                .transition(collapse)
+                        }
                     }
                 }
                 .padding(13)
+                // Critically damped, from wherever the layout is now: the card and the
+                // row it becomes are the same object changing size, not two things
+                // swapping — no overshoot, because nothing here was thrown.
+                .animation(reduceMotion ? .easeInOut(duration: 0.2)
+                                        : .spring(response: 0.3, dampingFraction: 1),
+                           value: entries.map(\.id))
             }
             .frame(maxHeight: 610)
         }
@@ -126,29 +137,128 @@ public struct MenuRootView: View {
                      "Move every display that has a working brightness channel"))
     }
 
+    // MARK: - Cards and the rows that replace them
+
+    private enum Entry: Identifiable {
+        case card(DisplayCard)
+        case off(OffRecord)
+        var id: String {
+            switch self {
+            case .card(let card): return "card-\(card.info.persistentKey)-\(card.id)"
+            case .off(let record): return "off-\(record.id)"
+            }
+        }
+    }
+
+    /// Online cards, with each switched-off display's row put back in the slot
+    /// its card left from. Turning a display off should not make something
+    /// appear somewhere else in the panel; the way back is where the hand
+    /// already is.
+    private var entries: [Entry] {
+        var list = controller.cards.map(Entry.card)
+        for record in controller.offRecords.sorted(by: { $0.slot < $1.slot }) {
+            list.insert(.off(record), at: min(max(record.slot, 0), list.count))
+        }
+        return list
+    }
+
+    private var collapse: AnyTransition {
+        reduceMotion ? .opacity : .opacity.combined(with: .scale(scale: 0.98, anchor: .top))
+    }
+
     /// A display that was switched off leaves the online list entirely, so its
     /// own card is gone — this row is the only way back.
-    private func offDisplayRow(_ entry: OffDisplay) -> some View {
-        HStack {
-            Image(systemName: "moon.zzz.fill")
-                .foregroundStyle(.secondary)
-            VStack(alignment: .leading, spacing: 2) {
-                Text(entry.info.name).font(.callout)
-                Text(entry.method == .ddc
-                     ? L10n.t("显示器已断电", "The monitor is powered down")
-                     : L10n.t("已关闭并移出桌面，显示器本身仍然通电",
-                              "Off and removed from the desktop — the monitor itself is still powered"))
-                    .font(.caption)
+    private func offRow(_ record: OffRecord) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(alignment: .firstTextBaseline) {
+                Image(systemName: "moon.zzz.fill")
                     .foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(record.name).font(.callout)
+                    Text(offReason(record))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer()
+                Button(controller.turningOff.contains(record.key)
+                       ? L10n.t("正在点亮…", "Turning on…")
+                       : L10n.t("重新点亮", "Turn back on")) { controller.turnOn(record) }
+                    .controlSize(.small)
+                    .tint(.green)
+                    .disabled(controller.turningOff.contains(record.key))
             }
-            Spacer()
-            Button(L10n.t("重新点亮", "Turn back on")) { controller.wake(entry.info) }
-                .controlSize(.small)
-                .tint(.green)
+            if let note = controller.notes[record.key] {
+                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                    Label(note, systemImage: "info.circle")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Spacer(minLength: 4)
+                    if !PowerEngine.displaysAreAsleep {
+                        Button(L10n.t("移除这一行", "Remove this row")) { controller.forget(record) }
+                            .controlSize(.small)
+                    }
+                }
+                .padding(.leading, 26)
+            }
+            if record.key == "builtin", controller.offersAutoCollapse {
+                offer(L10n.t("以后接上外接屏时，自动这样做？", "Do this by itself whenever an external display connects?"),
+                      accept: L10n.t("自动收起", "Do it automatically"),
+                      onAccept: controller.acceptAutoCollapse,
+                      onDismiss: controller.declineAutoCollapse)
+            } else if record.key == "builtin", controller.offersLoginItem {
+                offer(L10n.t("已开启。它只在本应用运行时生效 —— 顺便让它开机时启动？",
+                             "On. It only works while the app is running — start it at login too?"),
+                      accept: L10n.t("开机时启动", "Launch at login"),
+                      onAccept: {
+                          controller.enableLoginItemFromOffer()
+                          launchesAtLogin = LoginItem.isEnabled
+                      },
+                      onDismiss: controller.dismissLoginItemOffer)
+            }
         }
         .padding(10)
         .background(.quaternary.opacity(0.4), in: RoundedRectangle(cornerRadius: 10))
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("\(record.name), \(offReason(record))")
+    }
+
+    private func offReason(_ record: OffRecord) -> String {
+        switch record.reason {
+        case .automatic:
+            return L10n.t("已收起 —— 接着外接屏时自动熄灭，拔掉后自己亮回来",
+                          "Put away — off while an external display is connected, back when it is not")
+        case .commandLine:
+            return L10n.t("已用命令行熄灭，显示器本身仍然通电",
+                          "Switched off from the command line — the monitor itself is still powered")
+        case .manual:
+            return L10n.t("已熄灭并移出桌面，显示器本身仍然通电",
+                          "Off and removed from the desktop — the monitor itself is still powered")
+        }
+    }
+
+    /// A one-time suggestion: a sentence, one button that does it, one that
+    /// makes it go away for good. No animation of its own.
+    private func offer(_ text: String, accept: String,
+                       onAccept: @escaping () -> Void, onDismiss: @escaping () -> Void) -> some View {
+        HStack(spacing: 8) {
+            Text(text)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+            Spacer(minLength: 4)
+            Button(accept, action: onAccept)
+                .controlSize(.small)
+            Button(action: onDismiss) {
+                Image(systemName: "xmark")
+            }
+            .buttonStyle(.borderless)
+            .controlSize(.small)
+            .help(L10n.t("不用了", "No thanks"))
+            .accessibilityLabel(L10n.t("不用了", "No thanks"))
+        }
+        .padding(.leading, 26)
     }
 
     // MARK: - Status
@@ -242,6 +352,7 @@ public struct MenuRootView: View {
                 }
                 Divider()
                 Button(L10n.t("重新检测显示器", "Re-detect displays")) { controller.refresh() }
+                Button(L10n.t("显示器设置…", "Displays Settings…")) { controller.openDisplaySettings() }
                 Button(L10n.t("截取所有屏幕", "Capture every display")) {
                     controller.captureAllToFiles()
                 }
@@ -308,7 +419,7 @@ public struct MenuRootView: View {
                 }
                 Button(L10n.t("使用提示…", "Tips…")) { controller.showWelcome() }
                 Button(L10n.t("设置…", "Settings…")) { controller.openSettings() }
-                Button(L10n.t("退出 PWE Lumen Bar", "Quit PWE Lumen Bar")) { NSApplication.shared.terminate(nil) }
+                Button(controller.quitTitle) { NSApplication.shared.terminate(nil) }
             } label: {
                 Image(systemName: "ellipsis.circle")
             }
