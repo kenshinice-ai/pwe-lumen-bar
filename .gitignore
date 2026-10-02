@@ -7,3 +7,6 @@ build/
 
 # Release artefacts: rebuildable, and a .dmg has no business in a git history.
 dist/
+
+# Claude Code per-machine settings (auto-memory group wiring)
+**/.claude/settings.local.json
