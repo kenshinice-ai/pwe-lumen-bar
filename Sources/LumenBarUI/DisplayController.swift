@@ -1380,15 +1380,16 @@ public final class DisplayController: ObservableObject {
         let info = card.info
         guard Prompt.confirm(
             title: L10n.t("给 \(info.name) 断电？", "Cut power to \(info.name)?"),
-            message: L10n.t("有些显示器断电后会连同 DDC 通道一起从系统里消失，届时只能按显示器上的物理电源键才能开回来。\n\n想要可逆的关闭，请用卡片上的「熄屏」按钮。",
-                            "On some monitors this takes the DDC channel down with the power, and only the monitor's own power button will bring it back.\n\nFor a reversible blackout, use the card's Turn off button instead."))
+            message: L10n.t("只在你够得着这台显示器的电源键时断电。\n断电后，它可能从系统里消失，只能按它的电源键开回来。\n\n原因：有些显示器断电时，DDC 通道也一起消失，软件就发不出开机指令了。\n\n如果想随时点亮回来，就改用卡片上的「熄屏」。",
+                            "Cut power only if you can reach this monitor's power button.\nThe monitor may then vanish from the Mac, and only its own power button brings it back.\n\nWhy: some monitors drop their DDC channel with the power, so no software can send the power-on.\n\nIf you want to turn it back on from here, use the card's Turn off button instead."),
+            confirmLabel: L10n.t("断电", "Cut Power"))
         else { return }
         HardwareQueue.shared.run {
             let ok = PowerEngine.setDDCPower(.off, display: info)
             DispatchQueue.main.async {
                 self.status = ok
-                    ? L10n.t("\(info.name) 已关闭背光，动一下鼠标或按任意键唤醒",
-                             "\(info.name) backlight off — move the mouse or press a key to wake it")
+                    ? L10n.t("已给 \(info.name) 断电。如果它没有回来，按它的电源键。",
+                             "\(info.name) is powered off. If it does not come back, press its power button.")
                     : L10n.t("这块屏不支持通过 DDC 关闭背光",
                              "This display does not support turning the backlight off over DDC")
             }

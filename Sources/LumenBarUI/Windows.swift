@@ -26,11 +26,13 @@ enum Prompt {
         return value.isEmpty ? nil : value
     }
 
-    static func confirm(title: String, message: String) -> Bool {
+    /// `confirmLabel` names the action on the default button. Pass a verb
+    /// ("Cut Power") when one fits; it falls back to a plain "Continue".
+    static func confirm(title: String, message: String, confirmLabel: String? = nil) -> Bool {
         let alert = NSAlert()
         alert.messageText = title
         alert.informativeText = message
-        alert.addButton(withTitle: L10n.t("继续", "Continue"))
+        alert.addButton(withTitle: confirmLabel ?? L10n.t("继续", "Continue"))
         alert.addButton(withTitle: L10n.t("取消", "Cancel"))
         NSApp.activate(ignoringOtherApps: true)
         return alert.runModal() == .alertFirstButtonReturn
