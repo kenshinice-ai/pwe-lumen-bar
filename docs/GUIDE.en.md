@@ -660,4 +660,4 @@ The orientation row says "this display refused the rotation request".
 
 ---
 
-<sub>PWE Group Pty Ltd · A PARADISE PRODUCTION</sub>
+<sub>PWE · 天域出品 · PWE Group Pty Ltd</sub>

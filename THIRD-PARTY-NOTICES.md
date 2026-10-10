@@ -17,5 +17,5 @@ resolved on the machine in front of you. They are Apple's, not ours, and are
 used from a directly distributed app: this is one of the reasons the app cannot
 go to the Mac App Store.
 
-The Paradise Production wing in the icon and the interface is generated from
+The PWE wing in the icon and the interface is generated from
 `01 BRAND ASSETS/source/wing_gen.py` and is the property of PWE Group Pty Ltd.

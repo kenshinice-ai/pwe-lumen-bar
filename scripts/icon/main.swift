@@ -18,7 +18,7 @@ try? FileManager.default.createDirectory(at: build, withIntermediateDirectories:
 
 // MARK: - Brand colours
 //
-// Paradise Production, brand standard §5. Amber is legal here because the ground
+// PWE, brand standard §5. Amber is legal here because the ground
 // is navy; nothing in this file ever puts it on paper.
 
 let navy = CGColor(red: 14 / 255, green: 23 / 255, blue: 41 / 255, alpha: 1)

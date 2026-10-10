@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Put the Paradise wing into the documentation mockups.
+"""Put the PWE wing into the documentation mockups.
 
 The mockups draw the app's own interface, and the app's interface now opens with
 the wing. Rather than redraw it — the brand standard forbids that — the five

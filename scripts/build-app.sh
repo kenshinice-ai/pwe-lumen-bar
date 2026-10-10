@@ -123,7 +123,7 @@ cat > "$APP/Contents/Info.plist" <<PLIST
             <key>CFBundleURLSchemes</key><array><string>pwelumen</string></array>
         </dict>
     </array>
-    <key>NSHumanReadableCopyright</key><string>© 2026 PWE Group Pty Ltd · A PARADISE PRODUCTION</string>
+    <key>NSHumanReadableCopyright</key><string>© 2026 PWE Group Pty Ltd</string>
 </dict>
 </plist>
 PLIST

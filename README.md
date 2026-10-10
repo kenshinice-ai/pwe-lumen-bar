@@ -12,7 +12,7 @@
 
 [English](README.en.md) · 中文
 
-*天域文创出品*
+*PWE · 天域出品*
 
 </div>
 
@@ -296,5 +296,5 @@ All clear — every channel PWE Lumen Bar depends on is available on this machin
 ---
 
 <div align="center">
-<sub>PWE Group Pty Ltd · 天域文创出品</sub>
+<sub>PWE · 天域出品 · PWE Group Pty Ltd</sub>
 </div>

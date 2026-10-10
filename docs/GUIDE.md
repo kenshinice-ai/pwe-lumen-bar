@@ -445,4 +445,4 @@ macOS 的辅助功能授权绑定**代码签名哈希**，而目前的 `PWE Lume
 
 ---
 
-<sub>PWE Group Pty Ltd · 天域文创出品</sub>
+<sub>PWE · 天域出品 · PWE Group Pty Ltd</sub>

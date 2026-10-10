@@ -12,7 +12,7 @@
 
 English · [中文](README.md)
 
-*A PARADISE PRODUCTION*
+*PWE · 天域出品*
 
 </div>
 
@@ -236,5 +236,5 @@ The M4 Max run on 1 September 2026 is what turned the declared macOS 26 floor fr
 ---
 
 <div align="center">
-<sub>PWE Group Pty Ltd · A PARADISE PRODUCTION</sub>
+<sub>PWE · 天域出品 · PWE Group Pty Ltd</sub>
 </div>

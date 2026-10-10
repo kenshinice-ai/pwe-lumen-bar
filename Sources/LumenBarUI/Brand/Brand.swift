@@ -2,7 +2,7 @@ import AppKit
 import LumenBarCore
 import SwiftUI
 
-/// Paradise Production's colours and marks, and the rule that keeps them legal.
+/// PWE's colours and marks, and the rule that keeps them legal.
 ///
 /// Deliberately small. This app is a system utility, so its controls follow the
 /// user's own accent colour — a slider that ignores the colour someone picked in
@@ -59,7 +59,7 @@ enum Brand {
     }
 }
 
-/// The product mark: the Paradise wing, with the sparkles that belong to this
+/// The product mark: the PWE wing, with the sparkles that belong to this
 /// product.
 ///
 /// The wing geometry comes from `BrandMark`, which is imported from the

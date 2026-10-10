@@ -45,5 +45,5 @@ Pro 只解锁一件事：强制开启 HiDPI。如果你的 4K 外接屏文字看
 有任何问题，直接回复这封邮件。
 
 Lee Liu
-PWE Group Pty Ltd · 天域文创出品
+PWE · 天域出品 · PWE Group Pty Ltd
 {{support}}

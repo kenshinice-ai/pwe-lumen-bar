@@ -79,23 +79,24 @@ navy `#0E1729` 圆角底 + 琥珀 `#F5B335` 翅膀（宽度 60%），与
 琥珀 `#F5B335` 只能落在深底，浅底一律 `#A16207`。取色时按当前 appearance 解析，
 不靠下一个人记得这条规则。深浅两种模式都由 `swift run pwelumenshots` 渲染出来核对过。
 
-## 六、署名：中英分开
+## 六、署名：`PWE · 天域出品`，两种语言都印整行
 
 | 场合 | 署名 |
 |---|---|
-| 中文界面、`README.md`、`docs/GUIDE.md` | 天域文创出品 |
-| 英文界面、`README.en.md`、`docs/GUIDE.en.md` | A PARADISE PRODUCTION |
-| 同一份文件同时面向两种读者（磁盘映像里的说明与条款） | 两种并列 |
+| 界面、`README.md`、`README.en.md`、`docs/GUIDE*.md`、磁盘映像里的说明与条款、客户邮件 | `PWE · 天域出品` |
 
-**与标准 §1 的偏离**：标准规定的署名格式是并列的
-`A PARADISE PRODUCTION · 天域文创出品`。一个已经运行在单一语言下的界面，
-印上另一种语言的半行，对每个读者都是一半噪音。所以按语言分开，
-只在一份文件必须同时服务两种读者时才用并列形式。
+品牌标准 v2.0（2026-09-11）把房子定为 PWE · 天域，废弃了「天域文创」和署名
+`A PARADISE PRODUCTION · 天域文创出品`；Paradise Production 现在只指影像线。
 
-**这条是产品级决定，建议回写进品牌标准**（对所有双语产品都成立）。
+这一节原来的规则是「中英分开」：中文印「天域文创出品」，英文印 A PARADISE PRODUCTION，
+理由是并列的一行对每个读者都有半行噪音。新署名没有这个问题 —— PWE 是品牌而不是英文，
+天域出品四个字很短，所以两种语言都印整行。代码里的 `Brand.signature` 在 1.1.x 已经这样做；
+文档、模板和条款在 2026-10-10 跟上。
 
-版权字符串：`© 2026 PWE Group Pty Ltd`；bundle 的 `NSHumanReadableCopyright` 是
-`© 2026 PWE Group Pty Ltd · A PARADISE PRODUCTION`（Finder 显示，单值，用英文）。
+汉字不加拉丁字距：`天域出品` 按 0.4 倍处理，否则会被拉成四个词（标准 §8）。
+
+版权字符串：`© 2026 PWE Group Pty Ltd`，bundle 的 `NSHumanReadableCopyright` 也是这一句。
+版权行写法律主体，不带署名。
 
 ## 七、字体：不嵌入 Playfair
 
