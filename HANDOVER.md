@@ -12,8 +12,6 @@
 
 ## 等 Lee
 
-- **[动手] 开通 GitHub Sponsors（kenshinice-ai），整个 PWE 共用一个** — 开通后告诉我，我把按钮加到 pwestudio.site/support · 不开则支持页只有星标和反馈两种方式 · 自 2026-10-14
-- **[决定] 签名保险库 `~/.pwe-lumenbar-signing/` 怎么处理** — 推荐离线归档后删掉本机副本（账本是空的，0 张授权）；删除要你来做 · 不定则一把不再用的私钥一直留在这台机器上 · 自 2026-10-14
 - **[动手] 实测 DDC 断电后输入能不能把屏唤回** — 接上 Philips 27B1U3900，用卡片断电，再动鼠标、按键，看屏回不回来；结果决定「唤醒」一词是否只留「从显示器睡眠恢复」一义（PowerEngine.swift:37 还在叫人动鼠标唤醒）· 不测则 PowerEngine.swift:37 的提示和「唤醒」一词都定不下来 · 自 2026-10-07
 
 ---
@@ -189,9 +187,9 @@ Since 1.2.0 there is no Pro tier and no licence. Every feature is free; the sour
 - 应用里不弹窗、不计天数、不锁功能。这是定下的规矩，不是暂时没做。
 - `.github/FUNDING.yml` 指向同一页。
 
-**签名保险库**：`~/.pwe-lumenbar-signing/` 还在本机，1.2.0 起不再使用。
-- 里面是签名私钥和空账本，不在仓库里。
-- 怎么处理等 Lee 定，见「等 Lee」。
+**签名保险库**：`~/.pwe-lumenbar-signing/` 已删除（2026-10-14，Lee 授权）。
+- 删前内容：签名私钥、只有表头的账本、空的 licenses 目录。本机没有找到别的副本。
+- 后果：再也签不出 1.1.x 的 Pro 密钥。没有人持有过这种密钥，所以没有人受影响。
 
 **仍然成立**：上不了 Mac App Store。原因是私有 API、不能沙盒、辅助功能事件拦截、
 向 `/Library` 写管理员文件，每条都是拒绝项。只能直接分发。
@@ -228,6 +226,11 @@ Since 1.2.0 there is no Pro tier and no licence. Every feature is free; the sour
    - 被软断开的屏**重启后**是否还熄着 —— 没有重启这台机器来验证；
    - 面板里收起行的样子 —— 由用户肉眼确认，我没有截到图。
    睡眠中点亮失败只复现过一次（空闲进入的显示器睡眠）；`pmset displaysleepnow` 触发的睡眠下点亮是成功的。
+9. **GitHub Sponsors 在等 GitHub 审核**（2026-10-14 看：已提交，`hasSponsorsListing` 仍为 false）。
+   - 审核通过后，`https://github.com/sponsors/kenshinice-ai` 不再跳回个人主页。
+   - 然后在 `pwestudio.site/support` 的「直接支持 PWE」卡片里加按钮，并删掉「开通后会放在这里」那句。
+   - 再在 `.github/FUNDING.yml` 加一行 `github: kenshinice-ai`。
+   - 应用里不用改：它只链到支持页。
 
 ---
 
