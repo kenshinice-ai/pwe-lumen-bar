@@ -4,8 +4,10 @@
     ./scripts/docs-en-figures.py && ./scripts/site-figures.py
 
 `docs/images` is the source of truth for every figure; this copies the ones the
-product page and the web guide reference into `site/public/lumen/img/`, and
-crops the panel out of its annotated sheet for the hero.
+product page and the web guide reference straight into the tools site, at
+`PWE Loan Bar/site/public/lumen/img/`, and crops the panel out of its annotated
+sheet for the hero. If a figure's size changes, update the width and height on
+its <img> in /lumen or /lumen/guide to match.
 
 The crop is a viewBox change, nothing else — the artwork is vector, so the hero
 is the same drawing at full sharpness with the callouts left outside the frame.
@@ -16,7 +18,7 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 IMAGES = ROOT / "docs" / "images"
-OUT = ROOT / "site" / "public" / "lumen" / "img"
+OUT = ROOT.parent / "PWE Loan Bar" / "site" / "public" / "lumen" / "img"
 
 # Copied as they are. Each Chinese figure is paired with its English twin, except
 # hidpi-explained, which was drawn bilingual.

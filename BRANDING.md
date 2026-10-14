@@ -135,17 +135,16 @@ navy `#0E1729` 圆角底 + 琥珀 `#F5B335` 翅膀（宽度 60%），与
 
 - ~~定价：Pro 一次性 A$9.99~~（2026-09-01 定）→ **2026-10-14 改为免费开源**（MIT 协议，品牌保留，
   同 PWE Monitor）。署名、翅膀与图标不在 MIT 授权内，写在 `LICENSE` 末段。
-- 产品页与使用指南在 `site/public/lumen/`（`/lumen` 与 `/lumen/guide`），已复制进
-  `PWE Loan Bar/site/public/`，集团首页也加了卡片，`deploy.sh` 已接上（样式指纹、
-  磁盘映像暂存、上线自检）。🔴 **部署本身是对外发布动作，等确认。**
+- 产品页与使用指南只在 `PWE Loan Bar/site/public/lumen/`（`/lumen` 与 `/lumen/guide`）；
+  本仓库原有的审阅副本 2026-10-14 已删，改页面的规矩见 `site/README.md`。集团首页有卡片，
+  `deploy.sh` 已接上（磁盘映像暂存、上线自检）。部署是对外发布动作，要 Lee 点头。
 - ✅ 已上线：<https://pwestudio.site/lumen> 与 <https://pwestudio.site/lumen/guide>，
   安装包由 `deploy.sh` 从本项目 `dist/` 暂存，线上文件与本地公证过的那一份 sha256 一致。
-  `tools/config.sh` 的 `DOWNLOAD_URL` 已填上。
 - **图注一律双语，两份文件一套几何。** 说明图原本只有中文；`scripts/docs-en-figures.py`
   从中文原图生成 `-en.svg` 双胞胎（只换字串与必要的排版补丁），中文原图仍是几何的唯一来源。
   找不到要替换的字串就直接报错退出 —— 半中半英的英文图不许发出去。
   `hidpi-explained.svg` 例外：它一开始就是双语画的，两边共用。
-  `scripts/site-figures.py` 把站点用到的图拷进 `site/public/lumen/img/`，
+  `scripts/site-figures.py` 把站点用到的图直接写进 `PWE Loan Bar/site/public/lumen/img/`，
   并按 viewBox 裁出首页那张只有面板的主图（矢量裁剪，不损失清晰度）。
 - 面板图目前仍是示意图而非真机截图。示意图与真机已逐项对齐（含徽章文案「主屏」缩短那次改动），
   但真机截图更可信 —— popover 脚本抓不到，需要人在键盘前截一张。

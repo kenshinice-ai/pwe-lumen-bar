@@ -229,7 +229,7 @@ Since 1.2.0 there is no Pro tier and no licence. Every feature is free; the sour
 9. **GitHub Sponsors 在等 GitHub 审核**（2026-10-14 看：已提交，`hasSponsorsListing` 仍为 false）。
    - 审核通过后，`https://github.com/sponsors/kenshinice-ai` 不再跳回个人主页。
    - 然后在 `pwestudio.site/support` 的「直接支持 PWE」卡片里加按钮，并删掉「开通后会放在这里」那句。
-   - 如果那时工具站还在冻结重构（2026-10-14 起，由「PWE Tools AI 设计」会话负责），就不要直接改页面或跑 `deploy.sh`：把改动交给那个会话并进重构分支。发版时改 `/lumen` 的版本号也一样。
+   - 改页面前先读 `site/README.md`：页头、页脚由工具站的 `chrome.py` 生成，标记里面的内容不能手改。
    - 再在 `.github/FUNDING.yml` 加一行 `github: kenshinice-ai`。
    - 应用里不用改：它只链到支持页。
    - 仓库页的 Sponsor 按钮另有一个开关（Settings › Features › Sponsorships），2026-10-14 已打开。
