@@ -12,7 +12,6 @@
 
 ## 等 Lee
 
-- **[动手] 打开本仓库的 Sponsorships 开关** — GitHub 上 pwe-lumen-bar › Settings › General › Features › 勾上 Sponsorships；勾上后仓库页出现 Sponsor 按钮，指向 pwestudio.site/support（`FUNDING.yml` 已被 GitHub 识别，2026-10-14 实测 `hasSponsorshipsEnabled` 为 false）· 不开则仓库页没有任何支持入口 · 自 2026-10-14
 - **[动手] 实测 DDC 断电后输入能不能把屏唤回** — 接上 Philips 27B1U3900，用卡片断电，再动鼠标、按键，看屏回不回来；结果决定「唤醒」一词是否只留「从显示器睡眠恢复」一义（PowerEngine.swift:37 还在叫人动鼠标唤醒）· 不测则 PowerEngine.swift:37 的提示和「唤醒」一词都定不下来 · 自 2026-10-07
 
 ---
@@ -232,8 +231,8 @@ Since 1.2.0 there is no Pro tier and no licence. Every feature is free; the sour
    - 然后在 `pwestudio.site/support` 的「直接支持 PWE」卡片里加按钮，并删掉「开通后会放在这里」那句。
    - 再在 `.github/FUNDING.yml` 加一行 `github: kenshinice-ai`。
    - 应用里不用改：它只链到支持页。
-   - 仓库页的 Sponsor 按钮另有一个开关（Settings › Features › Sponsorships），在「等 Lee」里。
-     它不依赖 Sponsors 审核：只有 custom 链接时也会显示。依据是 GitHub 文档的说法，未在本仓库实测，因为开关还没开。
+   - 仓库页的 Sponsor 按钮另有一个开关（Settings › Features › Sponsorships），2026-10-14 已打开。
+     它不依赖 Sponsors 审核：只有 custom 链接时也显示，右栏「Sponsor this project」指向支持页（2026-10-14 实测）。
 
 ---
 
