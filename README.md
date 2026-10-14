@@ -8,7 +8,7 @@
 
 [![macOS](https://img.shields.io/badge/macOS-26%2B-0E1729?style=flat-square)](#)
 [![Apple Silicon](https://img.shields.io/badge/Apple%20Silicon-M1–M5-A16207?style=flat-square)](#)
-[![授权](https://img.shields.io/badge/授权-商业软件-0E1729?style=flat-square)](LICENSE)
+[![协议](https://img.shields.io/badge/协议-MIT-0E1729?style=flat-square)](LICENSE)
 
 [English](README.en.md) · 中文
 
@@ -30,7 +30,7 @@
 
 这一条会构建、用钥匙串里的 Developer ID 证书签名、复制进 `/Applications` 并启动它。要打一个能发给别人的磁盘映像，用 `./scripts/package.sh --notarize`。
 
-不想自己构建的话，[**pwestudio.site/lumen**](https://pwestudio.site/lumen) 上有签名公证过的安装包和[使用指南](https://pwestudio.site/lumen/guide)。**应用免费，没有试用期**；Pro 一次性 **A$9.99**，只解锁一件事 —— 强制开启 HiDPI。
+不想自己构建的话，[**pwestudio.site/lumen**](https://pwestudio.site/lumen) 上有签名公证过的安装包和[使用指南](https://pwestudio.site/lumen/guide)。**免费、开源（MIT 协议）**：所有功能都在，没有试用期，也不需要密钥。
 
 点菜单栏图标打开面板；**在图标上滚轮**直接调节光标所在屏的亮度，不用开面板；**右键**切换场景。
 
@@ -54,7 +54,7 @@
 
 很多显示器不报告第三档。macOS 于是只能把一个非原生分辨率拉伸到面板上，每个像素都重采样一次 —— 那点「糊」就是这么来的，而显示器本身完全没有问题。
 
-PWE Lumen Bar 做两件事：把系统藏起来的 HiDPI 模式**挖出来**（免费），以及在显示器压根不报告时把它们**补进去**（Pro，需管理员密码 + 重启，随时可移除）。
+PWE Lumen Bar 做两件事：把系统藏起来的 HiDPI 模式**挖出来**，以及在显示器压根不报告时把它们**补进去**（需管理员密码 + 重启，随时可移除）。
 
 ---
 
@@ -232,7 +232,7 @@ LumenBarCore/   引擎，无 UI，可命令行完整驱动
   SignalInfo     HDR / EDR / 色彩空间 / 位深 / 信号编码
   Mode Brightness Audio Rotation Power Input Capture Color
   Arrangement Preset DisplayDetails HiDPIOverride
-  SettingsStore DisplayNameStore LicenseStore
+  SettingsStore DisplayNameStore OffDisplayStore
 LumenBarUI/     菜单、控制器、快捷键、媒体键、OSD、设置窗、URL 命令
              StatusItemController 自管状态栏项（MenuBarExtra 收不到滚轮事件）
 PWE Lumen Bar/       应用外壳（纯 AppKit）
@@ -281,7 +281,7 @@ All clear — every channel PWE Lumen Bar depends on is available on this machin
 | Philips 27B1U3900 4K | DDC 亮度/对比度/音量/capabilities/EDID/输入源全部通过 |
 | **两台** Studio Display 同时在线（M4 Max） | 各 26 个模式（10 个 HiDPI），两条 `IOAVService` 通道各自绑定、互不覆盖，两块屏身份互不串 |
 
-另外已实测：分辨率切换与 15 秒回滚、旋转往返、单屏关闭点亮（在线数 2→1→2）、场景往返、配置锁定还原外部改动、跟随亮度按比例同步、联动亮度保差异、截图（5120×2880 完整像素）、EDID 导出、改名、镜像、排列、URL 自动化、授权激活。
+另外已实测：分辨率切换与 15 秒回滚、旋转往返、单屏关闭点亮（在线数 2→1→2）、场景往返、配置锁定还原外部改动、跟随亮度按比例同步、联动亮度保差异、截图（5120×2880 完整像素）、EDID 导出、改名、镜像、排列、URL 自动化。
 
 另外已实测：音量键归属判定 —— 把系统输出切到 Philips，`pwelumenctl audio` 报「接管」；切回内建扬声器，报「交还 macOS」，两个方向都对。
 
@@ -291,7 +291,23 @@ All clear — every channel PWE Lumen Bar depends on is available on this machin
 
 ## 交接
 
-完整交接文档见 [HANDOVER.md](HANDOVER.md)：API 陷阱、系统性缺陷的成因、Pro 授权机制、未决事项、安全约定。
+完整交接文档见 [HANDOVER.md](HANDOVER.md)：API 陷阱、系统性缺陷的成因、未决事项、安全约定。
+
+## 支持与致谢
+
+PWE Lumen Bar 免费，以后也免费：不锁功能，不弹窗，不计天数。
+
+如果它在你桌上派上了用场，有几种方式帮它走得更远：
+
+- 在 GitHub 上点一颗 ⭐，或者告诉一个同样被外接屏折腾过的朋友；
+- 遇到问题就[开一个 issue](https://github.com/kenshinice-ai/pwe-lumen-bar/issues)，附上 `pwelumenctl compat` 和 `pwelumenctl log 50` 的输出 —— 显示器千差万别，你那台的报告就是最好的测试；
+- 愿意的话，在 [pwestudio.site/support](https://pwestudio.site/support) 支持 PWE。所有免费的 PWE 工具共用这一个页面。
+
+谢谢每一位测试、报告问题和提出改进的人。
+
+## 协议
+
+源代码采用 [MIT 协议](LICENSE)。PWE 的名称、翅膀标识和应用图标不在授权范围内：分发你自己的构建时，请换成你自己的名字和图标（详见 LICENSE）。
 
 ---
 

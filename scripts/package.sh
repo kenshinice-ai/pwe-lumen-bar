@@ -184,8 +184,8 @@ ln -s /Applications "$STAGE/Applications"
 # happened" is the single most common report a menu bar app gets, and the disk
 # image window is the last place we can answer it before the customer is on
 # their own.
-cp tools/templates/read-me-first.txt "$STAGE/Read Me First.txt"
-cp tools/templates/licence-terms.txt "$STAGE/Licence Terms.txt"
+cp scripts/read-me-first.txt "$STAGE/Read Me First.txt"
+cp LICENSE "$STAGE/LICENSE.txt"
 
 hdiutil create \
   -volname "$APP_NAME" \

@@ -26,7 +26,7 @@ is present on *your* machine is something you can check yourself
 4. [The two ⋯ menus](#4-the-two--menus)
 5. [Everyday tasks](#5-everyday-tasks)
 6. [The Settings window](#6-the-settings-window)
-7. [PWE Lumen Bar Pro: forcing HiDPI on](#7-pwe-lumen-bar-pro-forcing-hidpi-on)
+7. [Forcing HiDPI on](#7-forcing-hidpi-on)
 8. [The `pwelumenctl` command line](#8-the-pwelumenctl-command-line)
 9. [When something goes wrong](#9-when-something-goes-wrong)
 
@@ -74,7 +74,7 @@ The first run shows this window once. To see it again later:
 |---|---|---|
 | **Accessibility** | Only for "take over the keyboard brightness/volume keys" — it has to see F1/F2 before the system does | The toggle springs back off; everything else works normally |
 | **Screen Recording** | The first screenshot | The capture fails with a message; nothing else is affected |
-| **Administrator password** | Only when Pro's "force HiDPI on" writes the system override file | That one feature is unavailable; nothing else is affected |
+| **Administrator password** | Only when "force HiDPI on" writes the system override file | That one feature is unavailable; nothing else is affected |
 
 **The global shortcuts (the ⌃⌥ set) need no Accessibility grant** — they go
 through Carbon hot key registration. A menu bar utility should not have to ask
@@ -212,7 +212,7 @@ draw a slider that cannot move:
 7. **Lock resolution and orientation** — once ticked, any resolution or
    orientation change from outside PWE Lumen Bar is reverted, and the card shows a
    `Locked` badge.
-8. **Force HiDPI on…** — a Pro feature; see [section 7](#7-pwe-lumen-bar-pro-forcing-hidpi-on).
+8. **Force HiDPI on… (needs a restart)** — see [section 7](#7-forcing-hidpi-on).
    Once installed, this item becomes "Remove the HiDPI override…". The built-in
    panel does not have this item.
 9. **Display details…** — its own window: physical size, native resolution, PPI,
@@ -256,7 +256,7 @@ draw a slider that cannot move:
    because the menu lives on the screen that just went dark.
 
 If a display reports no HiDPI modes at all, the resolution menu's tooltip says
-so. That is the problem [section 7](#7-pwe-lumen-bar-pro-forcing-hidpi-on) solves.
+so. That is the problem [section 7](#7-forcing-hidpi-on) solves.
 
 ### 5.2 Switch off one display without touching the others
 
@@ -353,24 +353,24 @@ The command line reads the same data: `pwelumenctl preset list|save|apply|delete
 
 Bottom ⋯ › **Settings…** (or "Open Settings" in the welcome window). The window
 has seven sections top to bottom and scrolls — the illustration shows the first
-five on the left and enlarges the last two on the right.
+four and the closing About section on the left, and the global shortcuts and System
+on the right, with what rebinding looks like.
 
 <p align="center">
   <img src="images/guide-settings-en.svg" width="960" alt="Settings window">
 </p>
 
-1. **PWE Lumen Bar Pro** — when unlocked, the email and "Deactivate on this Mac"; when
-   not, the full explanation and the unlock fields. See
-   [section 7](#7-pwe-lumen-bar-pro-forcing-hidpi-on).
-2. **General** — language (follow the system / 中文 / English) and launch at login.
-3. **Display information** — one row per display; expanding it shows everything
+1. **General** — language (follow the system / 中文 / English) and launch at login.
+2. **Display information** — one row per display; expanding it shows everything
    (physical size, PPI, white point, colour space, bit depth, signal encoding,
    HDR/EDR, DSC, EDID), ready to copy out. Reading this costs something, so
-   **only an expanded row is read**.
-4. **Displays** — "Remember each display's settings" restores brightness,
+   **only an expanded row is read**. "Why does text go blurry when a Mac drives a
+   monitor?" at the bottom expands into what the diagram in
+   [section 7](#7-forcing-hidpi-on) shows.
+3. **Displays** — "Remember each display's settings" restores brightness,
    warmth, resolution and orientation after a reconnect. "Put the built-in panel
    away when an external display connects" does what it says.
-5. **Keyboard brightness & volume keys** — taking over F1/F2 and friends, which
+4. **Keyboard brightness & volume keys** — taking over F1/F2 and friends, which
    needs Accessibility. There are two rules here, and they differ:
    - **The brightness keys follow the pointer**: they act on the display it is
      on, and are handed back to macOS on the built-in panel, native HUD and all.
@@ -380,7 +380,7 @@ five on the left and enlarges the last two on the right.
      and DDC does). Playing through Bluetooth, AirPlay, the built-in speakers or
      an external DAC, the keys go back to macOS so they move whatever is
      actually playing.
-6. **Global shortcuts** — the master switch, the current bindings, rebinding and
+5. **Global shortcuts** — the master switch, the current bindings, rebinding and
    reset. Seven by default, **all acting on the display under the pointer**:
 
    | Action | Default |
@@ -393,30 +393,28 @@ five on the left and enlarges the last two on the right.
    | Capture this display | `⌃⌥S` |
    | Sleep / wake this display | `⌃⌥P` |
 
-7. **System** — what you are running on (macOS version + chip) and an
+6. **System** — what you are running on (macOS version + chip) and an
    **interface self-check**: whether every private interface PWE Lumen Bar depends on is
    present on this machine. All clear is one line; anything missing is listed
    individually, with a note that the matching feature degrades rather than
    crashes. `pwelumenctl compat` prints the same report.
-8. **When rebinding** — click the button next to an action and press your
+7. **When rebinding** — click the button next to an action and press your
    combination: **at least one of `⌃ ⌥ ⌘` is required**, otherwise PWE Lumen Bar refuses
    (a bare key would swallow ordinary typing system-wide); Esc cancels. If
    another app already owns the combination, PWE Lumen Bar says so on the spot rather
    than recording a shortcut that will never fire. "Reset shortcuts to defaults"
    restores all seven.
+8. **About** — the version, who made it, and two links: "Source code" opens the
+   repository on GitHub; "Support PWE…" opens
+   [pwestudio.site/support](https://pwestudio.site/support). PWE Lumen Bar is free and
+   open source under the MIT licence; nothing here pops up or asks twice.
 
 ---
 
-## 7. PWE Lumen Bar Pro: forcing HiDPI on
+## 7. Forcing HiDPI on
 
-Everything you reach for daily is free, with no trial period and no expiry. Pro
-gates one thing, and it is the hard one: **making text on an external display as
-sharp as it is on the built-in panel.**
-
-It costs **A$9.99, once**. The licence is registered to the email address it was
-bought with, verified offline, and works on every Mac you personally work on.
-Buy it at [pwestudio.site/lumen](https://pwestudio.site/lumen) — the button opens
-a prefilled email.
+This is the hardest thing PWE Lumen Bar does: **making text on an external display as
+sharp as it is on the built-in panel.** Like everything else, it is free.
 
 This diagram is the problem itself:
 
@@ -431,33 +429,25 @@ do not, so the system stretches a non-native resolution onto the panel instead,
 resampling every pixel. That is where the softness comes from, and the display
 itself is fine.
 
-**Free**: the HiDPI modes macOS hides. PWE Lumen Bar digs them straight out of the window
-server's own mode table (the entries marked HiDPI in the resolution menu).
-**Pro**: when a display reports no such modes at all, adding them to the system.
+PWE Lumen Bar solves it in two steps:
+
+- **The HiDPI modes macOS hides** come straight out of the window server's own mode
+  table (the entries marked HiDPI in the resolution menu). Nothing is installed.
+- **When a display reports no such modes at all**, it adds them to the system. That
+  writes a system file, so it needs an administrator password and a restart.
+  Built-in and Apple displays already have these modes and do not need it.
 
 <p align="center">
-  <img src="images/guide-pro-en.svg" width="960" alt="Pro and forced HiDPI">
+  <img src="images/guide-hidpi-en.svg" width="840" alt="Forcing HiDPI on">
 </p>
 
-1. **Where free ends and paid begins** — stated first, not buried.
-2. **What it actually does** — adds the Retina resolutions macOS did not offer,
-   the same rendering path a Retina display uses, not a stretched approximation.
-3. **Three conditions, all before the button** — an administrator password, a
-   restart, and removable at any time. Built-in and Apple displays already have
-   these modes and do not need it.
-4. **"Why does text look soft when I plug in a display?"** — expanding it gives
-   the explanation the diagram above shows.
-5. **Unlocking** — the email used at purchase and the licence key, then
-   "Unlock". Keys are **verified offline**: the key is a signature over your
-   email, so PWE Lumen Bar needs no network and no account.
+To turn it on: card ⋯ › **Force HiDPI on… (needs a restart)**
 
-To turn it on: card ⋯ › **Force HiDPI on…**
-
-6. **The confirmation spells out the cost**: which modes are added, that an
+1. **The confirmation spells out the cost**: which modes are added, that an
    administrator password is required (**macOS asks; PWE Lumen Bar never touches the
    password**), the path written to, that it takes effect after a restart, and
    that it can be removed from the same menu.
-7. **After the restart**, the new HiDPI modes appear in the resolution menu. To
+2. **After the restart**, the new HiDPI modes appear in the resolution menu. To
    undo: "Remove the HiDPI override…" in the same ⋯ menu, which also needs a
    restart.
 
@@ -541,12 +531,11 @@ It lives at `PWE Lumen Bar.app/Contents/Resources/pwelumenctl`, or as the SwiftP
 | `input <disp> [name]` | Read / switch the input source (DDC only) |
 | `capture <disp> [directory]` | Capture one display, to the desktop by default |
 
-**Pro**
+**HiDPI**
 
 | Command | What it does |
 |---|---|
 | `hidpi <disp> [show\|install\|remove]` | Force HiDPI on; `show` previews what would be written without installing |
-| `license show\|activate <email> <key>\|deactivate` | Pro licensing |
 
 A few useful combinations:
 
@@ -597,14 +586,15 @@ After changing cabling or monitor settings, press **↻** in the panel's title b
 
 ### The media keys stop working after every rebuild
 
-macOS ties an Accessibility grant to the **code signature hash**, and
-`PWE Lumen Bar.app` is currently ad-hoc signed — every rebuild changes the signature and
+macOS ties an Accessibility grant to the **code signature hash**. The release on
+pwestudio.site is signed with a Developer ID and keeps its grant across updates. A
+build you make yourself without one is ad-hoc signed — every rebuild changes the signature and
 invalidates the grant you already gave, so **the toggle looks on while the keys
 do nothing**.
 
 The fix: System Settings › Privacy & Security › Accessibility, remove PWE Lumen Bar and
-add it again (not just untick and retick). This goes away once the app is signed
-with a real developer identity.
+add it again (not just untick and retick). Signing your builds with your own
+Developer ID makes it go away.
 
 Incidentally, **the global shortcuts are unaffected** — they need no such grant.
 

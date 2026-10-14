@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 330" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif; }
+    .h1 { font-size: 17px; font-weight: 700; fill: #1D1D1F; }
+    .sub { font-size: 12px; fill: #6E6E73; }
+    .sec { font-size: 11px; font-weight: 600; fill: #6E6E73; }
+    .t { font-size: 12.5px; fill: #1D1D1F; }
+    .tm { font-size: 12.5px; font-weight: 500; fill: #1D1D1F; }
+    .tb { font-size: 13.5px; font-weight: 600; fill: #1D1D1F; }
+    .ts { font-size: 11px; fill: #6E6E73; }
+    .tt { font-size: 10.5px; fill: #98989D; }
+    .mono { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 10px; fill: #6E6E73; }
+    .num { font-size: 11px; font-weight: 700; fill: #FFFFFF; }
+    .lead { stroke: #0A84FF; stroke-width: 1.1; fill: none; }
+  </style>
+
+  <rect width="840" height="330" fill="#FFFFFF"/>
+  <text x="24" y="30" class="h1">强制开启 HiDPI</text>
+  <text x="24" y="50" class="sub">卡片 ⋯ 菜单 › 强制开启 HiDPI…（需重启）</text>
+
+  <!-- confirmation dialog -->
+  <text x="60" y="82" class="sec">点「强制开启 HiDPI…」之后</text>
+  <rect x="60" y="90" width="400" height="212" rx="10" fill="#F5F5F7" stroke="#D2D2D7"/>
+  <text x="80" y="122" class="tb">为 Philips 27B1U3900 强制开启 HiDPI？</text>
+  <text x="80" y="146" class="ts">将写入系统显示器覆盖文件，加入这些 HiDPI 档位：</text>
+  <text x="80" y="164" class="ts" fill="#1D1D1F">2560×1440, 2048×1152, 1920×1080</text>
+  <text x="80" y="188" class="ts">• 需要管理员密码（由 macOS 自己弹窗，PWE Lumen Bar 不接触密码）</text>
+  <text x="80" y="206" class="ts">• 重启后才会生效</text>
+  <text x="80" y="224" class="ts">• 写入位置：</text>
+  <text x="152" y="224" class="mono">/Library/Displays/Contents/Resources/Overrides/…</text>
+  <text x="80" y="242" class="ts">• 之后可以在同一个菜单里移除</text>
+  <rect x="256" y="262" width="80" height="26" rx="6" fill="#FFFFFF" stroke="#C7C7CC"/>
+  <text x="296" y="279" text-anchor="middle" class="ts" fill="#1D1D1F">取消</text>
+  <rect x="348" y="262" width="80" height="26" rx="6" fill="#0A84FF"/>
+  <text x="388" y="279" text-anchor="middle" class="ts" fill="#FFFFFF">继续</text>
+
+  <!-- after restart -->
+  <text x="520" y="82" class="sec">重启之后，分辨率菜单里多出来的档位</text>
+  <rect x="520" y="90" width="260" height="112" rx="8" fill="#FFFFFF" stroke="#D2D2D7"/>
+  <text x="536" y="114" class="t">✓  2560 × 1440  ·  HiDPI</text>
+  <text x="552" y="138" class="t">2048 × 1152  ·  HiDPI</text>
+  <text x="552" y="162" class="t">1920 × 1080  ·  HiDPI</text>
+  <text x="552" y="186" class="t" fill="#6E6E73">3840 × 2160  ·  1x</text>
+
+  <!-- callouts -->
+  <circle cx="30" cy="196" r="10" fill="#0A84FF"/><text x="30" y="200" text-anchor="middle" class="num">1</text>
+  <path class="lead" d="M 41 196 L 56 196"/>
+  <circle cx="810" cy="138" r="10" fill="#0A84FF"/><text x="810" y="142" text-anchor="middle" class="num">2</text>
+  <path class="lead" d="M 799 138 L 784 138"/>
+</svg>

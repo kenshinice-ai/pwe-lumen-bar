@@ -33,7 +33,7 @@
   <line x1="70" y1="338" x2="370" y2="338" stroke="#E3E3E6"/>
   <text x="86" y="358" class="mi">Rename…</text>
   <text x="70" y="381" class="ck">✓</text><text x="86" y="381" class="mi">Lock resolution and orientation</text>
-  <text x="86" y="404" class="mi">Force HiDPI on… (Pro)</text>
+  <text x="86" y="404" class="mi">Force HiDPI on… (needs a restart)</text>
   <text x="86" y="427" class="mi">Display details…</text>
   <line x1="70" y1="438" x2="370" y2="438" stroke="#E3E3E6"/>
   <text x="70" y="456" class="sec">Diagnostics</text>

@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/style.css?v=55a2bdc6d2">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -39,8 +39,8 @@
         <nav>
           <a href="/lumen" data-lang="en">Overview</a>
           <a href="/lumen" data-lang="zh">产品页</a>
-          <a href="/lumen#pro" data-lang="en">Pro</a>
-          <a href="/lumen#pro" data-lang="zh">Pro</a>
+          <a href="/lumen#open" data-lang="en">Free &amp; open</a>
+          <a href="/lumen#open" data-lang="zh">免费开源</a>
         </nav>
         <div class="langs">
           <button type="button" data-set="en" aria-pressed="true">EN</button>
@@ -173,10 +173,10 @@
     2 倍下太大，1 倍下不够锐 —— 于是 macOS 选了 1 倍，文字就失去了边缘。强制 HiDPI 把缺失的
     2 倍模式写进系统，重启后分辨率菜单里就会出现「看起来像 2560×1440」这样的选项，
     按 Retina 屏那种方式渲染，而不是拉伸。</p>
-  <p data-lang="en">It is the one Pro feature. It writes a display override file into <code>/Library</code>,
+  <p data-lang="en">It is in every copy, free. It writes a display override file into <code>/Library</code>,
     so macOS asks for an administrator password — the app never sees it — and it needs a restart. Remove
     it from the same menu it was installed from.</p>
-  <p data-lang="zh">这是唯一的 Pro 功能。它往 <code>/Library</code> 写一个显示器覆盖文件，
+  <p data-lang="zh">每一份都有，免费。它往 <code>/Library</code> 写一个显示器覆盖文件，
     所以 macOS 会索取管理员密码 —— 应用不接触它 —— 并且需要重启。
     从安装它的同一个菜单里可以移除。</p>
 
@@ -184,21 +184,19 @@
     <img src="/lumen/img/hidpi-explained.svg" alt="How macOS renders at 1× and 2×, and what forcing HiDPI changes." loading="lazy">
   </figure>
 
-  <h2 data-lang="en">Activating Pro</h2>
-  <h2 data-lang="zh">激活 Pro</h2>
-  <p data-lang="en">Your licence email carries a one-click link. Clicking it opens the app, activates, and
-    tells you what happened. If you would rather do it by hand, open Settings (⌘,) and paste the key
-    together with the email address the licence was issued to. "Unlocked" at the top of Settings is how
-    you know it worked. The key is verified on your own machine — the app has no network code at all.</p>
-  <p data-lang="zh">授权邮件里有一个一键激活链接。点它，应用会打开、激活，并告诉你结果。
-    想手动也行：打开设置（⌘,），把密钥和购买时使用的邮箱一起填进去。设置顶部出现「已解锁」
-    就说明成功了。密钥在你自己的机器上校验 —— 应用里根本没有网络代码。</p>
+  <h2 data-lang="en">Forcing it on</h2>
+  <h2 data-lang="zh">强制开启</h2>
+  <p data-lang="en">Open the card's ⋯ menu and choose "Force HiDPI on… (needs a restart)". The confirmation
+    lists the modes it will add and the path it writes to before anything happens. After the restart,
+    the new modes are in the resolution menu.</p>
+  <p data-lang="zh">打开卡片的 ⋯ 菜单，选「强制开启 HiDPI…（需重启）」。确认窗口会先列出要加入的档位和写入的路径，
+    什么都还没发生。重启之后，新的档位就在分辨率菜单里。</p>
 
   <figure class="lb-figure" data-lang="en">
-    <img src="/lumen/img/guide-pro-en.svg" alt="The Pro section of Settings, the confirmation before forcing HiDPI, and the modes the resolution menu gains afterwards." loading="lazy">
+    <img src="/lumen/img/guide-hidpi-en.svg" alt="The confirmation before forcing HiDPI, and the modes the resolution menu gains after the restart." loading="lazy">
   </figure>
   <figure class="lb-figure" data-lang="zh">
-    <img src="/lumen/img/guide-pro.svg" alt="设置里的 Pro 一段、强制 HiDPI 前的确认，以及重启后分辨率菜单里多出来的档位。" loading="lazy">
+    <img src="/lumen/img/guide-hidpi.svg" alt="强制 HiDPI 前的确认，以及重启后分辨率菜单里多出来的档位。" loading="lazy">
   </figure>
 
   <h2 data-lang="en">Keys and shortcuts</h2>
@@ -234,10 +232,10 @@
     按键原样交还 macOS —— 否则你调的是一台自己听不到的显示器音量。</p>
 
   <figure class="lb-figure" data-lang="en">
-    <img src="/lumen/img/guide-settings-en.svg" alt="The Settings window: Pro, general options, per-display memory, the media keys, global shortcuts and the system self-check." loading="lazy">
+    <img src="/lumen/img/guide-settings-en.svg" alt="The Settings window: general options, display information, per-display memory, the media keys, global shortcuts, the system self-check and About." loading="lazy">
   </figure>
   <figure class="lb-figure" data-lang="zh">
-    <img src="/lumen/img/guide-settings.svg" alt="设置窗口：Pro、通用、按屏记忆、媒体键、全局快捷键与系统自检。" loading="lazy">
+    <img src="/lumen/img/guide-settings.svg" alt="设置窗口：通用、显示器信息、按屏记忆、媒体键、全局快捷键、系统自检与关于。" loading="lazy">
   </figure>
 
   <h2 data-lang="en">Presets, Shortcuts and the command line</h2>
@@ -310,11 +308,13 @@ pwelumen://rotate?display=2&amp;angle=90</code></pre>
   <h3 data-lang="en">Something is wrong and you want to send a log</h3>
   <h3 data-lang="zh">出了问题，想把日志发过来</h3>
   <p data-lang="en">The app and the command line both write to
-    <code>~/Library/Logs/PWE Lumen Bar/pwelumenbar.log</code>. Reply to your licence email and attach
-    it, along with what the Settings window's System section reports.</p>
+    <code>~/Library/Logs/PWE Lumen Bar/pwelumenbar.log</code>. <a href="https://github.com/kenshinice-ai/pwe-lumen-bar/issues">Open an issue on GitHub</a>
+    and attach it, along with what the Settings window's System section reports — or email
+    <a href="mailto:support@pwestudio.site">support@pwestudio.site</a> if you would rather not post it publicly.</p>
   <p data-lang="zh">应用和命令行都写同一个日志：
-    <code>~/Library/Logs/PWE Lumen Bar/pwelumenbar.log</code>。回复授权邮件把它附上，
-    再带上设置窗口「系统」一段里显示的自检结果。</p>
+    <code>~/Library/Logs/PWE Lumen Bar/pwelumenbar.log</code>。<a href="https://github.com/kenshinice-ai/pwe-lumen-bar/issues">在 GitHub 上开一个 issue</a>
+    把它附上，再带上设置窗口「系统」一段里显示的自检结果；不想公开的话，发邮件到
+    <a href="mailto:support@pwestudio.site">support@pwestudio.site</a>。</p>
 
   <p data-lang="en"><a class="cta light" href="/lumen">← Back to the overview</a></p>
   <p data-lang="zh"><a class="cta light" href="/lumen">← 回到产品页</a></p>
@@ -322,7 +322,7 @@ pwelumen://rotate?display=2&amp;angle=90</code></pre>
 </main>
 
 <footer class="wrap wide">
-  <span><span class="sig">Tools from PWE Studio.</span><br>© PWE Group Pty Ltd · ABN 55 606 664 546</span>
+  <span><span class="sig">Tools from PWE Studio.</span><br>© PWE Studio</span>
   <span class="credit"><img src="/wing-navy.svg" alt="" width="16" height="11">PWE · <span class="han">天域出品</span></span>
 </footer>
 
@@ -344,5 +344,6 @@ pwelumen://rotate?display=2&amp;angle=90</code></pre>
   }
 })();
 </script>
+<script defer src="/assist.js?v=2018c91041"></script>
 </body>
 </html>

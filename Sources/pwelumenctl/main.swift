@@ -99,8 +99,7 @@ func usage() {
       log [行数]                    查看诊断日志（app 与命令行共用）
       details <屏>                  显示器详情（含 EDID 可用性）
       edid <屏> [文件]              查看 / 导出 EDID
-      hidpi <屏> [show|install|remove]  强制开启 HiDPI（Pro，需重启）
-      license show|activate <邮箱> <密钥>|deactivate   Pro 授权
+      hidpi <屏> [show|install|remove]  强制开启 HiDPI（需重启）
       preset list|save|apply|delete <名称>   场景
       arrange <屏> left|right|above|below  |  arrange tile   屏幕排列
       remember on|off|show|clear    每块屏的设置记忆
@@ -141,8 +140,7 @@ func usage() {
       log [lines]                   read the diagnostic log (shared by app and CLI)
       details <disp>                full report for one display
       edid <disp> [file]            show / export the EDID block
-      hidpi <disp> [show|install|remove]  force HiDPI on (Pro, needs a restart)
-      license show|activate <email> <key>|deactivate   Pro licence
+      hidpi <disp> [show|install|remove]  force HiDPI on (needs a restart)
       preset list|save|apply|delete <name>   presets
       arrange <disp> left|right|above|below  |  arrange tile   display arrangement
       remember on|off|show|clear    per-display settings memory
@@ -471,27 +469,6 @@ case "main":
     print(PowerEngine.setAsMain(display)
           ? L10n.t("\(display.name) 已设为主屏", "\(display.name) is now the main display")
           : L10n.t("设置失败", "Failed"))
-
-case "license":
-    let store = LicenseStore.shared
-    switch arguments.count > 1 ? arguments[1] : "show" {
-    case "activate":
-        guard arguments.count > 3 else {
-            print(L10n.t("用法: pwelumenctl license activate <邮箱> <密钥>",
-                         "Usage: pwelumenctl license activate <email> <key>")); exit(1)
-        }
-        print(store.activate(email: arguments[2], key: arguments[3]).message)
-    case "deactivate":
-        store.deactivate()
-        print(L10n.t("已取消激活", "Deactivated"))
-    default:
-        print(L10n.t("Pro 状态：\(store.isPro ? "已解锁" : "未解锁")",
-                     "Pro: \(store.isPro ? "unlocked" : "locked")"))
-        if let email = store.licensedEmail { print("  \(email)") }
-        for feature in LicenseStore.ProFeature.allCases {
-            print("  \(feature.title): \(store.isUnlocked(feature) ? "✓" : "🔒")")
-        }
-    }
 
 case "hidpi":
     let display = requireDisplay(arguments.count > 1 ? arguments[1] : nil)

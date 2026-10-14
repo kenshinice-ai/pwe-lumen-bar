@@ -17,7 +17,7 @@
 
 定名 **PWE Lumen Bar**：`PWE`（家族前缀）+ `Lumen`（产品名，光的单位，与功能同源）+
 `Bar`（品类，菜单栏），与 `PWE Loan Bar` 同构。保留 Lumen 是明知冲突的选择 ——
-复合名降低了商标风险，但不解决搜索位；产品走直接分发 + 授权邮件，不依赖商店检索。
+复合名降低了商标风险，但不解决搜索位；产品走直接分发（1.2.0 起免费开源，在 GitHub 上公开），不依赖商店检索。
 
 改名在**签名分发之前**完成，没有任何已发布版本，因此不需要设置迁移。
 
@@ -33,7 +33,7 @@
 | 命令行 | `pwelumenctl` |
 | SwiftPM 包 / 目标 | `PWEDisplayBar` → `PWELumenBar` · `LumenBarCore` · `LumenBarUI` |
 | 日志 | `~/Library/Logs/PWE Lumen Bar/pwelumenbar.log` |
-| 授权保险库 | `~/.pwe-lumenbar-signing`（签名私钥、ledger、每一张已签发的密钥） |
+| 支持页 | `https://pwestudio.site/support`（所有免费 PWE 工具共用；`Brand.support`） |
 | Team ID | `2SQV3H5MH9`（Developer ID Application: Li Liu） |
 
 前缀统一到 `com.pwegroup.*`，对齐法律主体 PWE Group Pty Ltd，与 `com.pwegroup.pweloanbar`
@@ -113,15 +113,12 @@ navy `#0E1729` 圆角底 + 琥珀 `#F5B335` 翅膀（宽度 60%），与
 |---|---|
 | 开发构建 | `./scripts/build-app.sh --install` |
 | 发布 | `./scripts/package.sh --notarize` → `dist/PWE Lumen Bar <版本>.dmg` |
-| 签发授权 | `./tools/issue.sh --email …`（`--cn` 出中文邮件） |
-| 查账 | `./tools/issue.sh --list` |
 
 - 一切带签名的东西都在 iCloud 之外组装：iCloud 的 file provider 会在几秒内把
   `com.apple.FinderInfo` 贴回目录，而 codesign 拒绝校验带它的 bundle。
 - 开发构建也用 Developer ID 证书签名 —— macOS 把「辅助功能」授权绑在代码签名哈希上，
   ad-hoc 签名每次重建都会静默作废它，这正是「权限给了但媒体键不工作」的成因。
-- `pwelumen://activate?email=…&key=…` 是授权邮件的一键激活入口。密钥是应用自己校验的
-  签名，所以链接不比手动粘贴更可信 —— 错的密钥只是验不过。
+- 1.2.0 起没有授权：Pro、密钥、`pwelumen://activate` 和 `tools/` 都已移除（见 HANDOVER §六）。
 
 ## 九、与上游标准的偏离清单
 
@@ -136,9 +133,8 @@ navy `#0E1729` 圆角底 + 琥珀 `#F5B335` 翅膀（宽度 60%），与
 
 ## 十、未决
 
-- **定价：Pro 一次性 A$9.99**（2026-09-01 定）。写法跟随家族惯例（Loan Bar 用 `A$58`），
-  产品页与购买邮件里都是 A$ —— **如果要卖美元，产品页、邮件模板和 `tools/config.sh` 三处一起改。**
-  应用本身免费，没有试用期。
+- ~~定价：Pro 一次性 A$9.99~~（2026-09-01 定）→ **2026-10-14 改为免费开源**（MIT 协议，品牌保留，
+  同 PWE Monitor）。署名、翅膀与图标不在 MIT 授权内，写在 `LICENSE` 末段。
 - 产品页与使用指南在 `site/public/lumen/`（`/lumen` 与 `/lumen/guide`），已复制进
   `PWE Loan Bar/site/public/`，集团首页也加了卡片，`deploy.sh` 已接上（样式指纹、
   磁盘映像暂存、上线自检）。🔴 **部署本身是对外发布动作，等确认。**

@@ -302,10 +302,8 @@ struct DisplayCardView: View {
                     Button {
                         controller.forceHiDPI(card)
                     } label: {
-                        Label(controller.isPro
-                              ? L10n.t("强制开启 HiDPI…（需重启）", "Force HiDPI on… (needs a restart)")
-                              : L10n.t("强制开启 HiDPI…（Pro）", "Force HiDPI on… (Pro)"),
-                              systemImage: controller.isPro ? "sparkles.rectangle.stack" : "lock")
+                        Label(L10n.t("强制开启 HiDPI…（需重启）", "Force HiDPI on… (needs a restart)"),
+                              systemImage: "sparkles.rectangle.stack")
                     }
                 }
             }

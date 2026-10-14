@@ -1,20 +1,44 @@
-PWE Lumen Bar
-Copyright © 2026 PWE Group Pty Ltd (ABN 55 606 664 546). All rights reserved.
-PWE · 天域出品
+MIT License
 
-This is proprietary software. The application is free to use; the Pro feature
-is unlocked by a licence key issued to a named email address.
+Copyright (c) 2026 PWE Group Pty Ltd
 
-You may install and use it on the Macs you personally work on. You may not
-resell, redistribute, repackage, or create derivative works from the software,
-and you may not remove or alter its attribution.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-The software is provided "as is", without warranty of any kind. To the maximum
-extent permitted by law, PWE Group Pty Ltd excludes all liability for any loss
-or damage arising from its use. Nothing here excludes, restricts or modifies
-any guarantee, right or remedy under the Australian Consumer Law that cannot
-lawfully be excluded.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-The full terms, including the two display operations that cannot be undone from
-software, are in `tools/templates/licence-terms.txt` and ship inside the disk
-image as "Licence Terms.txt".
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+TRADEMARKS AND BRAND ASSETS — NOT COVERED BY THE LICENSE ABOVE
+
+The MIT licence above applies to the source code. It does not grant any right
+to use the names, logos, or brand assets of PWE Group Pty Ltd, including:
+
+  * the names "PWE", "天域", "PWE Studio", "Paradise Production", "天域影像",
+    the former name "天域文创" and "PWE Lumen Bar";
+  * the PWE wing mark (the five-feather wing), in any form — including the
+    vector path data in `Sources/LumenBarUI/Brand/BrandMark.swift`, the
+    application icon in `Resources/AppIcon.icns` and `Resources/AppIcon.pdf`,
+    and the source artwork they are derived from;
+  * the slogan "Create trust through clarity." / "用清晰创造信任。"
+
+You may fork, modify and redistribute this software under the MIT licence, but
+a redistributed build must not carry the PWE wing mark or use the PWE or
+Paradise Production names in a way that suggests it is the official release.
+Replace `Sources/LumenBarUI/Brand/BrandMark.swift`, the application icon and
+the application name with your own.
+
+Third-party components carry their own licences — see THIRD-PARTY-NOTICES.md.

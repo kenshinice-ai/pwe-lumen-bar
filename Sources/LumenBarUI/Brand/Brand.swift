@@ -53,6 +53,11 @@ enum Brand {
 
     static let copyright = "© 2026 PWE Group Pty Ltd"
 
+    static let sourceCode = URL(string: "https://github.com/kenshinice-ai/pwe-lumen-bar")!
+    /// One page for every free PWE tool, so the way to give something back can change
+    /// (GitHub Sponsors today, something else later) without shipping a new build.
+    static let support = URL(string: "https://pwestudio.site/support")!
+
     /// Whatever the bundle actually says, never a second copy of the number.
     static var version: String {
         Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "—"

@@ -1,17 +1,19 @@
 # PWE Lumen Bar — 交接文档 / Handover
 
-> 最后更新：2026-09-24 · 约 10,500 行 Swift · 已安装于 `/Applications/PWE Lumen Bar.app`
-> Last updated 24 Sep 2026 · ~10,500 lines of Swift · installed at `/Applications/PWE Lumen Bar.app`
+> 最后更新：2026-10-14 · 约 10,500 行 Swift · 已安装于 `/Applications/PWE Lumen Bar.app`
+> Last updated 14 Oct 2026 · ~10,500 lines of Swift · installed at `/Applications/PWE Lumen Bar.app`
 >
-> 仓库 / Repository：<https://github.com/kenshinice-ai/pwe-lumen-bar>（private）
+> 仓库 / Repository：<https://github.com/kenshinice-ai/pwe-lumen-bar>（**公开** / public，2026-09-01 起）
 > 产品页 / Product page：<https://pwestudio.site/lumen> · 使用指南 `/lumen/guide`
-> 版本 1.1.2，已签名公证并上线；Pro 一次性 **A$9.99**，应用本身免费
+> 自 1.2.0 起**免费、开源（MIT 协议）**，没有 Pro、没有密钥；支持页 <https://pwestudio.site/support>
 > 品牌与命名的全部决定见 [BRANDING.md](BRANDING.md) / every branding and naming decision is in BRANDING.md
 
 ---
 
 ## 等 Lee
 
+- **[动手] 开通 GitHub Sponsors（kenshinice-ai），整个 PWE 共用一个** — 开通后告诉我，我把按钮加到 pwestudio.site/support · 不开则支持页只有星标和反馈两种方式 · 自 2026-10-14
+- **[决定] 签名保险库 `~/.pwe-lumenbar-signing/` 怎么处理** — 推荐离线归档后删掉本机副本（账本是空的，0 张授权）；删除要你来做 · 不定则一把不再用的私钥一直留在这台机器上 · 自 2026-10-14
 - **[动手] 实测 DDC 断电后输入能不能把屏唤回** — 接上 Philips 27B1U3900，用卡片断电，再动鼠标、按键，看屏回不回来；结果决定「唤醒」一词是否只留「从显示器睡眠恢复」一义（PowerEngine.swift:37 还在叫人动鼠标唤醒）· 不测则 PowerEngine.swift:37 的提示和「唤醒」一词都定不下来 · 自 2026-10-07
 
 ---
@@ -31,7 +33,6 @@ Apple Silicon 栈（CGS 模式表 / SkyLight / DisplayServices / IOAVService）�
 ```bash
 ./scripts/build-app.sh --install     # 构建、用 Developer ID 签名、装进 /Applications 并启动
 ./scripts/package.sh --notarize      # 发布：签名 + 公证 + 装订 + dist/ 里的 .dmg
-./tools/issue.sh --email buyer@…     # 签发一张 Pro 授权（--cn 出中文邮件）
 .build/debug/pwelumenctl             # 命令行，与 app 共用引擎和设置
 ```
 
@@ -83,7 +84,11 @@ Learned the hard way, not from documentation. Read before touching the related c
 
 3. **EDID 走 I2C `0x50`**，不是 DDC 的 `0x37`。Apple Silicon 的 IORegistry 里根本没有 EDID 块。
 
-4. **`kCGDisplaySupportsRotation` 会虚报 `true`**；**`CGVirtualDisplayCreate` 不存在**。
+4. **`kCGDisplaySupportsRotation` 会虚报 `true`**。
+   另：C 函数 `CGVirtualDisplayCreate` 在 macOS 27 上不存在，但这**不等于**虚拟屏做不了 ——
+   Objective-C 类 `CGVirtualDisplay` / `CGVirtualDisplayDescriptor` / `CGVirtualDisplaySettings` /
+   `CGVirtualDisplayMode` 在 macOS 27.0.1 上都在（2026-10-02 实测），TargetBridge、monitorOS 都用它们。
+   这里早先的「不存在所以做不了」是测错了对象。虚拟屏有意不进本应用，归 PWE iMac Display。
 
 5. **`.clear` 混合模式在 PDF 上下文里不生效**，会退化成用当前颜色实心涂满（画图标时踩过，改用奇偶填充和反向裁剪）。
 
@@ -131,7 +136,7 @@ LumenBarCore/    引擎，无 UI，可被命令行完整驱动
   ModeEngine BrightnessEngine AudioEngine RotationEngine
   PowerEngine InputEngine CaptureEngine ColorEngine
   ArrangementEngine PresetEngine DisplayDetails HiDPIOverride
-  SettingsStore DisplayNameStore LicenseStore
+  SettingsStore DisplayNameStore
   OffDisplayStore 被熄掉的屏的持久记录 —— 熄屏后唯一能把它找回来的东西
 LumenBarUI/      菜单、控制器、快捷键、媒体键、OSD、设置窗、URL 命令
 PWE Lumen Bar/        应用外壳（纯 AppKit，自管 NSStatusItem —— MenuBarExtra 收不到滚轮事件）
@@ -155,20 +160,43 @@ Worth calling out because neither produced an error — both just made features 
 
 ---
 
-## 六、Pro 授权机制 / Pro licensing
+## 六、免费与开源 / Free and open source
 
-- 密钥 = 用 Ed25519 私钥对**买家邮箱**的签名，离线验证，无账号、无回连。
-- 公钥内嵌在 `LicenseStore.swift`；**私钥在保险库 `~/.pwe-lumenbar-signing/signing-key`**（不在仓库里，`tools/issue.sh` 第一次运行时会自动从旧位置搬过去）。丢了就再也签不出新密钥，泄露则任何人都能签 —— **这个目录是唯一需要备份的东西**，里面还有 ledger 和每一张已签发的密钥。
-- 签发：`./tools/issue.sh --email buyer@example.com --name "Jo"`（`--cn` 出中文邮件、`--list` 查账、`--reissue N` 补发）。它生成密钥、记账、渲染客户邮件并放进剪贴板，**自己不发送任何东西**。
-- 授权邮件里的一键激活：`pwelumen://activate?email=…&key=…`。密钥是应用自己校验的签名，所以链接不比手动粘贴更可信 —— 错的密钥只是验不过。已实测：签发的密钥能通过应用内嵌公钥校验，链接能激活运行中的构建。
-- 目前只锁一个功能：强制开启 HiDPI。
-- **离线密钥无法限制机器数**（BetterDisplay 用 Paddle 的激活服务器做到 2 台）。要限制就需要一个授权服务器，代价是失去离线可用性。
-- **上不了 Mac App Store**：私有 API、不能沙盒、辅助功能事件拦截、向 `/Library` 写管理员文件 —— 每条都是拒绝项。只能直接分发 + 许可证密钥。
-- **定价：Pro 一次性 A$9.99**（2026-09-01 定），应用本身免费、无试用期。写法跟随家族惯例
-  （Loan Bar 用 `A$58` / `A$188`）。改币种要同时改三处：产品页、`tools/templates/customer-email*.txt`、
-  `tools/config.sh`。
-- 买法是预填邮件（产品页上的按钮），收到后跑 `./tools/issue.sh --email …`。没有支付网关，
-  没有订阅 —— 这是有意的：一次性 A$9.99 的东西，接一套支付系统的成本比它自己还贵。
+1.2.0 起没有 Pro，也没有授权。所有功能免费，源代码用 MIT 协议。Lee 2026-10-14 定。
+
+Since 1.2.0 there is no Pro tier and no licence. Every feature is free; the source is MIT.
+
+**为什么**：到 2026-10-14，本机账本签发过的 Pro 授权是 0 张，所以没有付费用户受影响。
+这一类工具（MonitorControl、OpenDisplay、TargetBridge）几乎都免费开源；而这个应用会调私有接口、
+要管理员密码写 `/Library`，开源让人看得到它做了什么。
+
+**协议**：`LICENSE` 是 MIT，加一段品牌保留，照 PWE Monitor 的写法。
+- 代码可以随便用、改、再分发。
+- PWE 的名字、翅膀标识（`Sources/LumenBarUI/Brand/BrandMark.swift`）和应用图标不在授权内。
+- 别人分发自己的构建，必须换名字和图标。
+
+**1.2.0 删掉了什么**：
+- `LicenseStore.swift`、设置里的 Pro 一节、卡片菜单里的锁、`pwelumen://activate`、`pwelumenctl license`。
+- `tools/`（`issue.sh`、`sign-license.swift`、邮件模板、`Licence Terms.txt`）。
+- 磁盘映像里的「Licence Terms.txt」，换成 `LICENSE.txt`。
+  原来条款里「两个软件无法撤销的操作」那一段，搬进了 `scripts/read-me-first.txt`。
+- 测试机上旧版写下的 `licenseEmail` / `licenseKey` 设置项不再被读取，留着无害。
+
+**支持与致谢**：应用里只有一个入口。
+- 设置 › 关于 有「源代码」和「支持 PWE…」两个链接。
+- 「支持 PWE…」打开 `https://pwestudio.site/support`。所有免费的 PWE 工具共用这一页（`Brand.support`）。
+- 换收款渠道只改那一页，不用发新版。
+- 应用里不弹窗、不计天数、不锁功能。这是定下的规矩，不是暂时没做。
+- `.github/FUNDING.yml` 指向同一页。
+
+**签名保险库**：`~/.pwe-lumenbar-signing/` 还在本机，1.2.0 起不再使用。
+- 里面是签名私钥和空账本，不在仓库里。
+- 怎么处理等 Lee 定，见「等 Lee」。
+
+**仍然成立**：上不了 Mac App Store。原因是私有 API、不能沙盒、辅助功能事件拦截、
+向 `/Library` 写管理员文件，每条都是拒绝项。只能直接分发。
+正式版继续用 Lee 的 Developer ID 签名并公证。免费不等于不签名：签名让用户免去「应用已损坏」的警告，
+更新后辅助功能授权也不会掉。
 
 ---
 
@@ -190,7 +218,7 @@ Worth calling out because neither produced an error — both just made features 
 4. **DDC 多通道配对仍未测** —— 两条通道的绑定与隔离已经在 M4 Max + 两台 Studio Display 上跑过，
    但两端都不应答 VCP。真正没验证的是「两台**第三方**显示器同时收发 DDC」，需要两台非 Apple 屏。
 5. **`Colorimetry` / `PixelEncoding` 枚举含义未知**。IORegistry 以裸整数暴露，无公开文档。当前只报告能确定的（RGB=0、位深、动态范围），其余按原始值展示 —— **不要凭猜测给它们贴标签**。
-6. ~~定价、产品页~~ **已完成**：Pro A$9.99，<https://pwestudio.site/lumen> 已上线。
+6. ~~定价、产品页~~ **已取消定价**：1.2.0 起免费开源，见 §六。
 7. **真机截图**：站点与文档用的是示意图（矢量，中英各一份，见 `scripts/docs-en-figures.py`）。
    面板的真机截图需要人在键盘前点开 popover —— 脚本抓不到（`ImageRenderer` 画不出 AppKit 控件，
    也画不出 ScrollView 里的内容；`screencapture` 需要屏幕录制授权）。

@@ -17,73 +17,9 @@ struct SettingsView: View {
     @State private var monitor: Any?
     @State private var conflictWarning: String?
     @State private var mediaKeysNote: String?
-    @State private var licenseEmail = ""
-    @State private var licenseKey = ""
-    @State private var licenseMessage: String?
 
     var body: some View {
         Form {
-            Section("PWE Lumen Bar Pro") {
-                if controller.isPro {
-                    Label(L10n.t("已解锁", "Unlocked"), systemImage: "checkmark.seal.fill")
-                        .foregroundStyle(.green)
-                    if let email = LicenseStore.shared.licensedEmail {
-                        Text(email).font(.caption).foregroundStyle(.secondary)
-                    }
-                    Button(L10n.t("在这台 Mac 上取消激活", "Deactivate on this Mac")) {
-                        controller.deactivateLicense()
-                        licenseMessage = nil
-                    }
-                } else {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(L10n.t("亮度、音量、分辨率、旋转、场景、快捷键、截图 —— 日常要用的全部免费，没有试用期，也不会到期。",
-                                    "Brightness, volume, resolution, rotation, presets, shortcuts, screenshots — everything you reach for daily is free, with no trial period and no expiry."))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                            .fixedSize(horizontal: false, vertical: true)
-
-                        Text(L10n.t("Pro 只解决一件事，也是最难的一件：",
-                                    "Pro solves one thing — the hard one:"))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                    .padding(.bottom, 2)
-
-                    ForEach(LicenseStore.ProFeature.allCases, id: \.self) { feature in
-                        VStack(alignment: .leading, spacing: 5) {
-                            Label(feature.title, systemImage: "sparkles.rectangle.stack")
-                                .font(.callout.weight(.medium))
-                            Text(feature.explanation)
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                                .fixedSize(horizontal: false, vertical: true)
-                            Text(L10n.t("需要管理员密码，重启后生效，随时可以移除。内建屏和 Apple 显示器本来就有这些模式，用不上。",
-                                        "Needs an administrator password, takes effect after a restart, and can be removed at any time. Built-in panels and Apple displays already have these modes and do not need it."))
-                                .font(.caption2)
-                                .foregroundStyle(.tertiary)
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
-                    }
-                    HiDPIExplainer()
-                    TextField(L10n.t("购买时使用的邮箱", "The email you bought with"), text: $licenseEmail)
-                    TextField(L10n.t("许可证密钥", "Licence key"), text: $licenseKey, axis: .vertical)
-                        .lineLimit(2 ... 4)
-                        .font(.system(.caption, design: .monospaced))
-                    HStack {
-                        Button(L10n.t("解锁", "Unlock")) {
-                            let result = controller.activateLicense(email: licenseEmail, key: licenseKey)
-                            licenseMessage = result.message
-                            if case .activated = result { licenseKey = "" }
-                        }
-                        .disabled(licenseEmail.isEmpty || licenseKey.isEmpty)
-                        Spacer()
-                    }
-                }
-                if let licenseMessage {
-                    Text(licenseMessage).font(.caption).foregroundStyle(.secondary)
-                }
-            }
-
             Section(L10n.t("通用", "General")) {
                 // Bound straight to the stored preference. A local @State copy
                 // could survive a window rebuild holding a stale value and then
@@ -114,6 +50,7 @@ struct SettingsView: View {
                     DisplayInfoRow(card: card)
                 }
                 Button(L10n.t("刷新", "Refresh")) { controller.refresh() }
+                HiDPIExplainer()
             }
 
             Section(L10n.t("显示器", "Displays")) {
@@ -282,6 +219,17 @@ struct SettingsView: View {
                     .font(.caption2)
                     .foregroundStyle(.secondary)
             }
+            // Free and open, so the two things worth a link are the source and the one page
+            // that says how to give something back. Nothing here asks twice or counts days.
+            Text(L10n.t("免费，开源（MIT 协议）。", "Free and open source, under the MIT licence."))
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            HStack(spacing: 16) {
+                Link(L10n.t("源代码", "Source code"), destination: Brand.sourceCode)
+                Link(L10n.t("支持 PWE…", "Support PWE…"), destination: Brand.support)
+                Spacer()
+            }
+            .font(.caption)
         }
     }
 
@@ -466,9 +414,8 @@ private struct DisplayInfoRow: View {
 /// Why a Mac's text goes soft on an external monitor.
 ///
 /// Most people meet this problem as "my expensive monitor looks worse than my
-/// laptop" without ever learning why, so the explanation is the honest way to
-/// describe what the Pro feature is for — it says what macOS does and what the
-/// override changes, and stops there.
+/// laptop" without ever learning why, so this says what macOS does and what the
+/// override in each card's ⋯ menu changes, and stops there.
 private struct HiDPIExplainer: View {
     @State private var expanded = false
 

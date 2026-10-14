@@ -24,7 +24,7 @@ COPY = [
     "hidpi-explained.svg",
     "guide-menubar.svg", "guide-menubar-en.svg",
     "guide-menu.svg", "guide-menu-en.svg",
-    "guide-pro.svg", "guide-pro-en.svg",
+    "guide-hidpi.svg", "guide-hidpi-en.svg",
     "guide-settings.svg", "guide-settings-en.svg",
     "guide-actions-menu.svg", "guide-actions-menu-en.svg",
 ]

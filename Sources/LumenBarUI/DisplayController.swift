@@ -65,7 +65,6 @@ public final class DisplayController: ObservableObject {
     @Published private(set) var languageRevision = 0
     @Published private(set) var shortcutsEnabled = HotKeyCenter.isEnabledInDefaults
     @Published private(set) var mediaKeysEnabled = MediaKeyTap.isEnabledInDefaults
-    @Published private(set) var isPro = LicenseStore.shared.isPro
     /// Set by the status item. A popover sits at a higher window level than an
     /// ordinary window, so anything PWE Lumen Bar opens has to close it first or it
     /// opens underneath and looks like nothing happened.
@@ -843,17 +842,6 @@ public final class DisplayController: ObservableObject {
         }
     }
 
-    func activateLicense(email: String, key: String) -> LicenseStore.ActivationResult {
-        let result = LicenseStore.shared.activate(email: email, key: key)
-        isPro = LicenseStore.shared.isPro
-        return result
-    }
-
-    func deactivateLicense() {
-        LicenseStore.shared.deactivate()
-        isPro = false
-    }
-
     func showWelcome() {
         dismissPopover?()
         LumenBarWindow.show(id: "welcome",
@@ -914,12 +902,6 @@ public final class DisplayController: ObservableObject {
     /// gets them. Needs admin rights and a restart, so both are stated plainly
     /// before anything is written.
     func forceHiDPI(_ card: DisplayCard) {
-        guard LicenseStore.shared.isUnlocked(.forcedHiDPI) else {
-            status = L10n.t("强制 HiDPI 属于 PWE Lumen Bar Pro，在设置里解锁。",
-                            "Forced HiDPI is part of PWE Lumen Bar Pro — unlock it in Settings.")
-            openSettings()
-            return
-        }
         guard let plan = HiDPIOverride.plan(for: card.info) else {
             status = L10n.t("无法为这块屏生成覆盖文件", "Could not build an override for this display")
             return

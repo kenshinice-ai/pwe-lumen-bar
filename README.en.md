@@ -8,7 +8,7 @@
 
 [![macOS](https://img.shields.io/badge/macOS-26%2B-0E1729?style=flat-square)](#)
 [![Apple Silicon](https://img.shields.io/badge/Apple%20Silicon-M1–M5-A16207?style=flat-square)](#)
-[![Licence](https://img.shields.io/badge/licence-proprietary-0E1729?style=flat-square)](LICENSE)
+[![Licence](https://img.shields.io/badge/licence-MIT-0E1729?style=flat-square)](LICENSE)
 
 English · [中文](README.md)
 
@@ -42,7 +42,7 @@ A macOS menu bar display controller. Per-display brightness, contrast, warmth, v
 
 That builds, signs with the Developer ID certificate if one is in the keychain, copies the app into `/Applications` and launches it. `./scripts/package.sh --notarize` is the one that produces a disk image to send someone.
 
-If you would rather not build it, [**pwestudio.site/lumen**](https://pwestudio.site/lumen) carries a signed, notarised disk image and a [guide](https://pwestudio.site/lumen/guide). **The app is free, with no trial period**; Pro is **A$9.99 once** and unlocks one thing — forced HiDPI.
+If you would rather not build it, [**pwestudio.site/lumen**](https://pwestudio.site/lumen) carries a signed, notarised disk image and a [guide](https://pwestudio.site/lumen/guide). **It is free and open source, under the MIT licence**: every feature, no trial, no key.
 
 Click the display icon in the menu bar to open the panel. **Scroll on the icon** to change the brightness of whatever display the pointer is on without opening anything; **right-click** to switch presets. The interface follows the system language and can be forced to Chinese or English in Settings.
 
@@ -225,13 +225,38 @@ The M4 Max run on 1 September 2026 is what turned the declared macOS 26 floor fr
 
 ## Next
 
-- ~~EDID override to force HiDPI on displays that report none~~ — **shipped**, and it is the one Pro feature. It writes a display override into `/Library` behind the standard administrator prompt and takes effect after a restart.
+- ~~EDID override to force HiDPI on displays that report none~~ — **shipped**. It writes a display override into `/Library` behind the standard administrator prompt and takes effect after a restart.
 - Nits-normalised brightness across displays
 - Native App Intents for Shortcuts — SwiftPM cannot emit `Metadata.appintents`, which needs an Xcode project; the URL scheme covers the same ground today
 
-## One thing deliberately not built
+## One thing deliberately not built here
 
-**Virtual / dummy displays.** `CGVirtualDisplayCreate` **does not exist** on macOS 27 — the symbol has been renamed or moved to another framework. No promises until that is understood.
+**Virtual / dummy displays.** An earlier note here said they were impossible because the C function
+`CGVirtualDisplayCreate` is gone from macOS 27. That was the wrong test: the Objective-C classes
+`CGVirtualDisplay`, `CGVirtualDisplayDescriptor`, `CGVirtualDisplaySettings` and `CGVirtualDisplayMode`
+are present on macOS 27.0.1, and other projects create virtual displays with them. They stay out of
+this app on purpose: a virtual display is a different job from controlling the displays you have,
+and it belongs in its own app.
+
+## Support and thanks
+
+PWE Lumen Bar is free, and stays free: no locked features, no nags, no day counter.
+
+If it earns a place on your desk, a few things help it go further:
+
+- Star it on GitHub, or tell a friend who has fought with an external monitor.
+- [Open an issue](https://github.com/kenshinice-ai/pwe-lumen-bar/issues) when something misbehaves, with the
+  output of `pwelumenctl compat` and `pwelumenctl log 50`. Monitors differ wildly; a report from yours is the
+  best test there is.
+- If you would like to, support PWE at [pwestudio.site/support](https://pwestudio.site/support). Every free
+  PWE tool shares that one page.
+
+Thank you to everyone who tests, reports and suggests.
+
+## Licence
+
+The source code is under the [MIT licence](LICENSE). The PWE names, the wing mark and the application icon
+are not: if you distribute your own build, give it your own name and icon (see LICENSE for the details).
 
 ---
 

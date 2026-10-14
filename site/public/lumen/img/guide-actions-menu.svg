@@ -33,7 +33,7 @@
   <line x1="70" y1="338" x2="370" y2="338" stroke="#E3E3E6"/>
   <text x="86" y="358" class="mi">重命名…</text>
   <text x="70" y="381" class="ck">✓</text><text x="86" y="381" class="mi">锁定分辨率和方向</text>
-  <text x="86" y="404" class="mi">强制开启 HiDPI…（Pro）</text>
+  <text x="86" y="404" class="mi">强制开启 HiDPI…（需重启）</text>
   <text x="86" y="427" class="mi">显示器详情…</text>
   <line x1="70" y1="438" x2="370" y2="438" stroke="#E3E3E6"/>
   <text x="70" y="456" class="sec">诊断</text>

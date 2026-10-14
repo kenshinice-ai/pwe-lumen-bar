@@ -8,7 +8,7 @@ What it uses instead:
 
 | Source | What for |
 |---|---|
-| Apple frameworks — AppKit, SwiftUI, CoreGraphics, IOKit, CoreAudio, CryptoKit, ScreenCaptureKit | Everything the app does |
+| Apple frameworks — AppKit, SwiftUI, CoreGraphics, IOKit, CoreAudio, ScreenCaptureKit | Everything the app does |
 | Apple private interfaces — `SkyLight`, `CoreDisplay`, `DisplayServices`, `IOAVService` | Rotation, the HiDPI mode table, brightness on Apple panels, DDC/CI over I²C |
 
 The private interfaces are resolved with `dlsym` at run time and each one

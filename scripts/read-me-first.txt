@@ -29,23 +29,34 @@ TWO PERMISSIONS, BOTH OPTIONAL
 
   Everything else works without granting anything.
 
-ACTIVATE PRO
-  Click the activation link in your licence email, or open Settings
-  and paste the key and the email address it was issued to.
+FREE AND OPEN SOURCE
+  Every feature is free, with no trial and no key. The source is at
+  github.com/kenshinice-ai/pwe-lumen-bar under the MIT licence
+  (LICENSE.txt in this window). If it earns a place on your desk,
+  pwestudio.site/support says how to give something back.
 
-  Pro unlocks forced HiDPI — the mode that makes a 4K display's text
-  as sharp as the built-in screen. Everything else is in the free app.
+TWO THINGS NO SOFTWARE CAN UNDO
+  Both ask first. Read this before you confirm either.
+
+  Cut monitor power  Some monitors, told over DDC to power down,
+                     leave the system entirely. Only the monitor's
+                     own power button brings them back.
+  Switch input       Sending the monitor to another input takes this
+                     Mac's picture with it. Only the monitor's own
+                     buttons bring it back.
+
+  "Turn off" does neither: it takes the display off the desktop, and
+  "Turn on" puts it back.
 
 WHAT IT WRITES
-  Display settings, on your Mac only. Nothing is uploaded, there is
-  no account, and the licence is verified offline. Forced HiDPI is
-  the one feature that writes a file to /Library, which macOS asks
-  for your password to allow — the app never sees that password.
+  Display settings, on your Mac only. Nothing is uploaded and there
+  is no account. Forced HiDPI is the one feature that writes a file
+  to /Library, which macOS asks for your password to allow — the app
+  never sees that password. Update checks are off until you turn
+  them on.
 
   A log both the app and the command line write to is at
   ~/Library/Logs/PWE Lumen Bar/pwelumenbar.log
-
-Please read "Licence Terms.txt" in this window before use.
 
 PWE · 天域出品 · PWE Group Pty Ltd
 
@@ -78,20 +89,28 @@ PWE Lumen Bar
 
   其余功能不需要任何授权。
 
-激活 Pro
-  点授权邮件里的激活链接；或者打开设置，粘贴密钥和购买时用的邮箱。
+免费，开源
+  所有功能免费，没有试用期，也不需要密钥。源代码在
+  github.com/kenshinice-ai/pwe-lumen-bar，采用 MIT 协议（见本窗口里的
+  LICENSE.txt）。如果它在你桌上派上了用场，pwestudio.site/support
+  说了怎么支持我们。
 
-  Pro 只解锁「强制开启 HiDPI」—— 让 4K 外接屏的文字和内建屏一样锐利
-  的那一档。其他功能都在免费版里。
+两个软件无法撤销的操作
+  两者都会先确认。确认前请先读这一段。
+
+  给显示器断电    有些显示器收到 DDC 断电指令后会从系统里消失，
+                  只能按显示器自己的电源键恢复。
+  切换输入源      把显示器切到别的输入，这台 Mac 的画面也跟着走了，
+                  只能用显示器自己的按键切回来。
+
+  「熄屏」不属于这两种：它把屏移出桌面，「点亮」就能放回来。
 
 它会写什么
-  只写这台 Mac 上的显示设置。不上传、无账号，授权在本机离线校验。
-  只有「强制 HiDPI」会往 /Library 写一个文件，由 macOS 自己弹窗要
-  管理员密码 —— 应用不接触这个密码。
+  只写这台 Mac 上的显示设置。不上传，没有账号。只有「强制 HiDPI」
+  会往 /Library 写一个文件，由 macOS 自己弹窗要管理员密码 —— 应用不
+  接触这个密码。检查更新默认关闭，你打开了才会联网。
 
   应用和命令行共用的日志在
   ~/Library/Logs/PWE Lumen Bar/pwelumenbar.log
-
-使用前请阅读本窗口里的「Licence Terms.txt」。
 
 PWE · 天域出品 · PWE Group Pty Ltd

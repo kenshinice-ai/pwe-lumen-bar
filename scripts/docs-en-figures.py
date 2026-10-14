@@ -115,7 +115,7 @@ FIGURES = {
         "DDC 通道": "DDC channel",
         "重命名…": "Rename…",
         "锁定分辨率和方向": "Lock resolution and orientation",
-        "强制开启 HiDPI…（Pro）": "Force HiDPI on… (Pro)",
+        "强制开启 HiDPI…（需重启）": "Force HiDPI on… (needs a restart)",
         "显示器详情…": "Display details…",
         "诊断": "Diagnostics",
         "亮度：DDC": "Brightness: DDC",
@@ -142,8 +142,6 @@ FIGURES = {
         "⋯ 菜单 › 设置… ，或欢迎窗口里的「打开设置」":
             "⋯ menu › Settings…, or “Open Settings” in the welcome window",
         "PWE Lumen Bar 设置": "PWE Lumen Bar Settings",
-        "已解锁": "Unlocked",
-        "在这台 Mac 上取消激活": "Deactivate on this Mac",
         "通用": "General",
         "语言": "Language",
         "跟随系统": "System",
@@ -151,6 +149,7 @@ FIGURES = {
         "显示器信息": "Display information",
         "内建 Retina 显示器": "Built-in Retina Display",
         "刷新": "Refresh",
+        "为什么 Mac 接上显示器字会发虚？": "Why does text go blurry when a Mac drives a monitor?",
         "显示器": "Displays",
         "记住每块屏的设置": "Remember each display's settings",
         "重新插拔后自动恢复亮度、色温、分辨率和方向。":
@@ -174,6 +173,11 @@ FIGURES = {
         "运行环境": "Running on",
         "接口自检": "Interface self-check",
         "全部可用（16 项）": "All available (16 checks)",
+        "关于": "About",
+        "PWE Lumen Bar · 版本 1.2.0": "PWE Lumen Bar · Version 1.2.0",
+        "免费，开源（MIT 协议）。": "Free and open source, under the MIT licence.",
+        "源代码": "Source code",
+        "支持 PWE…": "Support PWE…",
         "录制新组合键时": "While recording a new combination",
         "按下组合键…": "Press keys…",
         "这个组合被别的程序占用了，换一个。":
@@ -199,31 +203,9 @@ FIGURES = {
             "Software dimming — the backlight is untouched",
         "这块屏拒绝了旋转请求": "This display refuses rotation requests",
     },
-    "guide-pro.svg": {
-        "PWE Lumen Bar Pro：强制开启 HiDPI": "PWE Lumen Bar Pro: forcing HiDPI on",
-        "设置 › PWE Lumen Bar Pro，以及卡片 ⋯ 菜单里的那一项":
-            "Settings › PWE Lumen Bar Pro, and the item in a card's ⋯ menu",
-        "LUMEN PRO（未解锁时）": "LUMEN PRO (before unlocking)",
-        "亮度、音量、分辨率、旋转、场景、快捷键、截图 —— 日常要用的全部免":
-            "Brightness, volume, resolution, rotation, presets, shortcuts,",
-        "费，没有试用期，也不会到期。":
-            "screenshots — everything you reach for daily is free.",
-        "Pro 只解决一件事，也是最难的一件：": "Pro solves one thing — the hard one:",
-        "让外接屏的文字和内建屏一样锐利":
-            "Make an external display's text as sharp as the built-in one",
-        "你的显示器像素足够多，缺的只是 macOS 愿意用 2 倍渲染的那几档模式。":
-            "Your monitor has the pixels. What it lacks are the modes macOS will render at 2× into.",
-        "PWE Lumen Bar 把它们补进系统，重启后就多出「看起来像 2560×1440」这样的选":
-            "PWE Lumen Bar writes them into the system, and after a restart you get options like",
-        "项 —— 和 Retina 屏同一种渲染方式，而不是被拉伸过的近似值。":
-            "“looks like 2560×1440” — rendered the way a Retina screen is, not stretched.",
-        "需要管理员密码，重启后生效，随时可以移除。内建屏和 Apple 显示器本":
-            "Needs an administrator password, takes effect after a restart, and can be",
-        "来就有这些模式，用不上。":
-            "removed at any time. Built-in and Apple displays already have these modes.",
-        "为什么 Mac 接上显示器字会发虚？": "Why does text go blurry when a Mac drives a monitor?",
-        "购买时使用的邮箱": "The email you bought with",
-        "许可证密钥": "Licence key",
+    "guide-hidpi.svg": {
+        "强制开启 HiDPI": "Forcing HiDPI on",
+        "卡片 ⋯ 菜单 › 强制开启 HiDPI…（需重启）": "A card's ⋯ menu › Force HiDPI on… (needs a restart)",
         "点「强制开启 HiDPI…」之后": "After choosing “Force HiDPI on…”",
         "为 Philips 27B1U3900 强制开启 HiDPI？": "Force HiDPI on for the Philips 27B1U3900?",
         "将写入系统显示器覆盖文件，加入这些 HiDPI 档位：":
@@ -292,6 +274,9 @@ LAYOUT = {
          '<text x="666" y="368" text-anchor="middle" class="ts" style="font-size:10px" fill="#1D1D1F">Reset shortcuts to defaults</text>'),
         ('<text x="944" y="481" text-anchor="end" class="ts">All available (16 checks)</text>',
          '<text x="944" y="481" text-anchor="end" class="ts" style="font-size:10px">All available (16 checks)</text>'),
+        # Two links sized for Chinese labels sit closer than "Source code" is wide.
+        ('<text x="160" y="675" class="ts" fill="#0A84FF">Support PWE…</text>',
+         '<text x="184" y="675" class="ts" fill="#0A84FF">Support PWE…</text>'),
     ],
 }
 

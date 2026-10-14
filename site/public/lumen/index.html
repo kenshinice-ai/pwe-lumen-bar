@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/style.css?v=55a2bdc6d2">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -42,8 +42,8 @@
         <nav>
           <a href="/" data-lang="en">All tools</a>
           <a href="/" data-lang="zh">全部工具</a>
-          <a href="#pro" data-lang="en">Pro</a>
-          <a href="#pro" data-lang="zh">Pro</a>
+          <a href="#open" data-lang="en">Free &amp; open</a>
+          <a href="#open" data-lang="zh">免费开源</a>
           <a href="/lumen/guide" data-lang="en">Guide</a>
           <a href="/lumen/guide" data-lang="zh">使用指南</a>
         </nav>
@@ -71,13 +71,13 @@
         <div class="hero-cta">
           <a class="cta amber" href="/lumen/download/PWE-Lumen-Bar.dmg" data-lang="en">Download for macOS</a>
           <a class="cta amber" href="/lumen/download/PWE-Lumen-Bar.dmg" data-lang="zh">下载 macOS 版</a>
-          <a class="cta light" href="#pro" data-lang="en">What Pro adds →</a>
-          <a class="cta light" href="#pro" data-lang="zh">Pro 加了什么 →</a>
+          <a class="cta light" href="https://github.com/kenshinice-ai/pwe-lumen-bar" data-lang="en">Source on GitHub →</a>
+          <a class="cta light" href="https://github.com/kenshinice-ai/pwe-lumen-bar" data-lang="zh">GitHub 上的源代码 →</a>
         </div>
-        <p class="hero-note" data-lang="en">Version 1.1.2 · 1.7 MB · signed and notarised by Apple, so it opens with no security
-          warning. Every M-series Mac, macOS 26 or later. It lives in the menu bar and has no Dock
+        <p class="hero-note" data-lang="en">Version 1.2.0 · 1.7 MB · free and open source · signed and notarised by Apple,
+          so it opens with no security warning. Every M-series Mac, macOS 26 or later. It lives in the menu bar and has no Dock
           icon.</p>
-        <p class="hero-note" data-lang="zh">1.1.2 版 · 1.7 MB · 已由 Apple 签名公证，打开不会有安全提示。全部 M 系列机型，
+        <p class="hero-note" data-lang="zh">1.2.0 版 · 1.7 MB · 免费开源 · 已由 Apple 签名公证，打开不会有安全提示。全部 M 系列机型，
           macOS 26 或更新版本。它住在菜单栏里，没有 Dock 图标。</p>
       </div>
 
@@ -179,57 +179,55 @@
     <div class="card">
       <h3 data-lang="en">Nothing leaves your Mac</h3>
       <h3 data-lang="zh">没有任何东西离开你的 Mac</h3>
-      <p data-lang="en">There is no network code in the app. No account, no sync, no analytics, and the
-        licence is verified offline on your own machine.</p>
-      <p data-lang="zh">应用里没有网络代码。无账号、不同步、不收集分析数据，
-        授权在你自己的机器上离线校验。</p>
+      <p data-lang="en">No account, no sync, no analytics. The one request it can make is a daily update
+        check, off until you turn it on, and it sends three things: the app, its version and your macOS
+        version.</p>
+      <p data-lang="zh">无账号、不同步、不收集分析数据。它唯一可能发出的请求是每天一次的更新检查，
+        默认关闭，打开了才会发，而且只发三样：这是哪个应用、哪个版本、哪个 macOS。</p>
     </div>
   </div>
 
-  <div id="pro">
-    <h2 data-lang="en">Pro unlocks one thing</h2>
-    <h2 data-lang="zh">Pro 只解锁一件事</h2>
+  <div id="open">
+    <h2 data-lang="en">Free, and open</h2>
+    <h2 data-lang="zh">免费，开源</h2>
   </div>
-  <p class="lede" data-lang="en">Forced HiDPI. Your monitor has the pixels; what it lacks are the modes
-    macOS will render at 2× into. Pro writes them into the system, and after a restart you get options
-    like "looks like 2560×1440" — rendered the way a Retina screen is, instead of a stretched
-    approximation. Everything else in the app is free.</p>
-  <p class="lede" data-lang="zh">强制开启 HiDPI。你的显示器像素足够多，缺的只是 macOS 愿意用 2 倍渲染的
-    那几档模式。Pro 把它们补进系统，重启后就多出「看起来像 2560×1440」这样的选项 ——
-    和 Retina 屏同一种渲染方式，而不是被拉伸过的近似值。应用里其余功能都是免费的。</p>
-  <p data-lang="en">It needs an administrator password, which macOS asks for directly — the app never
-    sees it — and the override can be removed from the same menu it was installed from.</p>
-  <p data-lang="zh">它需要管理员密码，由 macOS 自己弹窗索取 —— 应用不接触这个密码 ——
-    覆盖也可以从安装它的同一个菜单里移除。</p>
+  <p class="lede" data-lang="en">Every feature, for everyone: no trial, no key, no nag. That includes the
+    hard one — forced HiDPI, which gives a monitor that never advertised them the "looks like
+    2560×1440" modes a Retina screen renders at, instead of a stretched approximation.</p>
+  <p class="lede" data-lang="zh">所有功能，所有人都能用：没有试用期，没有密钥，没有催促。最难的那一项也在里面 ——
+    强制开启 HiDPI：给从不报告这些模式的显示器补上「看起来像 2560×1440」这样的档位，
+    和 Retina 屏同一种渲染方式，而不是被拉伸过的近似值。</p>
 
   <div class="grid">
     <div class="card">
-      <h3 data-lang="en">Free</h3>
-      <h3 data-lang="zh">免费</h3>
-      <p data-lang="en">Everything else. Per-display brightness, contrast, warmth, volume, resolution,
-        orientation, input source, power, screenshots, presets, global shortcuts, the media keys, the
-        command line. No trial period, no nag, no feature held back except the one below.</p>
-      <p data-lang="zh">其余全部功能。按屏亮度、对比度、色温、音量、分辨率、方向、输入源、开关、
-        截图、场景、全局快捷键、媒体键、命令行。没有试用期，没有催促弹窗，除了下面那一项之外
-        不扣任何功能。</p>
+      <h3 data-lang="en">Read it before you trust it</h3>
+      <h3 data-lang="zh">先读代码，再给信任</h3>
+      <p data-lang="en">The app talks to private display interfaces, and forced HiDPI asks for an
+        administrator password to write one file into <code>/Library</code> — macOS asks for it, the app
+        never sees it. The whole source is on GitHub under the MIT licence, so what it does is there to
+        read.</p>
+      <p data-lang="zh">这个应用会调用私有的显示接口；强制 HiDPI 要管理员密码，往 <code>/Library</code>
+        写一个文件 —— 密码由 macOS 自己索取，应用不接触。全部源代码在 GitHub 上，MIT 协议，
+        它做了什么，都读得到。</p>
+      <p>
+        <a class="cta ghost" href="https://github.com/kenshinice-ai/pwe-lumen-bar" data-lang="en">View the source</a>
+        <a class="cta ghost" href="https://github.com/kenshinice-ai/pwe-lumen-bar" data-lang="zh">查看源代码</a>
+      </p>
     </div>
     <div class="card">
-      <h3 data-lang="en">Pro — A$9.99, once</h3>
-      <h3 data-lang="zh">Pro —— A$9.99，一次性</h3>
-      <p data-lang="en">Forced HiDPI, on every Mac you personally work on. The licence is registered to
-        your email address and verified offline; there is no subscription and nothing to renew.</p>
-      <p data-lang="zh">强制开启 HiDPI，你自己用的每一台 Mac 都能激活。授权登记在你的邮箱名下、
-        离线校验；没有订阅，没有需要续的东西。</p>
+      <h3 data-lang="en">Support and thanks</h3>
+      <h3 data-lang="zh">支持与致谢</h3>
+      <p data-lang="en">Nothing is held back for people who give, and the app never asks. If it has earned
+        a place on your desk, a star, an issue with your monitor's report, or a word to a friend all help
+        — and so does supporting PWE directly.</p>
+      <p data-lang="zh">支持的人不会多得什么，应用也从不开口要。如果它在你桌上派上了用场：
+        点一颗星、带着你显示器的报告开一个 issue、告诉一个朋友，都是帮忙 —— 直接支持 PWE 也是。</p>
       <p>
-        <a class="cta amber" href="mailto:lee.liu.melbourne@gmail.com?subject=PWE%20Lumen%20Bar%20Pro%20licence&body=Hi%20Lee%2C%0A%0AI%27d%20like%20to%20buy%20a%20PWE%20Lumen%20Bar%20Pro%20licence%20%28A%249.99%29.%0A%0AName%3A%0AEmail%20the%20licence%20should%20be%20registered%20to%3A%0A%0AThanks%2C%0A" data-lang="en">Buy a licence — A$9.99</a>
-        <a class="cta amber" href="mailto:lee.liu.melbourne@gmail.com?subject=PWE%20Lumen%20Bar%20Pro%20%E6%8E%88%E6%9D%83&body=Lee%20%E4%BD%A0%E5%A5%BD%EF%BC%8C%0A%0A%E6%88%91%E6%83%B3%E8%B4%AD%E4%B9%B0%E4%B8%80%E5%BC%A0%20PWE%20Lumen%20Bar%20Pro%20%E6%8E%88%E6%9D%83%EF%BC%88A%249.99%EF%BC%89%E3%80%82%0A%0A%E5%A7%93%E5%90%8D%EF%BC%9A%0A%E6%8E%88%E6%9D%83%E7%99%BB%E8%AE%B0%E9%82%AE%E7%AE%B1%EF%BC%9A%0A%0A%E8%B0%A2%E8%B0%A2%EF%BC%8C%0A" data-lang="zh">购买授权 —— A$9.99</a>
+        <a class="cta" href="/support" data-lang="en">Support PWE</a>
+        <a class="cta" href="/support" data-lang="zh">支持 PWE</a>
       </p>
     </div>
   </div>
-  <p class="hero-note" data-lang="en">Licences are issued by hand, usually the same day: you get the key,
-    a one-click activation link, and an invoice from PWE Group Pty Ltd.</p>
-  <p class="hero-note" data-lang="zh">授权是人工签发的，通常当天发出：你会收到密钥、一个一键激活链接，
-    以及 PWE Group Pty Ltd 开具的发票。</p>
 
   <h2 data-lang="en">Requirements</h2>
   <h2 data-lang="zh">运行要求</h2>
@@ -250,7 +248,7 @@
 </main>
 
 <footer class="wrap wide">
-  <span><span class="sig">Tools from PWE Studio.</span><br>© PWE Group Pty Ltd · ABN 55 606 664 546</span>
+  <span><span class="sig">Tools from PWE Studio.</span><br>© PWE Studio</span>
   <span class="credit"><img src="/wing-navy.svg" alt="" width="16" height="11">PWE · <span class="han">天域出品</span></span>
 </footer>
 
@@ -272,5 +270,6 @@
   }
 })();
 </script>
+<script defer src="/assist.js?v=2018c91041"></script>
 </body>
 </html>
