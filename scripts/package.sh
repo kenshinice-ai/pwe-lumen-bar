@@ -216,6 +216,13 @@ rm -rf "$STAGE" "$WORK/image.dmg"
 echo
 echo "▸ $DMG"
 echo "    $(du -h "$DMG" | cut -f1)   sha256 $(shasum -a 256 "$DMG" | cut -c1-16)…"
+if [[ "$NOTARIZE" == "1" ]]; then
+  echo
+  # What is inside the app, which Gatekeeper does not ask (../ship-check.sh, shared by the PWE apps;
+  # the pwe-release skill's step 5). A failure stops here, before anything is tagged or uploaded.
+  [[ -x ../ship-check.sh ]] || { echo "✗ ../ship-check.sh not found — it gates the release"; exit 1; }
+  ../ship-check.sh "$APP" --source Sources
+fi
 if [[ "$NOTARIZE" == "0" ]]; then
   echo
   echo "  Not notarised. Gatekeeper will warn on other Macs until you run:"
