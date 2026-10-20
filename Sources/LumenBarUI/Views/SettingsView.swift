@@ -177,7 +177,8 @@ struct SettingsView: View {
                 Button(L10n.t("现在检查", "Check now")) {
                     checkingForUpdate = true
                     Task {
-                        await controller.updates.check()
+                        // Asked for, so a version once put off with "Later" shows again.
+                        await controller.updates.check(manual: true)
                         checkingForUpdate = false
                     }
                 }
