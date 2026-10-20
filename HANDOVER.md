@@ -228,7 +228,7 @@ Since 1.2.0 there is no Pro tier and no licence. Every feature is free; the sour
    睡眠中点亮失败只复现过一次（空闲进入的显示器睡眠）；`pmset displaysleepnow` 触发的睡眠下点亮是成功的。
 9. **GitHub Sponsors 在等 GitHub 审核**（2026-10-14 看：已提交，`hasSponsorsListing` 仍为 false）。
    - 审核通过后，`https://github.com/sponsors/kenshinice-ai` 不再跳回个人主页。
-   - 然后在 `pwestudio.site/support` 的「直接支持 PWE」卡片里加按钮，并删掉「开通后会放在这里」那句。
+   - 然后由「PWE Tools AI 设计」会话打开 `/support` 上已藏好的按钮（2026-10-21 起归它；Sponsors 上线而按钮还藏着时，`deploy.sh` 会提醒）。
    - 改页面前先读 `site/README.md`：页头、页脚由工具站的 `chrome.py` 生成，标记里面的内容不能手改。
    - 再在 `.github/FUNDING.yml` 加一行 `github: kenshinice-ai`。
    - 应用里不用改：它只链到支持页。
